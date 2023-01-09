@@ -1,0 +1,143 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Starting Jack-in Terminal: npx.cmd shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉shadow.user꞉>  ; Use `alt+enter` to evaluate
+; Creating cljs repl session...
+; Connecting cljs repl: shadow-cljs...
+;   The Calva Connection Log might have more connection progress information.
+; Connected session: cljs, repl: :app
+; TIPS: You can choose which REPL to use (clj or cljs):
+;    *Calva: Toggle REPL connection*
+;    (There is a button in the status bar for this)
+; Jack-in done.
+cljs꞉cljs.user꞉>  ; Use `alt+enter` to evaluate
+(use 'bidi.bidi)
+nil
+; No available JS runtime.
+; See https://shadow-cljs.github.io/docs/UsersGuide.html#repl-troubleshooting
+cljs꞉cljs.user꞉> 
+(def route ["/index.html" :index])
+nil
+; No available JS runtime.
+; See https://shadow-cljs.github.io/docs/UsersGuide.html#repl-troubleshooting
+cljs꞉cljs.user꞉> 
+(+ 1 2 3)
+nil
+; No available JS runtime.
+; See https://shadow-cljs.github.io/docs/UsersGuide.html#repl-troubleshooting
+cljs꞉cljs.user꞉> 
+; Jacking in...
+; nREPL Connection was closed
+; Starting Jack-in Terminal: npx.cmd shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉shadow.user꞉> 
+; Creating cljs repl session...
+; Connecting cljs repl: shadow-cljs...
+;   The Calva Connection Log might have more connection progress information.
+; [:browser-repl] Configuring build.
+; [:browser-repl] Compiling ...
+; [:browser-repl] Build completed. (150 files, 149 compiled, 0 warnings, 16.10s)
+; Connected session: cljs, repl: browser-repl
+; TIPS: You can choose which REPL to use (clj or cljs):
+;    *Calva: Toggle REPL connection*
+;    (There is a button in the status bar for this)
+; Jack-in done.
+cljs꞉cljs.user꞉>  ; Use `alt+enter` to evaluate
+(use 'bidi.bidi)
+nil
+; ------ REPL Error while processing ---------------------------------------------
+; (use 'bidi.bidi)
+; null
+; Only [lib.ns :only (names)] and optionally `:rename {from to}` specs supported in :use / :use-macros; offending spec: [bidi.bidi] at line 1 cljs/user.cljs
+cljs꞉cljs.user꞉> 
+(def route ["/index.html" :index])
+#'cljs.user/route
+cljs꞉cljs.user꞉> 
+(match-route route "/index.html")
+nil
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:1:2
+;  Use of undeclared Var cljs.user/match-route
+; --------------------------------------------------------------------------------
+; 
+cljs꞉cljs.user꞉> 
+(+1 2 3)
+:repl/exception!
+; 
+; Execution error (TypeError) at (<cljs repl>:1).
+; 1.call is not a function
+cljs꞉cljs.user꞉> (+ 1 2 3)
+6
+cljs꞉cljs.user꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: npx.cmd shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉shadow.user꞉> 
+; Creating cljs repl session...
+; Connecting cljs repl: shadow-cljs...
+;   The Calva Connection Log might have more connection progress information.
+; Connected session: cljs, repl: node-repl
+; TIPS: You can choose which REPL to use (clj or cljs):
+;    *Calva: Toggle REPL connection*
+;    (There is a button in the status bar for this)
+; Jack-in done.
+cljs꞉cljs.user꞉> (use 'bidi.bidi)
+nil
+; ------ REPL Error while processing ---------------------------------------------
+; (use 'bidi.bidi)
+; null
+; Only [lib.ns :only (names)] and optionally `:rename {from to}` specs supported in :use / :use-macros; offending spec: [bidi.bidi] at line 1 cljs/user.cljs
+cljs꞉cljs.user꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: npx.cmd shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉shadow.user꞉> 
+; Creating cljs repl session...
+; Connecting cljs repl: shadow-cljs...
+;   The Calva Connection Log might have more connection progress information.
+; Connected session: cljs, repl: :app
+; TIPS: You can choose which REPL to use (clj or cljs):
+;    *Calva: Toggle REPL connection*
+;    (There is a button in the status bar for this)
+; Jack-in done.
+cljs꞉cljs.user꞉> 
