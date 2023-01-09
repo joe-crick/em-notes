@@ -3,7 +3,6 @@
    [re-frame.core :as re-frame]
    [em-notes.styles :as styles]
    [em-notes.events :as events]
-   [em-notes.routes :as routes]
    [em-notes.subs :as subs]))
 
 ;; home
@@ -18,5 +17,3 @@
      [:div
       [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
        "go to About Page"]]]))
-
-(defmethod routes/panels :home-panel [] [home-panel])
