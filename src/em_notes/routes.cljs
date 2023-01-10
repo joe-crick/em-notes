@@ -6,9 +6,6 @@
    [pushy.core :as pushy]
    [re-frame.core :as re-frame]))
 
-(defmulti panels identity)
-(defmethod panels :default [] [:div "No panel found for this route."])
-
 (def routes
   (atom
    {"/"      [home/home-panel]

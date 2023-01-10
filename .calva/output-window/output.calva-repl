@@ -141,3 +141,22 @@ clj꞉shadow.user꞉> 
 ;    (There is a button in the status bar for this)
 ; Jack-in done.
 cljs꞉cljs.user꞉> 
+nil
+; [line 2, col 62] Invalid keyword: ::subs/active-panel.
+; 
+cljs꞉em-notes.views꞉> 
+nil
+; ------ WARNING - :undeclared-ns ------------------------------------------------
+;  Resource: <eval>:4:14
+;  No such namespace: styles, could not locate styles.cljs, styles.cljc, or JavaScript source providing "styles"
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:4:14
+;  Use of undeclared Var styles/level1
+; --------------------------------------------------------------------------------
+; 
+cljs꞉em-notes.views.loading꞉> 
+#'em-notes.views.loading/loading-panel
+cljs꞉em-notes.views.loading꞉> 
