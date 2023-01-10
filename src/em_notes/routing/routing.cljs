@@ -1,13 +1,13 @@
 (ns em-notes.routing.routing
   (:require
    [em-notes.events :as events]
-   [em-notes.routing.routes :as routes]
+   [em-notes.routing.routes :refer [routes]]
    [pushy.core :as pushy]
    [re-frame.core :as re-frame]))
 
 (defn parse
   [url]
-  [url (get @routes/routes url)])
+  [url (get @routes url)])
 
 (defn dispatch
   [route-pair]

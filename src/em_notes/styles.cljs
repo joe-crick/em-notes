@@ -6,12 +6,14 @@
     [garden.units :refer [deg px]]
     [garden.color :refer [rgba]]))
 
+#_{:clj-kondo/ignore [:unresolved-symbol]}
 (defcssfn linear-gradient
  ([c1 p1 c2 p2]
   [[c1 p1] [c2 p2]])
  ([dir c1 p1 c2 p2]
   [dir [c1 p1] [c2 p2]]))
 
+  #_{:clj-kondo/ignore [:unresolved-symbol]}
 (defglobal defaults
   [:body
    {:color               :red
@@ -23,6 +25,7 @@
     :background-size     [[(px 100) (px 100)] [(px 100) (px 100)] [(px 20) (px 20)] [(px 20) (px 20)]]
     :background-position [[(px -2) (px -2)] [(px -2) (px -2)] [(px -1) (px -1)] [(px -1) (px -1)]]}])
 
+  #_{:clj-kondo/ignore [:unresolved-symbol]}
 (defclass level1
   []
   {:color :green})

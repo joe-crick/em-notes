@@ -1,9 +1,9 @@
 (ns em-notes.routing.routes
   (:require
-   [em-notes.views.about :as about]
-   [em-notes.views.home :as home]))
+   [em-notes.views.about :refer [about-panel]]
+   [em-notes.views.home :refer [home-panel]]))
 
 (def routes
   (atom
-   {"/"      [home/home-panel]
-    "/about" [about/about-panel]}))
+   {"/"      [home-panel]
+    "/about" [about-panel]}))
