@@ -9,4 +9,4 @@
 ;; active panel. See routes.cljs for the full routing table.
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    (if-not (nil? @active-panel) (nth @active-panel 1) [loading/loading-panel])))
+    (nth @active-panel 1 [loading/loading-panel])))

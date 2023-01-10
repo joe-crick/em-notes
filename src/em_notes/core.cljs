@@ -5,8 +5,7 @@
    [em-notes.events :as events]
    [em-notes.routes :as routes]
    [em-notes.views :as views]
-   [em-notes.config :as config]
-   ))
+   [em-notes.config :as config]))
 
 
 (defn dev-setup []
