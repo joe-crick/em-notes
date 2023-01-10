@@ -1,37 +1,37 @@
 (ns em-notes.routes
   (:require
-   [bidi.bidi :as bidi]
+   [em-notes.events :as events]
+   [em-notes.views.about :as about]
+   [em-notes.views.home :as home]
    [pushy.core :as pushy]
-   [re-frame.core :as re-frame]
-   [em-notes.events :as events]))
+   [re-frame.core :as re-frame]))
 
 (defmulti panels identity)
 (defmethod panels :default [] [:div "No panel found for this route."])
 
 (def routes
   (atom
-    ["/" {""      :home
-          "about" :about}]))
+   {"/"      [home/home-panel]
+    "/about" [about/about-panel]}))
 
 (defn parse
   [url]
-  (bidi/match-route @routes url))
-
-(defn url-for
-  [& args]
-  (apply bidi/path-for (into [@routes] args)))
+  [url (get @routes url)])
 
 (defn dispatch
-  [route]
-  (let [panel (keyword (str (name (:handler route)) "-panel"))]
-    (re-frame/dispatch [::events/set-active-panel panel])))
+  [route-pair]
+  (let [[url route] route-pair
+        key-url (if (= url "home") "/" url)]
+    (re-frame/dispatch [::events/set-active-panel [(keyword key-url) route]])))
 
 (defonce history
   (pushy/pushy dispatch parse))
 
 (defn navigate!
   [handler]
-  (pushy/set-token! history (url-for handler)))
+  (let [url (if (= handler "home") "" handler)]
+    (pushy/set-token! history (str "/" url)))
+  )
 
 (defn start!
   []
@@ -40,4 +40,4 @@
 (re-frame/reg-fx
   :navigate
   (fn [handler]
-    (navigate! handler)))
+    (navigate! (.-name handler))))

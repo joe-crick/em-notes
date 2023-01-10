@@ -2,16 +2,9 @@
   (:require
    [re-frame.core :as re-frame]
    [em-notes.subs :as subs]
-   [em-notes.views.home :as home]
-   [em-notes.views.about :as about]
-   ))
+   [em-notes.views.home :as home]))
 
-(defn page [page-name] 
-  (case page-name
-    :home-panel [home/home-panel]
-    :about-panel [about/about-panel]
-    [home/home-panel]))
-  
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    (page @active-panel)))
+    (js/console.log "panel:" @active-panel)
+    (if-not (nil? @active-panel) (nth @active-panel 1) [home/home-panel])))
