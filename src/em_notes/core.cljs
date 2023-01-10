@@ -3,7 +3,7 @@
    [reagent.dom :as rdom]
    [re-frame.core :as re-frame]
    [em-notes.events :as events]
-   [em-notes.routes :as routes]
+   [em-notes.routing.routing :as routing]
    [em-notes.views :as views]
    [em-notes.config :as config]))
 
@@ -19,7 +19,7 @@
     (rdom/render [views/main-panel] root-el)))
 
 (defn init []
-  (routes/start!)
+  (routing/start!)
   (re-frame/dispatch-sync [::events/initialize-db])
   (dev-setup)
   (mount-root))

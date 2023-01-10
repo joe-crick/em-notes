@@ -1,8 +1,7 @@
 (ns em-notes.views.home
-  (:require
-   [re-frame.core :as re-frame]
-   [em-notes.events :as events]
-   [em-notes.subs :as subs]))
+  (:require [em-notes.routing.nav :as nav]
+            [em-notes.subs :as subs]
+            [re-frame.core :as re-frame]))
 
 (defn home-panel []
   (let [name (re-frame/subscribe [::subs/name])]
@@ -10,5 +9,5 @@
      [:h1.title
       (str "Hello from " @name ". This is the Home Page.")]
 
-     [:div>a {:on-click #(re-frame/dispatch [::events/navigate :about])}
-       "go to About Page"]]))
+     [:div>a {:on-click #(nav/go :note)}
+       "Create a Note"]]))

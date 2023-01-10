@@ -7,12 +7,14 @@
 
 (defn parse
   [url]
+  (js/console.log "parse:")
   [url (get @routes url)])
 
 (defn dispatch
   [route-pair]
   (let [[url route] route-pair
         key-url (if (= url "home") "/" url)]
+    (js/console.log "dispatch:")
     (re-frame/dispatch [::events/set-active-panel [(keyword key-url) route]])))
 
 (defonce history
@@ -21,6 +23,7 @@
 (defn navigate!
   [handler]
   (let [url (if (= handler "home") "" handler)]
+    (js/console.log "navigate!:" url)
     (pushy/set-token! history (str "/" url))))
 
 (re-frame/reg-fx
@@ -28,4 +31,7 @@
  (fn [handler]
    (navigate! (.-name handler))))
 
-(pushy/start! history)
+;; called by init
+(defn start!
+  []
+  (pushy/start! history))
