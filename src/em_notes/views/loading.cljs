@@ -1,9 +1,6 @@
-(ns em-notes.views.loading   
-  (:require
-   [em-notes.styles :as styles]))
+(ns em-notes.views.loading)
 
 (defn loading-panel []
   [:div
    [:h1
-    {:class (styles/level1)}
     "Loading..."]])
