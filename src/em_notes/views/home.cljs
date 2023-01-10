@@ -12,6 +12,5 @@
       {:class (styles/level1)}
       (str "Hello from " @name ". This is the Home Page.")]
 
-     [:div
-      [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
-       "go to About Page"]]]))
+     [:div>:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
+       "go to About Page"]]))

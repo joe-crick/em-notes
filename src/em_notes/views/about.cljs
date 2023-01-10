@@ -10,6 +10,5 @@
   [:div
    [:h1 "This is the About Page."]
 
-   [:div
-    [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
-     "go to Home Page"]]])
+   [:div>a {:on-click #(re-frame/dispatch [::events/navigate :home])}
+     "go to Home Page"]])
