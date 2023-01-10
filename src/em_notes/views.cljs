@@ -6,10 +6,6 @@
    [em-notes.views.about :as about]
    ))
 
-
-
-
-;; main
 (defn page [page-name]
   (js/console.log "page-name:" page-name)
   (case page-name
