@@ -2,8 +2,11 @@
   (:require
    [re-frame.core :as re-frame]
    [em-notes.subs :as subs]
-   [em-notes.views.home :as home]))
+   [em-notes.views.loading :as loading]))
 
+;; A simple function that subscribes to the active-panel in the store
+;; Automatically updates and renders whatever view is stored in the 
+;; active panel. See routes.cljs for the full routing table.
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    (if-not (nil? @active-panel) (nth @active-panel 1) [home/home-panel])))
+    (if-not (nil? @active-panel) (nth @active-panel 1) [loading/loading-panel])))

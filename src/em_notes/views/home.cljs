@@ -5,8 +5,6 @@
    [em-notes.events :as events]
    [em-notes.subs :as subs]))
 
-;; home
-
 (defn home-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
