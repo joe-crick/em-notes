@@ -6,5 +6,4 @@
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    (js/console.log "panel:" @active-panel)
     (if-not (nil? @active-panel) (nth @active-panel 1) [home/home-panel])))

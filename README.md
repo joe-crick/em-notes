@@ -18,7 +18,7 @@ you.
   [FAQs](https://github.com/day8/re-frame/blob/master/docs/FAQs/README.md)) ->
   [Reagent](https://github.com/reagent-project/reagent) ->
   [React](https://github.com/facebook/react)
-  - Client-side routing: [bidi](https://github.com/juxt/bidi) and [pushy](https://github.com/clj-commons/pushy)
+  - Client-side routing: [pushy](https://github.com/clj-commons/pushy)
   - CSS rendering: [Garden](https://github.com/noprompt/garden)
 * Build tools
   - CLJS compilation, dependency management, REPL, & hot reload: [`shadow-cljs`](https://github.com/thheller/shadow-cljs)
