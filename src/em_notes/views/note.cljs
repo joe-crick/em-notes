@@ -1,16 +1,22 @@
 (ns em-notes.views.note 
   (:require [em-notes.routing.nav :as nav]))
 
-(defn note-panel []
+(defn create-note []
   [:section
    [:div.container
     [:div
-     [:h1.title
+     [:h1 {:class "title mt-5"}
       "Note"]
 
      [:form
       [:div.field
-       [:label.label "Message"]
+       [:p.control
+        [:input.input {:type "text", :placeholder "Name"}]]]
+      [:div.field
+       [:p.control
+        [:input.input {:type "date", :placeholder "Date"}]]]
+      [:div.field
+       [:label.label "Note"]
        [:div.control
         [:textarea.textarea {:placeholder "Textarea"}]]]]
      [:div {:class "is-flex is-justify-content-space-between mt-5"}

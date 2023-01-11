@@ -8,8 +8,8 @@
 
 (def routes
   (atom
-   {"/"      [home/home-panel]
-    "/about" [about/about-panel]}))
+   {"/"      [home/home]
+    "/about" [about/about]}))
 
 (defn parse
   [url]

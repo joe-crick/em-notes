@@ -1,13 +1,11 @@
 (ns em-notes.views.home
-  (:require [em-notes.routing.nav :as nav]
-            [em-notes.subs :as subs]
-            [re-frame.core :as re-frame]))
+  (:require [em-notes.routing.nav :as nav]))
 
-(defn home-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1.title
-      (str "Hello from " @name ". This is the Home Page.")]
+(defn home []
+  [:section.mt-5
+   [:div.container
+    [:h1.title
+     (str "EM Notes")]
 
-     [:div>a {:on-click #(nav/go :note)}
-       "Create a Note"]]))
+    [:div>button {:class "button is-link" :on-click #(nav/go :note)}
+     "Create a Note"]]])

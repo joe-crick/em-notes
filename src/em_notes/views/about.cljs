@@ -1,7 +1,7 @@
 (ns em-notes.views.about
   (:require [em-notes.routing.nav :as nav]))
 
-(defn about-panel []
+(defn about []
   [:div
    [:h1.title "This is the About Page."]
 
