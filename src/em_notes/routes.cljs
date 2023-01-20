@@ -1,6 +1,6 @@
 (ns em-notes.routes
   (:require
-   [em-notes.events :as events]
+   [em-notes.events.events :as events]
    [em-notes.views.about :as about]
    [em-notes.views.home :as home]
    [pushy.core :as pushy]

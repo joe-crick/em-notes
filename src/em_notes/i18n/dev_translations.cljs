@@ -12,8 +12,14 @@
      :bar "bar"
      :bar-copy :en.example/bar ; Can alias entries
      :baz [:div "This is a **Hiccup** form"]}
+    :form
+    {:submit "Submit"
+     :cancel "Cancel"}
     :person 
     {:title "Person"
      :first-name "First Name"
      :last-name "Last Name"
-     :team "Team"}}})
+     :team "Team"
+     :overview "Overview"
+     :performance "Performance"
+     :tasks "Tasks"}}})

@@ -2,7 +2,7 @@
   (:require
    [reagent.dom :as rdom]
    [re-frame.core :as re-frame]
-   [em-notes.events :as events]
+   [em-notes.events.db-events :as db-events]
    [em-notes.routing.routing :as routing]
    [em-notes.views :as views]
    [em-notes.db]
@@ -21,6 +21,6 @@
 
 (defn init []
   (routing/start!)
-  (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::db-events/initialize-db])
   (dev-setup)
   (mount-root))
