@@ -5,6 +5,7 @@
 /*.log
 /.clj-kondo/
 /.calva/
+/.history/
 
 # Leiningen
 /.lein-*

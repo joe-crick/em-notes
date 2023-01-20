@@ -2,7 +2,7 @@
   (:require
    [em-notes.views.about :refer [about]]
    [em-notes.views.home :refer [home]]
-   [em-notes.views.note :refer [create-note]]))
+   [em-notes.views.person :refer [create-note]]))
 
 (def routes
   (atom

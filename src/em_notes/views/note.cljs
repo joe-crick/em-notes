@@ -1,5 +1,5 @@
 (ns em-notes.views.note 
-  (:require [em-notes.routing.nav :as nav]))
+  (:require [em-notes.components.form-footer :refer [form-footer]]))
 
 (defn create-note []
   [:section
@@ -19,6 +19,20 @@
        [:label.label "Note"]
        [:div.control
         [:textarea.textarea {:placeholder "Textarea"}]]]]
-     [:div {:class "is-flex is-justify-content-space-between mt-5"}
-      [:div [:button {:class "button is-primary"} "Submit"]]
-      [:div [:button {:class "button is-info" :on-click #(nav/go :home)} "Cancel"]]]]]])
+     [:div
+      {:class "select is-multiple"}
+      [:select
+       {:multiple "", :size "5"}
+       [:option {:value "Argentina"} "Argentina"]
+       [:option {:value "Bolivia"} "Bolivia"]
+       [:option {:value "Brazil"} "Brazil"]
+       [:option {:value "Chile"} "Chile"]
+       [:option {:value "Colombia"} "Colombia"]
+       [:option {:value "Ecuador"} "Ecuador"]
+       [:option {:value "Guyana"} "Guyana"]
+       [:option {:value "Paraguay"} "Paraguay"]
+       [:option {:value "Peru"} "Peru"]
+       [:option {:value "Suriname"} "Suriname"]
+       [:option {:value "Uruguay"} "Uruguay"]
+       [:option {:value "Venezuela"} "Venezuela"]]]
+     [form-footer]]]])
