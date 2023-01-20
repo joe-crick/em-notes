@@ -1,17 +1,15 @@
 (ns em-notes.views.person
   (:require
-   [reagent.core :as r]
    [re-frame.core :as rf]
-   [em-notes.routing.nav :as nav]
-   [em-notes.lib.update-atom :refer [set-revise]]
+   [em-notes.lib.get-state :refer [get-state]]
    [em-notes.components.form-footer :refer [form-footer]]
+   [em-notes.routing.nav :as nav]
    [em-notes.i18n.tr :refer [grab]]))
 
 (defn create-person []
   ;; setup local state
-  (let [data {:first-name "" :last-name "" :team ""}
-        person (r/atom data)
-        revise! (set-revise person)]
+  
+  (let [[person revise!] (get-state {:first-name "" :last-name "" :team ""})]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section
@@ -64,9 +62,7 @@
 
 (defn people []
   ;; setup local state
-  (let [data :overview
-        tab (r/atom data)
-        revise! (set-revise tab)]
+  (let [[tab revise!] (get-state :overview)]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section
@@ -74,15 +70,17 @@
         [:div
          [:h1 {:class "title mt-5"}
           (grab :person/title)]
+         
+         [:div.container
+          [:div>button {:class "button is-link" :on-click #(nav/go :create-person)}
+           (grab :home/create-person)]]
 
          [:div.container
-          [:button.link {:on-click #(revise! :overview)} (grab :person/overview)]
-          [:button.link {:on-click #(revise! :performance)} (grab :person/performance)]
-          [:button.link {:on-click #(revise! :tasks)} (grab :person/tasks)]]
+          [:button {:class "button is-ghost" :on-click #(revise! :overview)} (grab :person/overview)]
+          [:button {:class "button is-ghost" :on-click #(revise! :performance)} (grab :person/performance)]
+          [:button {:class "button is-ghost" :on-click #(revise! :tasks)} (grab :person/tasks)]]
 
          [:form
           [:div.field
            [:p.control
-            [active-tab @tab]]]]
-
-         [form-footer #(rf/dispatch [:create-person @tab])]]]])))
+            [active-tab @tab]]]]]]])))
