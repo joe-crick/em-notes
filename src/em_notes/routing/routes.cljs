@@ -3,7 +3,8 @@
    [em-notes.views.about :refer [about]]
    [em-notes.views.home :refer [home]]
    [em-notes.views.note :refer [create-note]]
-   [em-notes.views.person :refer [create-person people]]))
+   [em-notes.views.people.person :refer [create-person]]
+   [em-notes.views.people.people :refer [people]]))
 
 (def routes
   (atom

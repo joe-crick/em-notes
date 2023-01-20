@@ -1,6 +1,6 @@
 (ns em-notes.views.home
   (:require
-   [em-notes.views.person :refer [people]]
+   [em-notes.views.people.person :refer [people]]
    [em-notes.i18n.tr :refer [grab]]))
 
 (defn home []
