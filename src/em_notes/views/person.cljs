@@ -54,18 +54,17 @@
 (defn overview []
   [:div "Overview"])
 
-(defn active-tab [tab]
-  (println "tab: " tab)
-  ;; (case tab
-  ;;   :tasks [tasks]
-  ;;   :performance [performance]
-  ;;   [overview])
+(defn active-tab [tab] 
+  (case tab
+    :tasks [tasks]
+    :performance [performance]
+    [overview])
   )
 
 
 (defn people []
   ;; setup local state
-  (let [data {:active-tab ""}
+  (let [data :overview
         tab (r/atom data)
         revise! (set-revise tab)]
     ;; required when local state is used, because we need to return a render function
@@ -76,19 +75,14 @@
          [:h1 {:class "title mt-5"}
           (grab :person/title)]
 
-         [:button.link {:on-click #(revise! {:active-tab "Poooop"} )} "Get Pooped!"]
-         [:button.link {:on-click #(revise! :active-tab (js-obj "target" (js-obj "value" "Pee")))} "Pee-pee!"]
+         [:div.container
+          [:button.link {:on-click #(revise! :overview)} (grab :person/overview)]
+          [:button.link {:on-click #(revise! :performance)} (grab :person/performance)]
+          [:button.link {:on-click #(revise! :tasks)} (grab :person/tasks)]]
 
          [:form
           [:div.field
            [:p.control
-            [:input.input {:html-for :active-tab
-                           :type "text"
-                           :id :active-tab,
-                           :placeholder (grab :person/first-name)
-                           :value (:active-tab @tab)
-                           :on-change #(revise! :active-tab %)}]
-            ]]
-          ]
-         [:div.container (:active-tab @tab)]
+            [active-tab @tab]]]]
+
          [form-footer #(rf/dispatch [:create-person @tab])]]]])))
