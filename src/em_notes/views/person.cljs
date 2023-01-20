@@ -1,14 +1,15 @@
 (ns em-notes.views.person
   (:require
    [reagent.core :as r]
-   [em-notes.lib.update-atom :refer [revise!]]
+   [em-notes.lib.update-atom :refer [set-revise]]
    [em-notes.components.form-footer :refer [form-footer]]
    [em-notes.i18n.tr :refer [grab]]))
 
 (defn create-person []
   ;; setup local state
   (let [data {:first-name "" :last-name "" :team ""}
-        person (r/atom data)]
+        person (r/atom data)
+        revise! (set-revise person)]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section
@@ -25,9 +26,7 @@
                            :id :first-name,
                            :placeholder (grab :person/first-name)
                            :value (:first-name @person)
-                           :on-change #(revise! person :first-name %)
-                        ;;  :on-change #(println (.. % -target -value))
-                           }]
+                           :on-change #(revise! :first-name %)}]
             [:input {:class "input mt-5"
                      :type "text"
                      :id :last-name,

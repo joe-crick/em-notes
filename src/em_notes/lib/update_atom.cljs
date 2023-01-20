@@ -4,5 +4,5 @@
   (swap! atom assoc field (.. evt -target -value))
   (println @atom))
 
-(defn set-update [atom]
+(defn set-revise [atom]
   (partial revise! atom))
