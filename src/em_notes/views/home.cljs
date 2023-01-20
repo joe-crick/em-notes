@@ -8,5 +8,5 @@
     [:h1.title
      (grab :home/title)]
 
-    [:div>button {:class "button is-link" :on-click #(nav/go :note)}
-     "Create a Note"]]])
+    [:div>button {:class "button is-link" :on-click #(nav/go :person)}
+     (grab :home/create-person)]]])

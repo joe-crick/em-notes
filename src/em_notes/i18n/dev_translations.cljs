@@ -5,9 +5,15 @@
    {:missing ":en missing text"
     :home
     {:title "EM Notes"
+     :create-person "Create a Person"
      :greet "Hello %1"
      :farewell "Goodbye %1"
      :foo "foo"
      :bar "bar"
      :bar-copy :en.example/bar ; Can alias entries
-     :baz [:div "This is a **Hiccup** form"]}}})
+     :baz [:div "This is a **Hiccup** form"]}
+    :person 
+    {:title "Person"
+     :first-name "First Name"
+     :last-name "Last Name"
+     :team "Team"}}})

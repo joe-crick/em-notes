@@ -5,6 +5,7 @@
    [em-notes.events :as events]
    [em-notes.routing.routing :as routing]
    [em-notes.views :as views]
+   [em-notes.db]
    [em-notes.config :as config]))
 
 
