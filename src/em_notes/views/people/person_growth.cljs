@@ -32,4 +32,4 @@
   )
 
 (defn person-growth [person revise!]
-  [section-toggle #(growth person revise!)])
+  [section-toggle #(growth person revise!) (grab :person/growth)])
