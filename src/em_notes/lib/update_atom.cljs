@@ -2,11 +2,12 @@
 
 (defn revise!
   ;; replace a value
-  ([atom val] 
+  ([atom val]
    (reset! atom val))
   ;; update a value in a map/object
-  ([atom field evt] 
-   (swap! atom assoc field (.. evt -target -value))))
+  ([atom field evt]
+   (let [prop (if (vector? field) field [field])]
+     (swap! atom assoc-in prop (.. evt -target -value)))))
 
 (defn set-revise [atom]
   (partial revise! atom))

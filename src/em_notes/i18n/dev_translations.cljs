@@ -17,6 +17,16 @@
      :cancel "Cancel"}
     :person 
     {:title "Person"
+     :details "Details"
+     :feedback "Feedback"
+     :feedback-medium "What feedback medium to use"
+     :when-receive-feedback "When do they like to receive feedback?"
+     :how-receive-recognition "Give recognition"
+     :what-rewards-wanted "Good rewards"
+     :mood "Mood"
+     :what-makes-grumpy "What makes them grumpy"
+     :how-to-know-grumpy "How to know if grumpy"
+     :how-to-help-grumpy "How to help if grumpy"
      :first-name "First Name"
      :last-name "Last Name"
      :team "Team"

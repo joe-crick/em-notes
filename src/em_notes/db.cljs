@@ -17,11 +17,11 @@
      {:feedback-medium ""
       :when-receive-feedback ""
       :how-receive-recognition ""
-      :what-recognition-wanted ""}
-     :grumpy
-     {:what-makes ""
-      :how-to-know ""
-      :how-to-help ""}
+      :what-rewards-wanted ""}
+     :mood
+     {:what-makes-grumpy ""
+      :how-to-know-grumpy ""
+      :how-to-help-grumpy ""}
      :support
      {:manager ""
       :team ""
