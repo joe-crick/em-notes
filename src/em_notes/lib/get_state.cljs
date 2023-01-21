@@ -4,7 +4,6 @@
    [em-notes.lib.update-atom :refer [set-revise]]))
 
 (defn get-state [val]
-  (let [data :overview
-        atom (r/atom data)
+  (let [atom (r/atom val)
         revise! (set-revise atom)]
     [atom revise!]))

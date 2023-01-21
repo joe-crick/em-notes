@@ -1,14 +1,16 @@
-(ns em-notes.views.people.person
+(ns em-notes.views.people.create-person
   (:require
    [re-frame.core :as rf]
    [em-notes.lib.get-state :refer [get-state]]
    [em-notes.components.form-footer :refer [form-footer]]
+   [em-notes.db :refer [default-db]]
    [em-notes.i18n.tr :refer [grab]]))
 
 (defn create-person []
   ;; setup local state
   
-  (let [[person revise!] (get-state {:first-name "" :last-name "" :team ""})]
+  (let [[person revise!] (get-state (:person default-db))]
+    (println person)
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section

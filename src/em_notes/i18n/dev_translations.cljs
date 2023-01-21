@@ -22,4 +22,5 @@
      :team "Team"
      :overview "Overview"
      :performance "Performance"
+     :career-growth "Career Growth"
      :tasks "Tasks"}}})

@@ -11,4 +11,22 @@
    :person
    {:first-name ""
     :last-name ""
-    :team ""}})
+    :team ""
+    :profile
+    {:feedback
+     {:feedback-medium ""
+      :when-receive-feedback ""
+      :how-receive-recognition ""
+      :what-recognition-wanted ""}
+     :grumpy
+     {:what-makes ""
+      :how-to-know ""
+      :how-to-help ""}
+     :support
+     {:manager ""
+      :team ""
+      :peers-outside ""}
+     :growth
+     {:current-goals ""
+      :what-doing-now ""
+      :what-need-to-do ""}}}})
