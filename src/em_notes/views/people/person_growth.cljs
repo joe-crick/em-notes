@@ -1,11 +1,12 @@
 (ns em-notes.views.people.person-growth
-  (:require [em-notes.i18n.tr :refer [grab]]))
+  (:require [em-notes.i18n.tr :refer [grab]]
+            [em-notes.components.section-toggle :refer [section-toggle]]))
 
-(defn person-growth [person revise!]
+(defn growth [person revise!]
   [:fieldset
    [:legend (grab :person/growth)]
    [:div.field
-    [:label (grab :person/support-current-goals)]
+    [:label (grab :person/current-goals)]
     [:p.control
      [:input.input {:html-for :current-goals
                     :type "text"
@@ -27,4 +28,8 @@
                     :type "text"
                     :id :what-need-to-do,
                     :value (-> @person :growth :what-need-to-do)
-                    :on-change #(revise! [:growth :what-need-to-do] %)}]]]])
+                    :on-change #(revise! [:growth :what-need-to-do] %)}]]]]
+  )
+
+(defn person-growth [person revise!]
+  [section-toggle #(growth person revise!)])

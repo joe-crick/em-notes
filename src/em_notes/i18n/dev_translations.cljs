@@ -20,7 +20,7 @@
      :details "Details"
      :feedback "Feedback"
      :feedback-medium "What feedback medium to use"
-     :when-receive-feedback "When do they like to receive feedback?"
+     :when-receive-feedback "When to receive feedback"
      :how-receive-recognition "Give recognition"
      :what-rewards-wanted "Good rewards"
      :mood "Mood"
