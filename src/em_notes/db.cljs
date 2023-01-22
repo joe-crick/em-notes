@@ -1,13 +1,10 @@
 (ns em-notes.db)
 
 (def default-db
-  {:teams [{:name "Test"
-            :people [{:first-name "Bob" :last-name "Chun"}
-                     {:first-name "Chen" :last-name "Swift"}]}
-           {:name "Example"
-            :people [{:first-name "Callan" :last-name "Danilovich"}
-                     {:first-name "Ron" :last-name "Granger"}
-                     {:first-name "Hardy" :last-name "Thomas"}]}]
+  {:team {:name ""
+          :people {}}
+   ; store all the people in one, map, then map over people to get people per team
+   :people {}
    :person
    {:first-name ""
     :last-name ""

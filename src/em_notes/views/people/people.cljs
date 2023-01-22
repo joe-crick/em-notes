@@ -1,6 +1,6 @@
 (ns em-notes.views.people.people
     (:require 
-     [em-notes.lib.get-state :refer [get-state]] 
+     [em-notes.lib.local-state :refer [local-state]] 
      [em-notes.routing.nav :as nav]
      [em-notes.i18n.tr :refer [grab]]))
 
@@ -27,7 +27,7 @@
 
 (defn people []
   ;; setup local state
-  (let [[tab revise!] (get-state :overview)]
+  (let [[tab revise!] (local-state :overview)]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section

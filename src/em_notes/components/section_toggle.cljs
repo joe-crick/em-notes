@@ -1,8 +1,8 @@
 (ns em-notes.components.section-toggle
-  (:require [em-notes.lib.get-state :refer [get-state]]))
+  (:require [em-notes.lib.local-state :refer [local-state]]))
 
 (defn toggle [component content display? display-type]
-  (let [[show? revise!] (get-state (if (nil? display?) false display?))
+  (let [[show? revise!] (local-state (if (nil? display?) false display?))
         display (if (nil? display-type) "is-block" display-type)]
     (fn []
       [:div.container
