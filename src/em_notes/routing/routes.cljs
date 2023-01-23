@@ -4,7 +4,9 @@
    [em-notes.views.home :refer [home]]
    [em-notes.views.note :refer [create-note]]
    [em-notes.views.people.person :refer [person]]
-   [em-notes.views.people.people :refer [people]]))
+   [em-notes.views.people.people :refer [people]]
+   [em-notes.views.tasks.tasks :refer [tasks]]
+   [em-notes.views.tasks.task :refer [task]]))
 
 (def routes
   (atom
@@ -12,4 +14,6 @@
     "/about" [about]
     "/note" [create-note]
     "/people" [people]
-    "/person" [person]}))
+    "/person" [person]
+    "/tasks" [tasks]
+    "/task" [task]}))

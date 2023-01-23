@@ -21,3 +21,8 @@
  ::active-person
  (fn [db _]
    (:active-person db)))
+
+(re-frame/reg-sub
+ ::active-task
+ (fn [db _]
+   (:active-task db)))

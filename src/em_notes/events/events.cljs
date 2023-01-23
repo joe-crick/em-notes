@@ -5,6 +5,8 @@
    [em-notes.lib.lower-case :refer [lower-case]]
    [em-notes.db :as db]))
 
+;; NAVIGATION
+
 (re-frame/reg-event-fx
  ::navigate
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -16,6 +18,8 @@
    #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ active-panel]]
    {:db (assoc db :active-panel active-panel)}))
+
+;; PERSON
 
 (re-frame/reg-event-fx
  ::save-person
@@ -38,6 +42,32 @@
  (fn-traced [{:keys [db]} [_ person-id]]
             (let [person (get-in db [:person])]
               {:db (assoc-in db [:active-person] person)})))
+
+;; TASK
+
+
+(re-frame/reg-event-fx
+ ::save-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ [person task]]]
+            (let []
+              {:db (assoc-in db [:people (keyword person) :tasks (keyword (:task-id task))] task)})))
+
+(re-frame/reg-event-fx
+ ::set-active-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ [person task-id]]]
+            (let [task (get-in db [:people (keyword person) :tasks (keyword task-id)])]
+              {:db (assoc-in db [:active-task] task)})))
+
+(re-frame/reg-event-fx
+ ::toggle-task-status
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ [person task-id]]]
+            (let [task-complete? (get-in db [:people (keyword person) :tasks (keyword task-id) :completed])]
+              {:db (assoc-in db [:people (keyword person) :tasks (keyword task-id) :completed] (not task-complete?))})))
+
+;; DB
 
 (re-frame/reg-event-db
  ::initialize-db

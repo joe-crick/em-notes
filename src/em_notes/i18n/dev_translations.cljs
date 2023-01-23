@@ -5,6 +5,7 @@
    {:missing ":en missing text"
     :home
     {:title "EM Notes"
+     :home "Home"
      :create-person "Create a Person"
      :greet "Hello %1"
      :farewell "Goodbye %1"
@@ -15,10 +16,16 @@
     :form
     {:submit "Submit"
      :cancel "Cancel"}
-    :people 
-    {:title "People"
-     }
-    :person 
+    :people
+    {:title "People"}
+    :tasks
+    {:title "Tasks"
+     :status "Status"
+     :details "Details"
+     :due-date "Due Date"
+     :completed "Completed"
+     :name "Name"}
+    :person
     {:title "Person"
      :details "Details"
      :feedback "Feedback"
