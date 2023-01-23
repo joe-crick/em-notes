@@ -6,28 +6,27 @@
             [em-notes.subs :as subs]
             [em-notes.views.tasks.tasks :refer [tasks]]))
 
-(defn task-view [person revise!]
-  [tasks person revise!])
+(defn task-view [person]
+  [tasks @person])
 
 (defn performance []
   [:div "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
 
-(defn overview [person revise!]
-  [person-overivew person revise!])
+(defn overview [person]
+  [person-overivew @person])
 
 (defn career-growth []
   [:div "Need to be able to load in a career ladder, then track a person's progress against that ladder"])
 
-(defn active-tab [tab person revise!]
+(defn active-tab [tab person]
   (case tab
-    :tasks [task-view person revise!]
+    :tasks [task-view person]
     :performance [performance]
     :career-growth [career-growth]
-    [overview person revise!]))
+    [overview person]))
 
 (defn person []
   (let [active-person (rf/subscribe [::subs/active-person])
-    [person revise!] (local-state @active-person)
     [tab change-tab!] (local-state :overview)]
     (fn []
       [:section
@@ -37,4 +36,4 @@
         [:button {:class "button is-ghost" :on-click #(change-tab! :career-growth)} (grab :person/career-growth)]
         [:button {:class "button is-ghost" :on-click #(change-tab! :tasks)} (grab :person/tasks)]]
        [:div
-         [active-tab @tab person revise!]]])))
+         [active-tab @tab active-person]]])))
