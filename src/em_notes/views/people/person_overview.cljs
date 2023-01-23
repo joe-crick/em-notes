@@ -1,4 +1,4 @@
-(ns em-notes.views.people.create-person
+(ns em-notes.views.people.person-overview
   (:require
    [re-frame.core :as rf]
    [em-notes.lib.local-state :refer [local-state]]
@@ -13,7 +13,7 @@
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
 
-(defn create-person []
+(defn person-overivew []
   ;; setup local state 
   (let [[person revise!] (local-state (:person default-db))]
     ;; required when local state is used, because we need to return a render function
