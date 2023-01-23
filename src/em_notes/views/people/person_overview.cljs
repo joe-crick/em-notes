@@ -37,4 +37,4 @@
 
          [form-footer (fn []
                         (rf/dispatch [::events/save-person @person])
-                        (revise! person (:person default-db)))]]]])))
+                        (reset! person (:person default-db)))]]]])))

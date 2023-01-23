@@ -32,5 +32,4 @@
         [:button {:class "button is-ghost" :on-click #(change-tab! :career-growth)} (grab :person/career-growth)]
         [:button {:class "button is-ghost" :on-click #(change-tab! :tasks)} (grab :person/tasks)]]
        [:div
-        [:p
-         [active-tab @tab]]]])))
+         [active-tab @tab]]])))

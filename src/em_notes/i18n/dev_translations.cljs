@@ -15,6 +15,9 @@
     :form
     {:submit "Submit"
      :cancel "Cancel"}
+    :people 
+    {:title "People"
+     }
     :person 
     {:title "Person"
      :details "Details"

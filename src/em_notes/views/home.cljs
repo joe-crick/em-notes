@@ -9,10 +9,4 @@
     [:h1.title
      (grab :home/title)]
     
-    [:div.container
-     
-     [:ul
-      [:li [:a "People"]]
-      [:li [:a "Team"]]]]
-
     [people]]])
