@@ -12,4 +12,4 @@
     "/about" [about]
     "/note" [create-note]
     "/people" [people]
-    "/create-person" [person]}))
+    "/person" [person]}))

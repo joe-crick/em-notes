@@ -3,10 +3,10 @@
      [re-frame.core :as re-frame]
      [em-notes.routing.nav :as nav]
      [em-notes.subs :as subs]
+     [em-notes.events.events :as events]
      [em-notes.i18n.tr :refer [grab]]
+     [em-notes.lib.lower-case :refer [lower-case]]
      [em-notes.lib.nab :refer [nab]]))
-
-
 
 (defn people []
   ;; setup local state
@@ -16,7 +16,7 @@
       [:section
 
        [:div {:class "container is-flex is-justify-content-flex-end"}
-        [:div>button {:class "button is-link" :on-click #(nav/go :create-person)}
+        [:div>button {:class "button is-link" :on-click #(nav/go :person)}
          (grab :home/create-person)]]
 
        [:div.container
@@ -28,9 +28,14 @@
          [:tbody
           (for [rec @people
                 :let [person (second (clj->js rec))
-                      person-id (str (nab :first-name person) "-" (nab :last-name person))
+                      person-id (lower-case (str (nab :first-name person) "-" (nab :last-name person)))
                       person-name (str (nab :first-name person) " " (nab :last-name person))]]
             ^{:key person-id} [:tr {:id person-id}
-                               [:td.name person-name]
+                               [:td.name
+                                [:button {:class "button is-ghost"
+                                          :on-click (fn []
+                                                      (re-frame/dispatch-sync [::events/set-active-person person-id])
+                                                      (nav/go :person)
+                                                      )} person-name]]
                                [:td.team (nab :team person)]])]]]])))
 

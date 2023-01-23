@@ -5,6 +5,7 @@
    [em-notes.components.form-footer :refer [form-footer]]
    [em-notes.db :refer [default-db]]
    [em-notes.i18n.tr :refer [grab]]
+   [em-notes.subs :as subs]
    [em-notes.views.people.person-details :refer [person-details]]
    [em-notes.views.people.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-mood :refer [person-mood]]
@@ -13,9 +14,13 @@
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
 
+(defn reset-person! []
+  (rf/dispatch [::events/reset-active-person]))
+
 (defn person-overivew []
   ;; setup local state 
-  (let [[person revise!] (local-state (:person default-db))]
+  (let [active-person (rf/subscribe [::subs/active-person])
+        [person revise!] (local-state @active-person)]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section
@@ -37,4 +42,4 @@
 
          [form-footer (fn []
                         (rf/dispatch [::events/save-person @person])
-                        (reset! person (:person default-db)))]]]])))
+                        (reset-person!)), #(reset-person!)]]]])))

@@ -3,7 +3,7 @@
             [em-notes.components.section-toggle :refer [section-toggle]]
             [em-notes.components.fields.text-input :refer [set-text-input]]))
 
-(defn details [person revise!]
+(defn details [person revise!] 
   (let [text-input (set-text-input person revise!)]
     (fn []
       [:fieldset

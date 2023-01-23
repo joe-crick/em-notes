@@ -16,3 +16,8 @@
  ::people
  (fn [db _]
    (:people db)))
+
+(re-frame/reg-sub
+ ::active-person
+ (fn [db _]
+   (:active-person db)))

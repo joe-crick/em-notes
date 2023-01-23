@@ -26,4 +26,26 @@
      :growth
      {:current-goals ""
       :what-doing-now ""
+      :what-need-to-do ""}}}
+   :active-person
+   {:first-name ""
+    :last-name ""
+    :team ""
+    :profile
+    {:feedback
+     {:feedback-medium ""
+      :when-receive-feedback ""
+      :how-receive-recognition ""
+      :what-rewards-wanted ""}
+     :mood
+     {:what-makes-grumpy ""
+      :how-to-know-grumpy ""
+      :how-to-help-grumpy ""}
+     :support
+     {:manager ""
+      :team ""
+      :peers-outside ""}
+     :growth
+     {:current-goals ""
+      :what-doing-now ""
       :what-need-to-do ""}}}})

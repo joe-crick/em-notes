@@ -3,7 +3,7 @@
 (defn text-input [atom revise! config]
   (let [{label :label property :property className :class} config
         class (if (nil? className) "input" (str "input " className))
-        name (last property)]
+        name (last property)] 
     (fn []
       [:div.field
        [:label label]

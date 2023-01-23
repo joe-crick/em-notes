@@ -25,6 +25,20 @@
                   name (lower-case (str fname "-" lname))]
               {:db (assoc-in db [:people (keyword name)] person)})))
 
+(re-frame/reg-event-fx
+ ::set-active-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ person-id]]
+            (let [person (get-in db [:people (keyword person-id)])]
+              {:db (assoc-in db [:active-person] person)})))
+
+(re-frame/reg-event-fx
+ ::reset-active-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ person-id]]
+            (let [person (get-in db [:person])]
+              {:db (assoc-in db [:active-person] person)})))
+
 (re-frame/reg-event-db
  ::initialize-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
