@@ -4,7 +4,7 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.subs :as subs]
-            [em-notes.events.events :as events]
+            [em-notes.events :as events]
             [re-frame.core :as rf]))
 
 

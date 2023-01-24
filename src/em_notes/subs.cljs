@@ -18,6 +18,11 @@
    (:people db)))
 
 (re-frame/reg-sub
+ ::toasts
+ (fn [db _]
+   (:toasts db)))
+
+(re-frame/reg-sub
  ::active-person
  (fn [db _]
    (:active-person db)))

@@ -1,6 +1,6 @@
 (ns em-notes.routing.routing
   (:require
-   [em-notes.events.events :as events]
+   [em-notes.events :as events]
    [em-notes.routing.routes :refer [routes]]
    [pushy.core :as pushy]
    [re-frame.core :as re-frame]))

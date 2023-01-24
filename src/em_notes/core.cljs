@@ -3,7 +3,7 @@
    [reagent.dom :as rdom]
    [re-frame.core :as re-frame] 
    [em-notes.routing.routing :as routing]
-   [em-notes.events.events :as events]
+   [em-notes.events :as events]
    [em-notes.views :as views]
    [em-notes.db]
    [em-notes.config :as config]))

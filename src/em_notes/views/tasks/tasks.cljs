@@ -1,7 +1,7 @@
 (ns em-notes.views.tasks.tasks
   (:require      [re-frame.core :as re-frame]
                  [em-notes.routing.nav :as nav]
-                 [em-notes.events.events :as events]
+                 [em-notes.events :as events]
                  [em-notes.i18n.tr :refer [grab]]
                  [em-notes.lib.nab :refer [nab]]))
 

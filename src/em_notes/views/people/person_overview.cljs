@@ -7,7 +7,7 @@
    [em-notes.views.people.person-details :refer [person-details]]
    [em-notes.views.people.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-mood :refer [person-mood]]
-   [em-notes.events.events :as events]
+   [em-notes.events :as events]
    [em-notes.views.people.person-support :refer [person-support]] 
    [em-notes.views.people.person-growth :refer [person-growth]]
    [em-notes.routing.nav :as nav]))

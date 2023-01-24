@@ -41,4 +41,5 @@
    :active-task {:name ""
                  :details ""
                  :due-date ""
-                 :completed false}})
+                 :completed false}
+   :toasts [[":en missing text" "is-success"]]})
