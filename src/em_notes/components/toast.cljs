@@ -7,6 +7,6 @@
    [:div {:class "column has-text-centered is-one-fifth"}
     (for [[msg type] @toasts
           :let [className (str "notification " type)]]
-      ^{:key msg} [:div {:class className :style {:z-index "100"}}
-                     [:button {:class "delete" :on-click #(re-frame/dispatch-sync [::events/clear-toasts])}]
-                     msg])]])
+      ^{:key msg} [:div {:class className :style {:z-index "100" :position "fixed"}}
+                   [:button {:class "delete" :on-click #(re-frame/dispatch-sync [::events/clear-toasts])}]
+                   msg])]])

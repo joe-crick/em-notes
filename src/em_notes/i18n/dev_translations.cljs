@@ -15,7 +15,8 @@
      :baz [:div "This is a **Hiccup** form"]}
     :form
     {:submit "Save"
-     :cancel "Cancel"}
+     :cancel "Cancel"
+     :saved "Saved!"}
     :people
     {:title "People"}
     :tasks
