@@ -3,6 +3,7 @@
                  [em-notes.routing.nav :as nav]
                  [em-notes.events :as events]
                  [em-notes.i18n.tr :refer [grab]]
+                 [em-notes.lib.unid :refer [uniq-id]]
                  [em-notes.lib.nab :refer [nab]]))
 
 (defn tasks [tasks]
@@ -15,7 +16,7 @@
     [:tbody
      (for [task @tasks
            :let [task-id (:task-id task)]]
-       ^{:key task-id} [:tr {:id task-id}
+       ^{:key (uniq-id)} [:tr {:id task-id}
                           [:td.name
                            [:button {:class "button is-ghost"
                                      :on-click (fn []

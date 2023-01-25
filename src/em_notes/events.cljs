@@ -19,7 +19,7 @@
 (re-frame/reg-event-db
  ::set-active-panel
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ active-panel]] 
+ (fn-traced [db [_ active-panel]]
             (assoc db :active-panel active-panel)))
 
 ;; TOASTS
@@ -29,9 +29,10 @@
  ::show-toasts
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ toasts]]
-            (let [toasts (conj (get-in db [:toasts]) toasts)] 
+            (let [toasts (conj (get-in db [:toasts]) toasts)]
               {:db (assoc-in db [:toasts] toasts)
-               :dispatch-later [{:ms 3500 :dispatch [::clear-toasts]}]})))
+               :fx [[:dispatch-later [{:ms 3500 :dispatch [::clear-toasts]}]]]
+               })))
 
 (re-frame/reg-event-db
  ::clear-toasts
@@ -47,11 +48,10 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
             (let [{fname :first-name lname :last-name} person
-                  person-id (lower-case (str fname "-" lname))] 
+                  person-id (lower-case (str fname "-" lname))]
               {:db (assoc-in db [:people (keyword person-id)] person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]]
-               })))
+                    [:dispatch [::set-active-person person-id]]]})))
 
 (re-frame/reg-event-fx
  ::delete-person
@@ -69,13 +69,13 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ person-id]]
             (let [person (get-in db [:people (keyword person-id)])]
-              (assoc-in db [:active-person] person))))
+              (assoc db :active-person person))))
 
 (re-frame/reg-event-db
  ::reset-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (let [person (get-in db [:person])] 
+            (let [person (get-in db [:person])]
               (assoc db :active-person person))))
 
 
