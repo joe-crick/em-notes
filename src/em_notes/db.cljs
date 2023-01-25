@@ -42,4 +42,4 @@
                  :details ""
                  :due-date ""
                  :completed false}
-   :toasts [[":en missing text" "is-success"]]})
+   :toasts []})

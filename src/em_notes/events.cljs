@@ -5,6 +5,7 @@
    [em-notes.lib.lower-case :refer [lower-case]]
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.notification-types :refer [notify]]
+   [em-notes.lib.dissoc-in :refer [dissoc-in]]
    [em-notes.db :as db]))
 
 ;; NAVIGATION
@@ -46,9 +47,22 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
             (let [{fname :first-name lname :last-name} person
+                  person-id (lower-case (str fname "-" lname))] 
+              {:db (assoc-in db [:people (keyword person-id)] person)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::set-active-person person-id]]]
+               })))
+
+(re-frame/reg-event-fx
+ ::delete-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ person]]
+            (let [{fname :first-name lname :last-name} person
                   name (lower-case (str fname "-" lname))]
-              {:db (assoc-in db [:people (keyword name)] person)
-               :dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]})))
+              {:db (dissoc-in db [:people] (keyword name))
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::reset-active-person]]
+                    [:dispatch [::navigate "/"]]]})))
 
 (re-frame/reg-event-db
  ::set-active-person
@@ -61,8 +75,8 @@
  ::reset-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (let [person (get-in db [:person])]
-              (assoc-in db [:active-person] person))))
+            (let [person (get-in db [:person])] 
+              (assoc db :active-person person))))
 
 
 ;; TASK

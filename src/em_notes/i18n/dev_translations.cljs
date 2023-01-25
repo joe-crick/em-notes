@@ -16,7 +16,9 @@
     :form
     {:submit "Save"
      :cancel "Cancel"
-     :saved "Saved!"}
+     :saved "Saved!"
+     :deleted "Deleted!"
+     :delete "Delete"}
     :people
     {:title "People"}
     :tasks

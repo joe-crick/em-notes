@@ -9,18 +9,15 @@
    [em-notes.views.people.person-mood :refer [person-mood]]
    [em-notes.events :as events]
    [em-notes.views.people.person-support :refer [person-support]] 
-   [em-notes.views.people.person-growth :refer [person-growth]]
-   [em-notes.routing.nav :as nav]))
+   [em-notes.views.people.person-growth :refer [person-growth]]))
 
 
 (defn reset-person! []
-  (rf/dispatch [::events/reset-active-person]))
+  (rf/dispatch-sync [::events/reset-active-person]))
 
 (defn person-overivew [person]
   (let [[person revise!] (local-state person)]
     (fn [] [:section
-            [:div.container
-             [:button {:class "button is-info mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
             [:div.container
              [:div
               [:h1 {:class "title mt-5"}
@@ -37,6 +34,5 @@
                [:hr]
                [person-growth person revise!]]
 
-              [form-footer (fn []
-                             (rf/dispatch [::events/save-person @person])
-                             (reset-person!)), #(reset-person!)]]]])))
+              [form-footer #(rf/dispatch [::events/save-person @person]),
+               #(reset-person!)]]]])))
