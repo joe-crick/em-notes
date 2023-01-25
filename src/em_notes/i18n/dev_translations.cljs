@@ -19,15 +19,21 @@
      :saved "Saved!"
      :deleted "Deleted!"
      :delete "Delete"}
-    :people
-    {:title "People"}
     :tasks
     {:title "Tasks"
      :status "Status"
      :details "Details"
      :due-date "Due Date"
      :completed "Completed"
-     :name "Name"}
+     :name "Name"
+     :create-task "Create Task"}
+    :task {:title "Task"
+           :name "Name"
+           :details "Details"
+           :due-date "Due Date"
+           :completed "Completed"}
+    :people
+    {:title "People"}
     :person
     {:title "Person"
      :details "Details"

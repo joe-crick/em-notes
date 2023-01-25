@@ -1,5 +1,6 @@
 (ns em-notes.views.tasks.task 
   (:require [em-notes.components.fields.text-input :refer [set-text-input]]
+            [em-notes.components.fields.date-input :refer [set-date-input]]
             [em-notes.components.form-footer :refer [form-footer]]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.local-state :refer [local-state]]
@@ -14,16 +15,17 @@
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
         [task revise!] (local-state @active-task)
-        text-input (set-text-input task revise!)]
+        text-input (set-text-input task revise!)
+        date-input (set-date-input task revise!)]
     (fn []
       [:div.container
-       [:h1 {grab :task/title}]
+       [:h1 {:class "is-size-3"} (grab :task/title)]
        [:form
         [text-input {:label (grab :task/name)
                      :property [:name]}]
         [text-input {:label (grab :task/details)
                      :property [:details]}]
-        [text-input {:label (grab :task/due-date)
+        [date-input {:label (grab :task/due-date)
                      :property [:due-date]}]
         [text-input {:label (grab :task/completed)
                      :property [:completed]}]

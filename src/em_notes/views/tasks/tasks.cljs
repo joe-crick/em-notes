@@ -8,13 +8,14 @@
 
 (defn tasks [tasks]
   [:div.container
+   [:button {:class "button is-primary mt-3" :on-click #(nav/go :task)} (grab :tasks/create-task)]
    [:table {:class "table is-striped is-hoverable"}
     [:thead
      [:tr
       [:th (grab :tasks/title)]
       [:th (grab :tasks/status)]]]
     [:tbody
-     (for [task @tasks
+     (for [task tasks
            :let [task-id (:task-id task)]]
        ^{:key (uniq-id)} [:tr {:id task-id}
                           [:td.name

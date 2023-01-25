@@ -9,7 +9,7 @@
             [em-notes.routing.nav :as nav]))
 
 (defn task-view [active-person]
-  [tasks @active-person])
+  [tasks (:tasks @active-person)])
 
 (defn performance []
   [:div "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])

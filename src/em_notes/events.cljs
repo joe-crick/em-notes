@@ -81,7 +81,6 @@
 
 ;; TASK
 
-
 (re-frame/reg-event-db
  ::save-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
