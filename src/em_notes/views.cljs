@@ -9,8 +9,10 @@
 ;; Automatically updates and renders whatever view is stored in the 
 ;; active panel. See routes.cljs for the full routing table.
 (defn main-panel []
-  (let [active-panel (re-frame/subscribe [::subs/active-panel])
-        toasts (re-frame/subscribe [::subs/toasts])]
+  (let [route (re-frame/subscribe [::subs/active-panel])
+        toasts (re-frame/subscribe [::subs/toasts])
+        [active-panel query] @route]
+    (println "active-panel: " (str active-panel))
     [:div.section
      [toast toasts]
-     (nth @active-panel 1 [loading/loading-splash])]))
+     (or active-panel [loading/loading-splash])]))

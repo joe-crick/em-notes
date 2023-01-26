@@ -3,17 +3,19 @@
    [em-notes.events :as events]
    [em-notes.routing.routes :refer [routes]]
    [pushy.core :as pushy]
+   [lambdaisland.uri :as uri]
    [re-frame.core :as re-frame]))
 
 (defn parse
   [url]
-  [url (get @routes url)])
+  [url (let [route (:path (uri/uri url))]
+         (get @routes route))])
 
 (defn dispatch
   [route-pair]
-  (let [[url route] route-pair
-        key-url (if (= url "home") "/" url)]
-    (re-frame/dispatch [::events/set-active-panel [(keyword key-url) route]])))
+  (let [[url route] route-pair 
+        query (:query (uri/uri url))]
+    (re-frame/dispatch [::events/set-active-panel [route query]])))
 
 (defonce history
   (pushy/pushy dispatch parse))
