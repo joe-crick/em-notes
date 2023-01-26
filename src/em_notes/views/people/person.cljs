@@ -27,9 +27,10 @@
     :career-growth [career-growth]
     [overview active-person]))
 
-(defn person []
+(defn person [person-id]
   (let [active-person (rf/subscribe [::subs/active-person])
         [tab change-tab!] (local-state :overview)] 
+    (println "person-id: " (:id person-id))
     (fn []
       [:section
        [:div.container

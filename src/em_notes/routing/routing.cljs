@@ -13,8 +13,8 @@
 
 (defn dispatch
   [route-pair]
-  (let [[url route] route-pair 
-        query (:query (uri/uri url))]
+  (let [[url route] route-pair
+        query (uri/query-map (uri/uri url))]
     (re-frame/dispatch [::events/set-active-panel [route query]])))
 
 (defonce history
