@@ -10,10 +10,10 @@
 
 (def routes
   (atom
-   {"/"      [home]
-    "/about" [about]
-    "/note" [create-note]
-    "/people" [people]
-    "/person" [person]
-    "/tasks" [tasks]
-    "/task" [task]}))
+   {"/"      home
+    "/about" about
+    "/note" create-note
+    "/people" people
+    "/person" person
+    "/tasks" tasks
+    "/task" task}))

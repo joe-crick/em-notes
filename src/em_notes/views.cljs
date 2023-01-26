@@ -12,7 +12,8 @@
   (let [route (re-frame/subscribe [::subs/active-panel])
         toasts (re-frame/subscribe [::subs/toasts])
         [active-panel query] @route]
-    (println "active-panel: " (str active-panel))
     [:div.section
      [toast toasts]
-     (or active-panel [loading/loading-splash])]))
+     (if (nil? active-panel)
+       [loading/loading-splash]
+       [active-panel query])]))

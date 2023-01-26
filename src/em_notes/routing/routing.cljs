@@ -7,7 +7,7 @@
    [re-frame.core :as re-frame]))
 
 (defn parse
-  [url]
+  [url] 
   [url (let [route (:path (uri/uri url))]
          (get @routes route))])
 
