@@ -3,7 +3,6 @@
      [re-frame.core :as re-frame]
      [em-notes.routing.nav :as nav]
      [em-notes.subs :as subs]
-     [em-notes.events :as events]
      [em-notes.i18n.tr :refer [grab]]
      [em-notes.lib.lower-case :refer [lower-case]]
      [em-notes.lib.unid :refer [uniq-id]]
@@ -35,8 +34,8 @@
                                [:td.name
                                 [:button {:class "button is-ghost"
                                           :on-click (fn []
-                                                      (re-frame/dispatch-sync [::events/set-active-person person-id])
-                                                      (nav/go :person)
+                                                      ;; (re-frame/dispatch-sync [::events/set-active-person person-id])
+                                                      (nav/go :person (str "id=" person-id))
                                                       )} person-name]]
                                [:td.team (nab :team person)]])]]]])))
 

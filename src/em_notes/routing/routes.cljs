@@ -1,5 +1,7 @@
 (ns em-notes.routing.routes
   (:require
+   [re-frame.core :as re-frame]
+   [em-notes.events :as events]
    [em-notes.views.about :refer [about]]
    [em-notes.views.home :refer [home]]
    [em-notes.views.note :refer [create-note]]
@@ -10,10 +12,12 @@
 
 (def routes
   (atom
-   {"/"      home
-    "/about" about
-    "/note" create-note
-    "/people" people
-    "/person" person
-    "/tasks" tasks
-    "/task" task}))
+   {"/"      [home #(identity 1)]
+    "/about" [about #(identity 1)]
+    "/note" [create-note #(identity 1)]
+    "/people" [people #(identity 1)]
+    "/person" [person (fn [query] 
+                        (re-frame/dispatch-sync [::events/set-active-person (:id query)]))]
+    "/tasks" [tasks (fn [query]
+                      (re-frame/dispatch-sync [::events/set-active-task (:id query)]))]
+    "/task" [task #(identity 1)]}))

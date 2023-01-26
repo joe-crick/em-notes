@@ -13,8 +13,9 @@
 (re-frame/reg-event-fx
  ::navigate
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [_ [_ handler]]
-            {:navigate handler}))
+ (fn-traced [_ [_ handler params]] 
+            ;; Calls a registered effect (see routing.cljs)
+            {:navigate [handler params]}))
 
 (re-frame/reg-event-db
  ::set-active-panel

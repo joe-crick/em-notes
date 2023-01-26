@@ -12,23 +12,25 @@
          (get @routes route))])
 
 (defn dispatch
-  [route-pair]
-  (let [[url route] route-pair
-        query (uri/query-map (uri/uri url))]
+  [url-route-pair]
+  (let [[url [route handler]] url-route-pair
+        query (uri/query-map (uri/uri url))] 
+    (handler query)
     (re-frame/dispatch [::events/set-active-panel [route query]])))
 
 (defonce history
   (pushy/pushy dispatch parse))
 
 (defn navigate!
-  [handler]
-  (let [url (if (= handler "home") "" handler)]
+  [handler params]
+  (let [base-url (if (= handler "home") "" handler)
+        url (if (nil? params) base-url (str base-url "?" params))]
     (pushy/set-token! history (str "/" url))))
 
 (re-frame/reg-fx
  :navigate
- (fn [handler]
-   (navigate! (.-name handler))))
+ (fn [[handler params]] 
+   (navigate! (.-name handler) params)))
 
 ;; called by init
 (defn start!

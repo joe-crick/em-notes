@@ -25,12 +25,11 @@
     :tasks [task-view active-person]
     :performance [performance]
     :career-growth [career-growth]
-    [overview active-person]))
+    [overview active-person])) 
 
-(defn person [person-id]
+(defn person []
   (let [active-person (rf/subscribe [::subs/active-person])
-        [tab change-tab!] (local-state :overview)] 
-    (println "person-id: " (:id person-id))
+        [tab change-tab!] (local-state :overview)]
     (fn []
       [:section
        [:div.container
