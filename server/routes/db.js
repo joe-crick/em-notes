@@ -21,6 +21,6 @@ router.post('/', (req, res) => {
       console.error(err);
     }
   });
-  res.send(data);
+  res.send(JSON.stringify(data));
 })
 module.exports = router;

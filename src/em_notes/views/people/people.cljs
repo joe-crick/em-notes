@@ -6,6 +6,7 @@
      [em-notes.i18n.tr :refer [grab]]
      [em-notes.lib.lower-case :refer [lower-case]]
      [em-notes.lib.unid :refer [uniq-id]]
+     [em-notes.networking.api :as api]
      [em-notes.lib.nab :refer [nab]]))
 
 (defn people []
@@ -14,11 +15,9 @@
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:section
-
        [:div {:class "container is-flex is-justify-content-flex-end"}
         [:div>button {:class "button is-link" :on-click #(nav/go :person)}
          (grab :home/create-person)]]
-
        [:div.container
         [:table {:class "table is-striped is-hoverable"}
          [:thead

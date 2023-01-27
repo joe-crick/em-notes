@@ -6,6 +6,7 @@
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.notification-types :refer [notify]]
    [em-notes.lib.dissoc-in :refer [dissoc-in]]
+   [em-notes.networking.api :refer [get-app-db, save-app-db]] 
    [em-notes.db :as db]))
 
 ;; NAVIGATION
@@ -21,7 +22,6 @@
  ::set-active-panel
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ active-panel]]
-            (println "active-panel: " active-panel)
             (assoc db :active-panel active-panel)))
 
 ;; TOASTS
@@ -125,4 +125,18 @@
  ::initialize-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [_ _]
+            (get-app-db (fn [d-b]
+                          (re-frame/dispatch [::set-init-db d-b])))
             db/default-db))
+
+(re-frame/reg-event-db
+ ::set-init-db
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ api-db]]
+            (merge db api-db)))
+
+(re-frame/reg-event-db
+ ::save-db
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ _]]
+            (save-app-db db)))

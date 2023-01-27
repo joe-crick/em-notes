@@ -6,6 +6,8 @@
    [lambdaisland.uri :as uri]
    [re-frame.core :as re-frame]))
 
+;; The default view is set in events.cljs. See ::set-init-db.
+
 (defn parse
   [url] 
   [url (let [route (:path (uri/uri url))]
