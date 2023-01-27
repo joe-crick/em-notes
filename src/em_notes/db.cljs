@@ -42,4 +42,5 @@
                  :details ""
                  :due-date ""
                  :completed false}
-   :toasts []})
+   :toasts []
+   :modal {}})

@@ -31,3 +31,8 @@
  ::active-task
  (fn [db _]
    (:active-task db)))
+
+(re-frame/reg-sub
+ ::modal
+ (fn [db _]
+   (:modal db)))

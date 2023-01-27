@@ -31,7 +31,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ toasts]]
             (let [toasts (conj (get-in db [:toasts]) toasts)]
-              {:db (assoc-in db [:toasts] toasts)
+              {:db (assoc db :toasts toasts)
                :fx [[:dispatch-later [{:ms 3500 :dispatch [::clear-toasts]}]]]
                })))
 
@@ -93,7 +93,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person task-id]]]]
             (let [task (get-in db [:people (keyword person) :tasks (keyword task-id)])]
-              (assoc-in db [:active-task] task))))
+              (assoc db :active-task task))))
 
 (re-frame/reg-event-db
  ::toggle-task-status
@@ -101,6 +101,15 @@
  (fn-traced [db [_ [person task-id]]]
             (let [task-complete? (get-in db [:people (keyword person) :tasks (keyword task-id) :completed])]
               (assoc-in db [:people (keyword person) :tasks (keyword task-id) :completed] (not task-complete?)))))
+
+
+;; MODAL
+
+(re-frame/reg-event-db
+ ::set-modal
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ modal-config]]
+            (assoc db :modal modal-config)))
 
 ;; DB
 

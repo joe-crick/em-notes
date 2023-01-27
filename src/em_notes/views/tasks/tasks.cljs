@@ -3,11 +3,19 @@
    [em-notes.routing.nav :as nav]
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.unid :refer [uniq-id]]
+   [em-notes.events :as events]
+   [re-frame.core :as rf]
+   [em-notes.components.form-footer :refer [form-footer]]
+   [em-notes.views.tasks.task :refer [task]]
    [em-notes.lib.nab :refer [nab]]))
 
 (defn tasks [tasks]
   [:div.container
-   [:button {:class "button is-primary mt-3" :on-click #(nav/go :task)} (grab :tasks/create-task)]
+   [:button {:class "button is-primary mt-3"
+             :on-click #(rf/dispatch [::events/set-modal {:title "Task"
+                                                          :content task
+                                                          :footer [form-footer (fn [] (rf/dispatch [::events/set-active-task {}]))]
+                                                          :show? true}])} (grab :tasks/create-task)]
    [:table {:class "table is-striped is-hoverable"}
     [:thead
      [:tr

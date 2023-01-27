@@ -40,7 +40,7 @@
        [:div {:class "container is-flex is-justify-content-space-between"}
         [:button {:class "button is-info mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]
         [:button {:class "button is-danger mt-5"
-                  :on-click #(rf/dispatch-sync [::events/delete-person @active-person])} (grab :form/delete)]]
+                  :on-click #(rf/dispatch [::events/delete-person @active-person])} (grab :form/delete)]]
 
        [:div
         [active-tab @tab active-person]]])))
