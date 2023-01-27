@@ -14,7 +14,7 @@
    [:button {:class "button is-primary mt-3"
              :on-click #(rf/dispatch [::events/set-modal {:title "Task"
                                                           :content task
-                                                          :footer [form-footer (fn [] (rf/dispatch [::events/set-active-task {}]))]
+                                                          :footer [form-footer (fn [] (rf/dispatch [::events/set-active-task []]))]
                                                           :display "is-block"}])} (grab :tasks/create-task)]
    [:table {:class "table is-striped is-hoverable"}
     [:thead

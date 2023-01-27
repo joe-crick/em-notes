@@ -21,6 +21,7 @@
  ::set-active-panel
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ active-panel]]
+            (println "active-panel: " active-panel)
             (assoc db :active-panel active-panel)))
 
 ;; TOASTS
@@ -87,6 +88,13 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person task]]]]
             (assoc-in db [:people (keyword person) :tasks (keyword (:task-id task))] task)))
+
+(re-frame/reg-event-fx
+ ::cancel-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            {:db (dissoc db :active-task)
+             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
 
 (re-frame/reg-event-db
  ::set-active-task

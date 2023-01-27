@@ -1,4 +1,5 @@
-(ns em-notes.db)
+(ns em-notes.db
+  (:require  [em-notes.components.empty :refer [no-op]]))
 
 (def default-db
   {:people {}
@@ -38,6 +39,10 @@
                                :what-doing-now ""
                                :what-need-to-do ""}}
                      :tasks []}
+   :default-modal {:title ""
+          :content no-op
+          :footer []
+          :display "is-hidden"}
    :active-task {:name ""
                  :details ""
                  :due-date ""

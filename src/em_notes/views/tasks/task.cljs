@@ -10,8 +10,6 @@
             [re-frame.core :as rf]))
 
 
-(defn reset-task! []
-  (rf/dispatch [::events/reset-active-task]))
 
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
@@ -32,6 +30,5 @@
         [text-input {:label (grab :task/completed)
                      :property [:completed]}]
         [form-footer (fn []
-                       (rf/dispatch [::events/save-task @task])
-                       (reset-task!)), #(reset-task!)]]]))
+                       (rf/dispatch [::events/save-task @task])), #(rf/dispatch [::events/cancel-task])]]]))
   )

@@ -1,6 +1,6 @@
 (ns em-notes.components.form-footer
-  (:require [em-notes.routing.nav :as nav]
-            [em-notes.i18n.tr :refer [grab]]))
+  (:require
+   [em-notes.i18n.tr :refer [grab]]))
 
 (defn form-footer [submit on-cancel]
   (let [cancel-fn (if (nil? on-cancel) identity on-cancel)]
@@ -8,9 +8,9 @@
       [:div {:class "is-flex is-justify-content-space-between mt-5"}
        [:div
         [:button {:class "button is-primary"
+                  :type "button"
                   :on-click submit} (grab :form/submit)]]
        [:div
         [:button {:class "button is-info"
-                  :on-click (fn []
-                              (cancel-fn)
-                              (nav/go :home))} (grab :form/cancel)]]])))
+                  :type "button"
+                  :on-click cancel-fn} (grab :form/cancel)]]])))
