@@ -13,14 +13,11 @@
   (let [route (re-frame/subscribe [::subs/active-panel])
         toasts (re-frame/subscribe [::subs/toasts])
         modal-config (re-frame/subscribe [::subs/modal])
-        {content :content title :title show? :show?} @modal-config
-        modalClassName (if (= show? true) "is-block" "is-hidden")
+        {content :content title :title display :display} @modal-config
         [active-panel query] @route]
     [:div.section
      [toast toasts]
-     [modal modalClassName title content]
+     [modal display title content]
      (if (nil? active-panel)
        [loading/loading-splash]
        [active-panel query])]))
-
-;;   (if footer [footer] "")
