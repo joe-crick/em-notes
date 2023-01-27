@@ -6,6 +6,8 @@
 /.clj-kondo/
 /.calva/
 /.history/
+/server/node_modules
+/server/bin
 
 # Leiningen
 /.lein-*
