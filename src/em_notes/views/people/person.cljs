@@ -6,6 +6,7 @@
             [em-notes.subs :as subs]
             [em-notes.events :as events]
             [em-notes.views.tasks.tasks :refer [tasks]]
+            [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.routing.nav :as nav]))
 
 (defn task-view [active-person]
@@ -25,20 +26,24 @@
     :tasks [task-view active-person]
     :performance [performance]
     :career-growth [career-growth]
-    [overview active-person])) 
+    [overview active-person]))
+
+(defn current-tab? [tab cur-tab]
+  (if (= cur-tab tab) "is-info" ""))
 
 (defn person []
   (let [active-person (rf/subscribe [::subs/active-person])
         [tab change-tab!] (local-state :overview)]
     (fn []
       [:section
-       [:div.container
-        [:button {:class "button is-ghost" :on-click #(change-tab! :overview)} (grab :person/overview)]
-        [:button {:class "button is-ghost" :on-click #(change-tab! :performance)} (grab :person/performance)]
-        [:button {:class "button is-ghost" :on-click #(change-tab! :career-growth)} (grab :person/career-growth)]
-        [:button {:class "button is-ghost" :on-click #(change-tab! :tasks)} (grab :person/tasks)]]
+       [:div {:class "container"}
+        [left-right (fn []) (fn [] [:div
+                                    [:button {:class (str "button " (current-tab? @tab :overview)) :on-click #(change-tab! :overview)} (grab :person/overview)]
+                                    [:button {:class (str "button " (current-tab? @tab :performance)) :on-click #(change-tab! :performance)} (grab :person/performance)]
+                                    [:button {:class (str "button " (current-tab? @tab :career-growth)) :on-click #(change-tab! :career-growth)} (grab :person/career-growth)]
+                                    [:button {:class (str "button " (current-tab? @tab :tasks)) :on-click #(change-tab! :tasks)} (grab :person/tasks)]])]]
        [:div {:class "container is-flex is-justify-content-space-between"}
-        [:button {:class "button is-info mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]
+        [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]
         [:button {:class "button is-danger mt-5"
                   :on-click #(rf/dispatch [::events/delete-person @active-person])} (grab :form/delete)]]
 
