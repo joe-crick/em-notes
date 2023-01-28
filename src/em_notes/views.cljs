@@ -15,9 +15,12 @@
         modal-config (re-frame/subscribe [::subs/modal])
         {content :content title :title display :display} @modal-config
         [active-panel query] @route]
-    [:div.section
-     [toast toasts]
-     [modal display title content]
-     (if (nil? active-panel)
-       [loading/loading-splash]
-       [active-panel query])]))
+    [:div {:class "is-flex is-flex-direction-column "}
+     [:section.hero-bg
+      [:div {:class "container"} [:img {:src "/img/em-notes-transp.png" }]]]
+     [:section {:style {:margin-top "35px"}}
+      [toast toasts]
+      [modal display title content]
+      (if (nil? active-panel)
+        [loading/loading-splash]
+        [active-panel query])]]))

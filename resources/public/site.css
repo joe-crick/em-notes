@@ -3,3 +3,8 @@ fieldset {
     border-radius: 4px;
     padding: 10px;
 }
+
+.hero-bg {
+    background-color: #F4F4F3;
+    height: 100px;
+}

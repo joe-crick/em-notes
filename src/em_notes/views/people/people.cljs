@@ -5,6 +5,7 @@
      [em-notes.subs :as subs]
      [em-notes.i18n.tr :refer [grab]]
      [em-notes.lib.lower-case :refer [lower-case]] 
+     [em-notes.lib.table-style :refer [table-style]]
      [em-notes.lib.nab :refer [nab]]))
 
 (defn people []
@@ -12,12 +13,12 @@
   (let [people (re-frame/subscribe [::subs/people])]
     ;; required when local state is used, because we need to return a render function
     (fn []
-      [:section
+      [:div
        [:div {:class "container is-flex is-justify-content-flex-end"}
         [:div>button {:class "button is-link" :on-click #(nav/go :person)}
          (grab :home/create-person)]]
-       [:div.container
-        [:table {:class "table is-striped is-hoverable"}
+       [:div {:class "container" :style {:margin-top "15px"}}
+        [:table {:class (table-style)}
          [:thead
           [:tr
            [:th (grab :person/title)]
