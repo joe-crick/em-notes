@@ -1,8 +1,7 @@
 (ns em-notes.views.tasks.tasks
   (:require
    [em-notes.routing.nav :as nav]
-   [em-notes.i18n.tr :refer [grab]]
-   [em-notes.lib.unid :refer [uniq-id]]
+   [em-notes.i18n.tr :refer [grab]] 
    [em-notes.events :as events]
    [re-frame.core :as rf]
    [em-notes.components.form-footer :refer [form-footer]]
@@ -24,7 +23,7 @@
     [:tbody
      (for [task tasks
            :let [task-id (:task-id task)]]
-       ^{:key (uniq-id)} [:tr {:id task-id}
+       ^{:key (random-uuid)} [:tr {:id task-id}
                           [:td.name
                            [:button {:class "button is-ghost"
                                      :on-click (fn []

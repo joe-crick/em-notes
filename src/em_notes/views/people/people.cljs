@@ -4,8 +4,7 @@
      [em-notes.routing.nav :as nav]
      [em-notes.subs :as subs]
      [em-notes.i18n.tr :refer [grab]]
-     [em-notes.lib.lower-case :refer [lower-case]]
-     [em-notes.lib.unid :refer [uniq-id]]
+     [em-notes.lib.lower-case :refer [lower-case]] 
      [em-notes.lib.nab :refer [nab]]))
 
 (defn people []
@@ -28,7 +27,7 @@
                 :let [person (second (clj->js rec))
                       person-id (lower-case (str (nab :first-name person) "-" (nab :last-name person)))
                       person-name (str (nab :first-name person) " " (nab :last-name person))]]
-            ^{:key (uniq-id)} [:tr {:id person-id}
+            ^{:key (random-uuid)} [:tr {:id person-id}
                                [:td.name
                                 [:button {:class "button is-ghost"
                                           :on-click (fn []

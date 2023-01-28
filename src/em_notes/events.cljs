@@ -142,7 +142,7 @@
  ::set-init-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ api-db]] 
-            (assoc db :people (:people api-db))))
+            (assoc db :people api-db)))
 
 ;; FIND OUT WHY THE DEFAULT DB IS NOT LOADING DATA!!!
 
