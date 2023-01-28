@@ -11,10 +11,6 @@
    [em-notes.views.people.person-support :refer [person-support]] 
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
-
-(defn reset-person! []
-  (rf/dispatch-sync [::events/reset-active-person]))
-
 (defn person-overivew [person]
   (let [[person revise!] (local-state person)]
     (fn [] [:section
@@ -35,4 +31,4 @@
                [person-growth person revise!]]
 
               [form-footer #(rf/dispatch [::events/save-person @person]),
-               #(reset-person!)]]]])))
+               #(rf/dispatch-sync [::events/reset-active-person])]]]])))

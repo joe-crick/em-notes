@@ -6,7 +6,7 @@
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.notification-types :refer [notify]]
    [em-notes.lib.dissoc-in :refer [dissoc-in]]
-   [em-notes.networking.api :refer [get-app-db, save-app-db]] 
+   [em-notes.networking.api :refer [get-app-db, save-app-db]]
    [em-notes.db :as db]))
 
 ;; NAVIGATION
@@ -14,7 +14,7 @@
 (re-frame/reg-event-fx
  ::navigate
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [_ [_ handler params]] 
+ (fn-traced [_ [_ handler params]]
             ;; Calls a registered effect (see routing.cljs)
             {:navigate [handler params]}))
 
@@ -33,8 +33,7 @@
  (fn-traced [{:keys [db]} [_ toasts]]
             (let [toasts (conj (get-in db [:toasts]) toasts)]
               {:db (assoc db :toasts toasts)
-               :fx [[:dispatch-later [{:ms 3500 :dispatch [::clear-toasts]}]]]
-               })))
+               :fx [[:dispatch-later [{:ms 3500 :dispatch [::clear-toasts]}]]]})))
 
 (re-frame/reg-event-db
  ::clear-toasts
@@ -75,12 +74,13 @@
             (let [person (get-in db [:people (keyword person-id)])]
               (assoc db :active-person person))))
 
-(re-frame/reg-event-db
+(re-frame/reg-event-fx
  ::reset-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ _]]
+ (fn-traced [{:keys [db]} [_ _]]
             (let [person (get-in db [:person])]
-              (assoc db :active-person person))))
+              {:db  (assoc db :active-person person)
+               :fx [[:dispatch [::navigate "/"]]]})))
 
 
 ;; TASK
@@ -141,7 +141,7 @@
 (re-frame/reg-event-db
  ::set-init-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ api-db]] 
+ (fn-traced [db [_ api-db]]
             (assoc db :people api-db)))
 
 ;; FIND OUT WHY THE DEFAULT DB IS NOT LOADING DATA!!!

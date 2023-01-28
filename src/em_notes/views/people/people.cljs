@@ -31,5 +31,5 @@
                                    [:td {:class "name"}
                                     [:button {:class "button is-ghost"
                                               :on-click #(nav/go :person (str "id=" person-id))} person-name]]
-                                   [:td {:class "team has-text-centered pt-4"} (nab :team person)]])]]]])))
+                                   [:td {:class "team pt-4"} (nab :team person)]])]]]])))
 
