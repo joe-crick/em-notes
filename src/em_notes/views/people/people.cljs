@@ -28,7 +28,7 @@
                       person-id (lower-case (str (nab :first-name person) "-" (nab :last-name person)))
                       person-name (str (nab :first-name person) " " (nab :last-name person))]]
             ^{:key (random-uuid)} [:tr {:id person-id}
-                                   [:td {:class "name has-text-centered"}
+                                   [:td {:class "name"}
                                     [:button {:class "button is-ghost"
                                               :on-click #(nav/go :person (str "id=" person-id))} person-name]]
                                    [:td {:class "team has-text-centered pt-4"} (nab :team person)]])]]]])))
