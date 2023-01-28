@@ -13,22 +13,22 @@
 
 (defn person-overivew [person]
   (let [[person revise!] (local-state person)]
-    (fn [] [:section
-            [:div.container
-             [:div
-              [:h1 {:class "title mt-5"}
-               (grab :person/title)]
+    (fn []
+      [:div.container
+       [:div
+        [:h1 {:class "title"}
+         (grab :person/title)]
 
-              [:form
-               [person-details person revise!]
-               [:hr]
-               [person-feedback person revise!]
-               [:hr]
-               [person-mood person revise!]
-               [:hr]
-               [person-support person revise!]
-               [:hr]
-               [person-growth person revise!]]
+        [:form
+         [person-details person revise!]
+         [:hr]
+         [person-feedback person revise!]
+         [:hr]
+         [person-mood person revise!]
+         [:hr]
+         [person-support person revise!]
+         [:hr]
+         [person-growth person revise!]]
 
-              [form-footer #(rf/dispatch [::events/save-person @person]),
-               #(rf/dispatch-sync [::events/reset-active-person])]]]])))
+        [form-footer #(rf/dispatch [::events/save-person @person]),
+         #(rf/dispatch-sync [::events/reset-active-person])]]])))

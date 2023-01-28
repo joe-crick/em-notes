@@ -7,6 +7,7 @@
             [em-notes.events :as events]
             [em-notes.views.tasks.tasks :refer [tasks]]
             [em-notes.components.left-right-cols :refer [left-right]]
+            [em-notes.components.card :refer [card]]
             [em-notes.routing.nav :as nav]))
 
 (defn task-view [active-person]
@@ -35,17 +36,19 @@
   (let [active-person (rf/subscribe [::subs/active-person])
         [tab change-tab!] (local-state :overview)]
     (fn []
-      [:section
+      [:section {:style {:margin-top "-40px"}}
        [:div {:class "container"}
+        [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
+       [:div {:class "container mb-1"}
         [left-right (fn []) (fn [] [:div
                                     [:button {:class (str "button " (current-tab? @tab :overview)) :on-click #(change-tab! :overview)} (grab :person/overview)]
                                     [:button {:class (str "button " (current-tab? @tab :performance)) :on-click #(change-tab! :performance)} (grab :person/performance)]
                                     [:button {:class (str "button " (current-tab? @tab :career-growth)) :on-click #(change-tab! :career-growth)} (grab :person/career-growth)]
                                     [:button {:class (str "button " (current-tab? @tab :tasks)) :on-click #(change-tab! :tasks)} (grab :person/tasks)]])]]
-       [:div {:class "container is-flex is-justify-content-space-between"}
-        [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]
-        [:button {:class "button is-danger mt-5"
-                  :on-click #(rf/dispatch [::events/delete-person @active-person])} (str (grab :form/delete) " " (grab :person/title))]]
+       [:div.container
+        [left-right (fn [])
+         (fn [] [:div.container [:button {:class "button is-danger mt-5 mb-3"
+                                          :on-click #(rf/dispatch [::events/delete-person @active-person])} (str (grab :form/delete) " " (grab :person/title))]])]]
 
-       [:div
-        [active-tab @tab active-person]]])))
+       [card
+        (fn [] [active-tab @tab active-person])]])))

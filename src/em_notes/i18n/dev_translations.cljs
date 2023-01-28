@@ -34,6 +34,7 @@
            :completed "Completed"}
     :people
     {:title "People"}
+    :table {:actions "Actions"}
     :person
     {:title "Person"
      :details "Details"
