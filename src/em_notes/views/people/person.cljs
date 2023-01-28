@@ -13,13 +13,13 @@
   [tasks (:tasks @active-person)])
 
 (defn performance []
-  [:div "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
+  [:div.container "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
 
 (defn overview [active-person]
   [person-overivew @active-person])
 
 (defn career-growth []
-  [:div "Need to be able to load in a career ladder, then track a person's progress against that ladder"])
+  [:div.container "Need to be able to load in a career ladder, then track a person's progress against that ladder"])
 
 (defn active-tab [tab active-person]
   (case tab
@@ -45,7 +45,7 @@
        [:div {:class "container is-flex is-justify-content-space-between"}
         [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]
         [:button {:class "button is-danger mt-5"
-                  :on-click #(rf/dispatch [::events/delete-person @active-person])} (grab :form/delete)]]
+                  :on-click #(rf/dispatch [::events/delete-person @active-person])} (str (grab :form/delete) " " (grab :person/title))]]
 
        [:div
         [active-tab @tab active-person]]])))

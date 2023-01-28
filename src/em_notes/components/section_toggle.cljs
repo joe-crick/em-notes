@@ -6,7 +6,7 @@
         display (if (nil? display-type) "is-block" display-type)]
     (fn []
       [:div.container
-       [:button.button {:on-click #(revise! (not @show?)) :type "button"} content]
+       [:button {:class (str "button " (if @show? "is-primary is-light" "")) :on-click #(revise! (not @show?)) :type "button"} content]
        [:div {:class (if @show? display "is-hidden")}
         [component]]])))
 
