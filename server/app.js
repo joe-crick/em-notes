@@ -9,12 +9,9 @@ var dbRouter = require('./routes/db');
 
 var app = express();
 
-app.options('*', cors({
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  }))
+app.use(cors({
+  origin: "http://localhost:8280"
+}));
 
 app.use(logger('dev'));
 app.use(express.json());

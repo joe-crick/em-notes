@@ -16,11 +16,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-  fs.writeFile(file, req.body, err => {
+  fs.writeFile(file, JSON.stringify(req.body), err => {
     if (err) {
       console.error(err);
     }
   });
-  res.send(JSON.stringify(data));
+  res.send(JSON.stringify(req.body));
 })
 module.exports = router;

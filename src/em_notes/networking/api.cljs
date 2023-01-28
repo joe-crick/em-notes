@@ -5,7 +5,7 @@
 
 (defn json-parse [json]
   (let [js-obj (.parse js/JSON json)]
-    (js->clj js-obj)))
+    (js->clj js-obj :keywordize-keys true)))
 
 (defn get-request []
   (go (<! (http/get "http://localhost:3000/db"))))
@@ -18,8 +18,8 @@
 (defn get-app-db [callback]
   (read-response (get-request) callback))
 
-(defn save-app-db [db]
-  (http/post "http://localhost:3000/db" {:json-params db}))
+(defn save-app-db [db] 
+  (http/post "http://localhost:3000/db" {:json-params  (dissoc db :active-panel)}))
 
 
 

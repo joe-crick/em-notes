@@ -6,7 +6,6 @@
      [em-notes.i18n.tr :refer [grab]]
      [em-notes.lib.lower-case :refer [lower-case]]
      [em-notes.lib.unid :refer [uniq-id]]
-     [em-notes.networking.api :as api]
      [em-notes.lib.nab :refer [nab]]))
 
 (defn people []
