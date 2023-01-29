@@ -3,7 +3,6 @@
    [re-frame.core :as rf]
    [em-notes.lib.local-state :refer [local-state]]
    [em-notes.components.form-footer :refer [form-footer]]
-   [em-notes.i18n.tr :refer [grab]]
    [em-notes.views.people.person-details :refer [person-details]]
    [em-notes.views.people.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-mood :refer [person-mood]]
@@ -17,7 +16,7 @@
       [:div.container
        [:div
         [:h1 {:class "title"}
-         (grab :person/title)]
+         (str (:first-name @person) " " (:last-name @person))]
 
         [:form
          [person-details person revise!]
