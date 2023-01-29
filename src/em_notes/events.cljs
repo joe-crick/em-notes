@@ -97,7 +97,6 @@
                     [:dispatch [::set-active-task person-id task-id]]
                     [:dispatch [::save-db]]]})))
 
-
 (re-frame/reg-event-fx
  ::cancel-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -119,7 +118,6 @@
             (let [task-complete? (get-in db [:people (keyword person) :tasks (keyword task-id) :completed])]
               (assoc-in db [:people (keyword person) :tasks (keyword task-id) :completed] (not task-complete?)))))
 
-
 ;; MODAL
 
 (re-frame/reg-event-db
@@ -134,7 +132,6 @@
  ::run-confirm
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ event]]
-            (prn "conf-event: " event)
             {:db (assoc db :confirm (:default-confirm db))
              :fx [[:dispatch event]]}))
 
@@ -150,6 +147,15 @@
  (fn-traced [db [_ _]]
             (assoc db :confirm (:default-confirm db))))
 
+
+;; INIT QUEUE
+
+(re-frame/reg-event-db
+ ::add-to-init-queue
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ event]]
+            (assoc db :init-queue event)))
+
 ;; DB
 
 (re-frame/reg-event-db
@@ -160,13 +166,15 @@
                           (re-frame/dispatch [::set-init-db db])))
             db/default-db))
 
-(re-frame/reg-event-db
+
+(re-frame/reg-event-fx
  ::set-init-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ api-db]]
-            (assoc db :people api-db)))
-
-;; FIND OUT WHY THE DEFAULT DB IS NOT LOADING DATA!!!
+ (fn-traced [{:keys [db]} [_ api-db]]
+            (let [events (:init-queue db)]
+              (prn "events: " events)
+              {:db (assoc db :people api-db :initialised true)
+               :fx [events]})))
 
 (re-frame/reg-event-db
  ::save-db

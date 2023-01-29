@@ -11,13 +11,13 @@
             [em-notes.routing.nav :as nav]))
 
 (defn task-view [active-person]
-  [tasks (:tasks @active-person)])
+  [tasks (:tasks active-person)])
 
 (defn performance []
   [:div.container "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
 
 (defn overview [active-person]
-  [person-overivew @active-person])
+  [person-overivew active-person])
 
 (defn career-growth []
   [:div.container "Need to be able to load in a career ladder, then track a person's progress against that ladder"])
@@ -52,6 +52,8 @@
                            :on-click #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
                                                                           :on-confirm [::events/delete-person @active-person]
                                                                           :display "is-block"}])} (str (grab :form/delete) " " (grab :person/title))]])]]
-
+       
+       ;; reagent makes us ref this rendered in the view, or the reactivity won't work
+       [:div.is-hidden (:first-name @active-person)]
        [card
-        (fn [] [active-tab @tab active-person])]])))
+        (fn [] [active-tab @tab @active-person])]])))

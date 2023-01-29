@@ -51,4 +51,5 @@
                  :due-date ""
                  :completed false}
    :toasts []
-   :modal {}})
+   :modal {}
+   :init-queue []})

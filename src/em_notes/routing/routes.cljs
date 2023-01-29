@@ -17,7 +17,7 @@
     "/note" [create-note #(identity 1)]
     "/people" [people #(identity 1)]
     "/person" [person (fn [query] 
-                        (re-frame/dispatch [::events/set-active-person (:id query)]))]
+                        (re-frame/dispatch [::events/add-to-init-queue [:dispatch [::events/set-active-person (:id query)]]]))]
     "/tasks" [tasks (fn [query]
-                      (re-frame/dispatch [::events/set-active-task (:id query)]))]
+                      (re-frame/dispatch [::events/add-to-init-queue [:dispatch [::events/set-active-task (:id query)]]]))]
     "/task" [task #(identity 1)]}))
