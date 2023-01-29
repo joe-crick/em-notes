@@ -97,7 +97,7 @@
                   task-id (if new-task? (str (random-uuid)) (:task-id task))]
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] (conj (:tasks db) task))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-task person-id task-id]]
+                    [:dispatch [::set-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::save-db]]]})))
 
@@ -112,6 +112,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-task]]
                     [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::set-active-person person-id]]
                     [:dispatch [::save-db]]]})))
 
 (re-frame/reg-event-fx

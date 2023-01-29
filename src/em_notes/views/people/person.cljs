@@ -58,8 +58,4 @@
         (fn [] [:div
                 [:h1 {:class "title"}
                  (str (:first-name @active-person) " " (:last-name @active-person))]
-                [active-tab @tab @active-person]])]])))
-
-;; #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
-;;                                       :on-confirm [::events/delete-person @active-person]
-;;                                       :display "is-block"}])
+                [active-tab @tab active-person]])]])))

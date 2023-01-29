@@ -10,8 +10,8 @@
    [em-notes.views.people.person-support :refer [person-support]] 
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
-(defn person-overivew [person]
-  (let [[person revise!] (local-state person)]
+(defn person-overivew [active-person]
+  (let [[person revise!] (local-state @active-person)]
     (fn []
       [:div.container
        [:div
