@@ -154,7 +154,7 @@
  ::add-to-init-queue
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ event]]
-            (assoc db :init-queue event)))
+            (assoc db :init-queue (conj (:init-queue db) event))))
 
 ;; DB
 
@@ -172,9 +172,8 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ api-db]]
             (let [events (:init-queue db)]
-              (prn "events: " events)
               {:db (assoc db :people api-db :initialised true)
-               :fx [events]})))
+               :fx events})))
 
 (re-frame/reg-event-db
  ::save-db
