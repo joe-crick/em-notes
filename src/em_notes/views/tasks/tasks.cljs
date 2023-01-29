@@ -2,6 +2,7 @@
   (:require [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.table-style :refer [table-style]]
             [em-notes.routing.nav :as nav]
             [em-notes.views.tasks.task :refer [task]]
@@ -34,4 +35,4 @@
                                                          (nav/go :task))} (:name task)]]
                                   [:td {:class "pt-4"} (:details task)]
                                   [:td [:button {:class "button is-danger is-small"
-                                                 :on-click #(rf/dispatch [::events/delete-task [active-person task]])} (grab :form/delete)]]])]]])))
+                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [active-person task]])} (grab :form/delete)]]])]]])))

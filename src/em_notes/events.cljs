@@ -9,7 +9,8 @@
    [em-notes.networking.api :refer [get-app-db, save-app-db]]
    [em-notes.db :as db]
    [em-notes.lib.nab :refer [nab]]
-   [em-notes.lib.get-person-id :refer [get-person-id]]))
+   [em-notes.lib.get-person-id :refer [get-person-id]]
+   [re-frame.events :as events]))
 
 ;; NAVIGATION
 
@@ -171,10 +172,9 @@
 (re-frame/reg-event-fx
  ::add-to-route-queue
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[event dispatch] data
-                  is-init? (nil? (:initialised db))
-                  update (if is-init? (assoc db :init-queue (conj (:init-queue db) dispatch)) db)
+ (fn-traced [{:keys [db]} [_ event]]
+            (let [is-init? (nil? (:initialised db))
+                  update (if is-init? (assoc db :init-queue (conj (:init-queue db) event)) db)
                   events (if is-init? [] event)]
               {:db update
                :fx [events]})))

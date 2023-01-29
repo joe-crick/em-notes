@@ -18,7 +18,7 @@
     "/people" [people #(identity 1)]
     "/person" [person (fn [query] 
                         (let [event [::events/set-active-person (:id query)]]
-                          (re-frame/dispatch [::events/add-to-route-queue [event [:dispatch event]]])))]
+                          (re-frame/dispatch [::events/add-to-route-queue [:dispatch event]])))]
     "/tasks" [tasks (fn [query]
                       (re-frame/dispatch [::events/add-to-route-queue [:dispatch [::events/set-active-task (:id query)]]]))]
     "/task" [task #(identity 1)]}))

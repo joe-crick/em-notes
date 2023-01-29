@@ -2,8 +2,9 @@
   (:require [em-notes.components.card :refer [card]]
             [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.events :as events]
-            [em-notes.i18n.tr :refer [grab]] 
+            [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
             [em-notes.views.people.person-overview :refer [person-overivew]]
@@ -49,9 +50,7 @@
         [left-right (fn [])
          (fn [] [:div.container
                  [:button {:class "button is-danger mt-5 mb-3"
-                           :on-click #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
-                                                                           :on-confirm [::events/delete-person @active-person]
-                                                                           :display "is-block"}])} (str (grab :form/delete) " " (grab :person/title))]])]]
+                           :on-click #(show-confirm (grab :person/confirm-delete) [::events/delete-person @active-person])} (str (grab :form/delete) " " (grab :person/title))]])]]
 
        ;; reagent makes us ref this rendered in the view, or the reactivity won't work
        [:div.is-hidden (:first-name @active-person)]
@@ -60,3 +59,7 @@
                 [:h1 {:class "title"}
                  (str (:first-name @active-person) " " (:last-name @active-person))]
                 [active-tab @tab @active-person]])]])))
+
+;; #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
+;;                                       :on-confirm [::events/delete-person @active-person]
+;;                                       :display "is-block"}])

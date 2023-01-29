@@ -32,7 +32,8 @@
            :name "Name"
            :details "Details"
            :due-date "Due Date"
-           :completed "Completed"}
+           :completed "Completed"
+           :confirm-delete "Are you certain you want to delete this task"}
     :confirm {:title "Confirm"
               :yes "Yes"}
     :people
