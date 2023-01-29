@@ -73,6 +73,7 @@
  ::set-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ person-id]]
+            (prn "person-id: " person-id)
             (let [person (get-in db [:people (keyword person-id)])]
               (assoc db :active-person person))))
 
@@ -106,7 +107,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
-                  person-id (get-person-id person) 
+                  person-id (get-person-id person)
                   task-id (:task-id task)]
               {:db (dissoc-in db [:people (keyword person-id) :tasks] (keyword task-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
@@ -165,13 +166,18 @@
             (assoc db :confirm (:default-confirm db))))
 
 
-;; INIT QUEUE
+;; ROUTE QUEUE
 
-(re-frame/reg-event-db
- ::add-to-init-queue
+(re-frame/reg-event-fx
+ ::add-to-route-queue
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ event]]
-            (assoc db :init-queue (conj (:init-queue db) event))))
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[event dispatch] data
+                  is-init? (nil? (:initialised db))
+                  update (if is-init? (assoc db :init-queue (conj (:init-queue db) dispatch)) db)
+                  events (if is-init? [] event)]
+              {:db update
+               :fx [events]})))
 
 ;; DB
 

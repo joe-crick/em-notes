@@ -89,3 +89,16 @@ clj꞉shadow.user꞉> 
 ;    (There is a button in the status bar for this)
 ; Jack-in done.
 cljs꞉cljs.user꞉> 
+; Evaluating file: routes.cljs
+; ------ WARNING - :redef --------------------------------------------------------
+;  Resource: <eval>:131:1
+;  parse-long already refers to: cljs.core/parse-long being replaced by: no.en.core/parse-long
+; --------------------------------------------------------------------------------
+; 
+; ------ WARNING - :redef --------------------------------------------------------
+;  Resource: <eval>:136:1
+;  parse-double already refers to: cljs.core/parse-double being replaced by: no.en.core/parse-double
+; --------------------------------------------------------------------------------
+; 
+nil
+cljs꞉em-notes.routing.routes꞉> 
