@@ -15,9 +15,6 @@
     (fn []
       [:div.container
        [:div
-        [:h1 {:class "title"}
-         (str (:first-name @person) " " (:last-name @person))]
-
         [:form
          [person-details person revise!]
          [:hr]

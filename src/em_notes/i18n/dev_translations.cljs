@@ -18,7 +18,8 @@
      :cancel "Cancel"
      :saved "Saved!"
      :deleted "Deleted!"
-     :delete "Delete"}
+     :delete "Delete"
+     :del "del"}
     :tasks
     {:title "Tasks"
      :status "Status"

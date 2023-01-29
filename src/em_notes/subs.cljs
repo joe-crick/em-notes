@@ -18,6 +18,11 @@
    (:people db)))
 
 (re-frame/reg-sub
+ ::tasks
+ (fn [db person-id]
+   (get-in db [:person (keyword person-id) :tasks])))
+
+(re-frame/reg-sub
  ::toasts
  (fn [db _]
    (:toasts db)))

@@ -13,22 +13,24 @@
 
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
+        active-person (rf/subscribe [::subs/active-person])
         [task revise!] (local-state @active-task)
         text-input (set-text-input task revise!)
         date-input (set-date-input task revise!)
         text-area (set-text-area task revise!)]
     (fn []
       [:div.container
+       [:div.is-hidden (:last-name @active-person)]
        [:h1 {:class "is-size-3"} (grab :task/title)]
        [:form
         [text-input {:label (grab :task/name)
                      :property [:name]}]
         [text-area {:label (grab :task/details)
-                     :property [:details]}]
+                    :property [:details]}]
         [date-input {:label (grab :task/due-date)
                      :property [:due-date]}]
         [text-input {:label (grab :task/completed)
                      :property [:completed]}]
         [form-footer (fn []
-                       (rf/dispatch [::events/save-task @task])), #(rf/dispatch [::events/cancel-task])]]]))
+                       (rf/dispatch [::events/save-task [@active-person @task]])), #(rf/dispatch [::events/cancel-task])]]]))
   )

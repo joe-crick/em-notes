@@ -7,7 +7,9 @@
    [em-notes.lib.notification-types :refer [notify]]
    [em-notes.lib.dissoc-in :refer [dissoc-in]]
    [em-notes.networking.api :refer [get-app-db, save-app-db]]
-   [em-notes.db :as db]))
+   [em-notes.db :as db]
+   [em-notes.lib.nab :refer [nab]]
+   [em-notes.lib.get-person-id :refer [get-person-id]]))
 
 ;; NAVIGATION
 
@@ -88,13 +90,28 @@
 (re-frame/reg-event-fx
  ::save-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ [person task]]]
-            (let [{fname :first-name lname :last-name} person
-                  person-id (lower-case (str fname "-" lname))
-                  task-id (:task-id task)]
-              {:db (assoc-in db [:people (keyword person) :tasks (keyword task-id)] task)
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task] data
+                  person-id (get-person-id person)
+                  new-task? (nil? (nab :task-id task))
+                  task-id (if new-task? (str (random-uuid)) (:task-id task))]
+              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] (conj (:tasks db) task))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-task person-id task-id]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task] data
+                  person-id (get-person-id person) 
+                  task-id (:task-id task)]
+              {:db (dissoc-in db [:people (keyword person-id) :tasks] (keyword task-id))
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-task]]
+                    [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::save-db]]]})))
 
 (re-frame/reg-event-fx
@@ -165,7 +182,6 @@
             (get-app-db (fn [db]
                           (re-frame/dispatch [::set-init-db db])))
             db/default-db))
-
 
 (re-frame/reg-event-fx
  ::set-init-db

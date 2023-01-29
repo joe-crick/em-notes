@@ -43,10 +43,11 @@
                    :footer []
                    :display "is-hidden"}
    :default-confirm {:title ""
-                   :content nil
-                   :footer []
-                   :display "is-hidden"}
-   :active-task {:name ""
+                     :content nil
+                     :footer []
+                     :display "is-hidden"}
+   :active-task {:id ""
+                 :name ""
                  :details ""
                  :due-date ""
                  :completed false}

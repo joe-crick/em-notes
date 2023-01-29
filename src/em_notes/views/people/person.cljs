@@ -1,17 +1,17 @@
 (ns em-notes.views.people.person
-  (:require [em-notes.lib.local-state :refer [local-state]]
-            [em-notes.i18n.tr :refer [grab]]
-            [re-frame.core :as rf]
-            [em-notes.views.people.person-overview :refer [person-overivew]]
-            [em-notes.subs :as subs]
-            [em-notes.events :as events]
-            [em-notes.views.tasks.tasks :refer [tasks]]
+  (:require [em-notes.components.card :refer [card]]
             [em-notes.components.left-right-cols :refer [left-right]]
-            [em-notes.components.card :refer [card]]
-            [em-notes.routing.nav :as nav]))
+            [em-notes.events :as events]
+            [em-notes.i18n.tr :refer [grab]] 
+            [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.routing.nav :as nav]
+            [em-notes.subs :as subs]
+            [em-notes.views.people.person-overview :refer [person-overivew]]
+            [em-notes.views.tasks.tasks :refer [tasks]]
+            [re-frame.core :as rf]))
 
 (defn task-view [active-person]
-  [tasks (:tasks active-person)])
+  [tasks active-person])
 
 (defn performance []
   [:div.container "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
@@ -50,10 +50,13 @@
          (fn [] [:div.container
                  [:button {:class "button is-danger mt-5 mb-3"
                            :on-click #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
-                                                                          :on-confirm [::events/delete-person @active-person]
-                                                                          :display "is-block"}])} (str (grab :form/delete) " " (grab :person/title))]])]]
-       
+                                                                           :on-confirm [::events/delete-person @active-person]
+                                                                           :display "is-block"}])} (str (grab :form/delete) " " (grab :person/title))]])]]
+
        ;; reagent makes us ref this rendered in the view, or the reactivity won't work
        [:div.is-hidden (:first-name @active-person)]
        [card
-        (fn [] [active-tab @tab @active-person])]])))
+        (fn [] [:div
+                [:h1 {:class "title"}
+                 (str (:first-name @active-person) " " (:last-name @active-person))]
+                [active-tab @tab @active-person]])]])))
