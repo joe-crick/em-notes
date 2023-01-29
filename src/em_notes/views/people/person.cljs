@@ -47,8 +47,11 @@
                                     [:button {:class (str "button " (current-tab? @tab :tasks)) :on-click #(change-tab! :tasks)} (grab :person/tasks)]])]]
        [:div.container
         [left-right (fn [])
-         (fn [] [:div.container [:button {:class "button is-danger mt-5 mb-3"
-                                          :on-click #(rf/dispatch [::events/delete-person @active-person])} (str (grab :form/delete) " " (grab :person/title))]])]]
+         (fn [] [:div.container
+                 [:button {:class "button is-danger mt-5 mb-3"
+                           :on-click #(rf/dispatch [::events/show-confirm {:msg (grab :person/confirm-delete)
+                                                                          :on-confirm [::events/delete-person @active-person]
+                                                                          :display "is-block"}])} (str (grab :form/delete) " " (grab :person/title))]])]]
 
        [card
         (fn [] [active-tab @tab active-person])]])))

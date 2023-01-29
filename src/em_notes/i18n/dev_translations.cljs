@@ -32,6 +32,8 @@
            :details "Details"
            :due-date "Due Date"
            :completed "Completed"}
+    :confirm {:title "Confirm"
+              :yes "Yes"}
     :people
     {:title "People"}
     :table {:actions "Actions"}
@@ -61,4 +63,5 @@
      :overview "Overview"
      :performance "Performance"
      :career-growth "Career Growth"
-     :tasks "Tasks"}}})
+     :tasks "Tasks"
+     :confirm-delete "Are you certain you want to delete this person?"}}})

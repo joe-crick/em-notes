@@ -36,3 +36,8 @@
  ::modal
  (fn [db _]
    (:modal db)))
+
+(re-frame/reg-sub
+ ::confirm
+ (fn [db _]
+   (:confirm db)))

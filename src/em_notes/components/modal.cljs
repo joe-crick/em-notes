@@ -4,7 +4,7 @@
    [em-notes.db :refer [default-db]]
    [re-frame.core :as rf]))
 
-(defn modal [display title content]
+(defn modal [display title content on-close]
   [:div
    {:class (str "modal " display)}
    [:div {:class "modal-background"}]
@@ -15,5 +15,5 @@
      [:p {:class "modal-card-title"} title]
      [:button {:class "delete"
                :aria-label "close"
-               :on-click #(rf/dispatch [::events/set-modal (:default-modal default-db)])}]]
+               :on-click (if (nil? on-close) #(rf/dispatch [::events/set-modal (:default-modal default-db)]) on-close)}]]
     [:section {:class "modal-card-body"} (if content [content] "")]]])

@@ -39,9 +39,13 @@
                                :what-need-to-do ""}}
                      :tasks []}
    :default-modal {:title ""
-          :content nil
-          :footer []
-          :display "is-hidden"}
+                   :content nil
+                   :footer []
+                   :display "is-hidden"}
+   :default-confirm {:title ""
+                   :content nil
+                   :footer []
+                   :display "is-hidden"}
    :active-task {:name ""
                  :details ""
                  :due-date ""

@@ -128,6 +128,28 @@
  (fn-traced [db [_ modal-config]]
             (assoc db :modal modal-config)))
 
+;; CONFIRM
+
+(re-frame/reg-event-fx
+ ::run-confirm
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ event]]
+            (prn "conf-event: " event)
+            {:db (assoc db :confirm (:default-confirm db))
+             :fx [[:dispatch event]]}))
+
+(re-frame/reg-event-db
+ ::show-confirm
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ confirm-config]]
+            (assoc db :confirm confirm-config)))
+
+(re-frame/reg-event-db
+ ::close-confirm
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ _]]
+            (assoc db :confirm (:default-confirm db))))
+
 ;; DB
 
 (re-frame/reg-event-db
