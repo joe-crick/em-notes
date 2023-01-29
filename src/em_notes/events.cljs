@@ -9,8 +9,7 @@
    [em-notes.networking.api :refer [get-app-db, save-app-db]]
    [em-notes.db :as db]
    [em-notes.lib.nab :refer [nab]]
-   [em-notes.lib.get-person-id :refer [get-person-id]]
-   [re-frame.events :as events]))
+   [em-notes.lib.get-person-id :refer [get-person-id]]))
 
 ;; NAVIGATION
 
@@ -74,7 +73,6 @@
  ::set-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ person-id]]
-            (prn "person-id: " person-id)
             (let [person (get-in db [:people (keyword person-id)])]
               (assoc db :active-person person))))
 

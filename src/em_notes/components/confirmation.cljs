@@ -8,14 +8,14 @@
 (defn close-confirm []
   (rf/dispatch [::events/close-confirm]))
 
-(defn confirm [display msg on-confirm]
+(defn confirm [display msg on-confirm] 
   [modal display (grab :confirm/title)
    (fn []
      [:div
       [:p.mb-5 msg]
       [:div {:class "container is-flex is-justify-content-space-between"}
        [:div
-        [:button {:class "button is-primary" :on-click #((rf/dispatch [::events/run-confirm on-confirm]))} (grab :confirm/yes)]]
+        [:button {:class "button is-primary" :on-click #(rf/dispatch [::events/run-confirm on-confirm])} (grab :confirm/yes)]]
        [:div
         [:button {:class "button is-info"
                   :aria-label "close"
