@@ -93,10 +93,10 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
                   person-id (get-person-id person)
-                  new-task? (nil? (nab :task-id task))
-                  task-id (if new-task? (str (random-uuid)) (:task-id task))]
-              (prn "task-new: " task)
-              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] task)
+                  new-task? (= (:task-id task) "")
+                  task-id (if new-task? (str (random-uuid)) (:task-id task))
+                  updated-task (assoc task :task-id task-id)]
+              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] updated-task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
