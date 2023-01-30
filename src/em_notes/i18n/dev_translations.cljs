@@ -22,7 +22,6 @@
      :del "del"}
     :tasks
     {:title "Tasks"
-     :status "Status"
      :details "Details"
      :due-date "Due Date"
      :completed "Completed"

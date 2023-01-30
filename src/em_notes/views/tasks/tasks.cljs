@@ -23,7 +23,7 @@
          [:tr
           [:th (grab :tasks/title)]
           [:th (grab :tasks/details)]
-          [:th (grab :tasks/status)]
+          [:th (grab :tasks/completed)]
           [:th (grab :table/actions)]]]
         [:tbody
          (for [task tasks
