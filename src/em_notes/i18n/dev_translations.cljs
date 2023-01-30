@@ -35,7 +35,9 @@
            :completed "Completed"
            :confirm-delete "Are you certain you want to delete this task"
            :mark-complete "Complete"
-           :mark-incomplete "Open"}
+           :mark-incomplete "Open"
+           :true "true"
+           :false "false"}
     :confirm {:title "Confirm"
               :yes "Yes"}
     :people
