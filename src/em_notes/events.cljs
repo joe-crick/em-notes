@@ -95,6 +95,7 @@
                   person-id (get-person-id person)
                   new-task? (nil? (nab :task-id task))
                   task-id (if new-task? (str (random-uuid)) (:task-id task))]
+              (prn "task-new: " task)
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
@@ -129,16 +130,17 @@
             (let [task (get-in db [:people (keyword person) :tasks (keyword task-id)])]
               (assoc db :active-task task))))
 
-(re-frame/reg-event-db
+(re-frame/reg-event-fx
  ::toggle-task-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ data]]
+ (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
                   person-id (get-person-id person)
-                  task-id (:task-id task)
-                  task-complete? (:completed task)]
-              (prn [:people (keyword person-id) :tasks (keyword task-id) :completed])
-              (assoc-in db [:people (keyword person-id) :tasks (keyword task-id) :completed] true))))
+                  task-complete? (:completed task)
+                  task-id (:task-id task)]
+              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id) :completed] (not task-complete?))
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::save-db]]]})))
 
 ;; MODAL
 

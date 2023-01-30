@@ -8,3 +8,11 @@ fieldset {
     background-color: #F4F4F3;
     height: 100px;
 }
+
+.button.is-fixed-100 {
+    min-width: 100px;
+ }
+
+ .button.is-fixed-50 {
+    min-width: 50px;
+ }

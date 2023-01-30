@@ -9,8 +9,6 @@
             [em-notes.events :as events]
             [re-frame.core :as rf]))
 
-
-
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
         active-person (rf/subscribe [::subs/active-person])

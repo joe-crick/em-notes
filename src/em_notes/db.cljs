@@ -46,7 +46,7 @@
                      :content nil
                      :footer []
                      :display "is-hidden"}
-   :active-task {:id ""
+   :active-task {:task-id ""
                  :name ""
                  :details ""
                  :due-date ""

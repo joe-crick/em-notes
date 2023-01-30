@@ -12,9 +12,7 @@
 
 (defn tasks []
   (let [active-person (rf/subscribe [::subs/active-person])
-        tasks (:tasks @active-person)
-        task-id (:task-id task)
-        completed? (:completed task)] 
+        tasks (:tasks @active-person)] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "title"}
@@ -30,7 +28,9 @@
           [:th (grab :table/actions)]]]
         [:tbody
          (for [task tasks
-               :let [[_ task] task]]
+               :let [[_ task] task
+                     task-id (:task-id task)
+                     completed? (:completed task)]]
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"
@@ -38,8 +38,9 @@
                                                          (nav/go :task))} (:name task)]]
                                   [:td {:class "pt-4"} (:details task)]
                                   [:td {:class "pt-4"} (str (:completed task))]
-                                  [:td 
-                                   [:button {:class "button is-danger is-small mr-1"
-                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)] 
-                                   [:button {:class "button is-info is-small"
-                                             :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]]])]]])))
+                                  [:td  
+                                   [:div {:class "buttons are-small is-grouped"}
+                                    [:button {:class "button is-info is-fixed-100"
+                                              :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                    [:button {:class "button is-danger is-fixed-50"
+                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)]]]])]]])))
