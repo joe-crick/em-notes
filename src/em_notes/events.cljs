@@ -120,7 +120,7 @@
  ::cancel-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
-            {:db (dissoc db :active-task)
+            {:db (assoc db :active-task (:default-task db))
              :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
 
 (re-frame/reg-event-db

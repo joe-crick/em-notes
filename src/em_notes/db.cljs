@@ -46,6 +46,11 @@
                      :content nil
                      :footer []
                      :display "is-hidden"}
+   :default-task {:task-id ""
+                  :name ""
+                  :details ""
+                  :due-date ""
+                  :completed false}
    :active-task {:task-id ""
                  :name ""
                  :details ""
