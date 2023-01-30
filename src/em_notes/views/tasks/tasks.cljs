@@ -12,8 +12,9 @@
 
 (defn tasks []
   (let [active-person (rf/subscribe [::subs/active-person])
-        tasks (:tasks @active-person)]
-    (prn "tasks-tasks_view: " tasks)
+        tasks (:tasks @active-person)
+        task-id (:task-id task)
+        completed? (:completed task)] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "title"}
@@ -24,16 +25,21 @@
         [:thead
          [:tr
           [:th (grab :tasks/title)]
+          [:th (grab :tasks/details)]
           [:th (grab :tasks/status)]
           [:th (grab :table/actions)]]]
         [:tbody
          (for [task tasks
-               :let [[_ [task]] task]]
-           ^{:key (random-uuid)} [:tr {:id (:task-id task)}
+               :let [[_ task] task]]
+           ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"
                                              :on-click (fn []
                                                          (nav/go :task))} (:name task)]]
                                   [:td {:class "pt-4"} (:details task)]
-                                  [:td [:button {:class "button is-danger is-small"
-                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)]]])]]])))
+                                  [:td {:class "pt-4"} (str (:completed task))]
+                                  [:td 
+                                   [:button {:class "button is-danger is-small mr-1"
+                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)] 
+                                   [:button {:class "button is-info is-small"
+                                             :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]]])]]])))
