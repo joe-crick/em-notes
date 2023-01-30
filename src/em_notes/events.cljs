@@ -7,8 +7,7 @@
    [em-notes.lib.notification-types :refer [notify]]
    [em-notes.lib.dissoc-in :refer [dissoc-in]]
    [em-notes.networking.api :refer [get-app-db, save-app-db]]
-   [em-notes.db :as db]
-   [em-notes.lib.nab :refer [nab]]
+   [em-notes.db :as db] 
    [em-notes.lib.get-person-id :refer [get-person-id]]))
 
 ;; NAVIGATION
@@ -95,11 +94,24 @@
                   person-id (get-person-id person)
                   new-task? (= (:task-id task) "")
                   task-id (if new-task? (str (random-uuid)) (:task-id task))
-                  updated-task (assoc task :task-id task-id)]
+                  updated-task (assoc task :task-id task-id)] 
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] updated-task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task task-view] data
+                  person-id (get-person-id person)]
+              {:db (assoc db :active-task task)
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal {:title (grab :task/title)
+                                             :content task-view
+                                             :display "is-block"}]]
                     [:dispatch [::save-db]]]})))
 
 (re-frame/reg-event-fx

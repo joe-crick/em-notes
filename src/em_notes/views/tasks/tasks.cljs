@@ -5,9 +5,8 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.show-modal :refer [show-modal]]
-            [em-notes.lib.table-style :refer [table-style]]
-            [em-notes.routing.nav :as nav]
-            [em-notes.views.tasks.task :refer [task]]
+            [em-notes.lib.table-style :refer [table-style]] 
+            [em-notes.views.tasks.task :as task]
             [re-frame.core :as rf]))
 
 (defn tasks []
@@ -18,7 +17,7 @@
        [left-right (fn [] [:h1 {:class "title"}
                            (grab :tasks/title)])
         (fn [] [:button {:class "button is-primary"
-                         :on-click #(show-modal "Task" task)} (grab :tasks/create-task)])]
+                         :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]
        [:table {:class (table-style)}
         [:thead
          [:tr
@@ -34,8 +33,7 @@
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"
-                                             :on-click (fn []
-                                                         (nav/go :task))} (:name task)]]
+                                             :on-click #(rf/dispatch [::events/edit-task [@active-person task task/task]])} (:name task)]]
                                   [:td {:class "pt-4"} (:details task)]
                                   [:td {:class "pt-4"} (str (:completed task))]
                                   [:td  

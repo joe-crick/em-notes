@@ -1,2 +1,2 @@
 * Use UNIDs for all people, instead of fname-lname
-* Make loader display until db initialisation is complete
+* Load existing tasks in modal
