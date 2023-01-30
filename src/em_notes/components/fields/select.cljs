@@ -14,7 +14,7 @@
                    :html-for name
                    :on-change #(revise! property %)}
           (for [[val text] values]
-            [:option {:value val} text])]]]])))
+            ^{:key (random-uuid)} [:option {:value val} text])]]]])))
 
 (defn set-select [atom revise!]
   (partial select atom revise!))

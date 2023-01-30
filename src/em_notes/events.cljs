@@ -94,7 +94,7 @@
                   person-id (get-person-id person)
                   new-task? (= (:task-id task) "")
                   task-id (if new-task? (str (random-uuid)) (:task-id task))
-                  updated-task (assoc task :task-id task-id)] 
+                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))] 
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] updated-task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
