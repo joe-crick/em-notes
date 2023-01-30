@@ -13,6 +13,7 @@
         toasts (re-frame/subscribe [::subs/toasts])
         modal-config (re-frame/subscribe [::subs/modal])
         confirm-config (re-frame/subscribe [::subs/confirm])
+        initialised (re-frame/subscribe [::subs/initialised])
         {m-content :content m-title :title m-display :display} @modal-config
         {msg :msg on-confirm :on-confirm c-display :display} @confirm-config
         [active-panel query] @route]
@@ -23,6 +24,6 @@
       [toast toasts]
       [confirm c-display msg on-confirm]
       [modal m-display m-title m-content]
-      (if (nil? active-panel)
+      (if (nil? @initialised)
         [loading/loading-splash]
         [active-panel query])]]))

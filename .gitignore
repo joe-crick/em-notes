@@ -8,6 +8,7 @@
 /.history/
 /server/node_modules
 /server/bin
+/.lsp
 
 # Leiningen
 /.lein-*

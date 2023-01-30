@@ -46,3 +46,8 @@
  ::confirm
  (fn [db _]
    (:confirm db)))
+
+(re-frame/reg-sub
+ ::initialised
+ (fn [db _]
+   (:initialised db)))

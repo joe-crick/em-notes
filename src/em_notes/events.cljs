@@ -108,6 +108,9 @@
             (let [[person task] data
                   person-id (get-person-id person)
                   task-id (:task-id task)]
+              (prn "data: " data " - person: " person " - task: " task)
+              (prn "task-id: " task-id)
+              (prn "person-id: " person-id)
               {:db (dissoc-in db [:people (keyword person-id) :tasks] (keyword task-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-task]]
@@ -163,7 +166,7 @@
  ::close-confirm
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (assoc db :confirm (:default-confirm db))))
+            (assoc db :confirm (:default-confirm db)))) 
 
 
 ;; ROUTE QUEUE

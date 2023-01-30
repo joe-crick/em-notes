@@ -1,1 +1,2 @@
-Use UNIDs for all people, instead of fname-lname
+* Use UNIDs for all people, instead of fname-lname
+* Make loader display until db initialisation is complete

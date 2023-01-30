@@ -8,12 +8,12 @@
             [em-notes.lib.table-style :refer [table-style]]
             [em-notes.routing.nav :as nav]
             [em-notes.views.tasks.task :refer [task]]
-            [re-frame.core :as rf]
-            [em-notes.lib.get-person-id :refer [get-person-id]]))
+            [re-frame.core :as rf]))
 
 (defn tasks []
   (let [active-person (rf/subscribe [::subs/active-person])
         tasks (:tasks @active-person)]
+    (prn "tasks-tasks_view: " tasks)
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "title"}
@@ -36,4 +36,4 @@
                                                          (nav/go :task))} (:name task)]]
                                   [:td {:class "pt-4"} (:details task)]
                                   [:td [:button {:class "button is-danger is-small"
-                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [active-person task]])} (grab :form/delete)]]])]]])))
+                                                 :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)]]])]]])))
