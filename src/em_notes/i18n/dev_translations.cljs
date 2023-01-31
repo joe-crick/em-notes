@@ -37,7 +37,7 @@
            :mark-incomplete "Open"
            :true "true"
            :false "false"}
-    :growth-metrics {:title "Growth Metrics"
+    :growth-metrics {:title "Career Growth"
                      :name "Name"
                      :details "Details"
                      :progress "Progress"

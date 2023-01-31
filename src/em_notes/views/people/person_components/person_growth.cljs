@@ -1,4 +1,4 @@
-(ns em-notes.views.people.person-growth
+(ns em-notes.views.people.person-components.person-growth
   (:require [em-notes.i18n.tr :refer [grab]]
             [em-notes.components.section-toggle :refer [section-toggle]]
             [em-notes.components.fields.text-input :refer [set-text-input]]))

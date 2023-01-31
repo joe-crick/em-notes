@@ -1,16 +1,16 @@
-(ns em-notes.views.people.person-profile
+(ns em-notes.views.people.person-components.person-profile
   (:require
    [re-frame.core :as rf]
    [em-notes.lib.local-state :refer [local-state]]
    [em-notes.components.form-footer :refer [form-footer]]
-   [em-notes.views.people.person-details :refer [person-details]]
-   [em-notes.views.people.person-feedback :refer [person-feedback]]
-   [em-notes.views.people.person-mood :refer [person-mood]]
+   [em-notes.views.people.person-components.person-details :refer [person-details]]
+   [em-notes.views.people.person-components.person-feedback :refer [person-feedback]]
+   [em-notes.views.people.person-components.person-mood :refer [person-mood]]
     [em-notes.i18n.tr :refer [grab]]
    [em-notes.events :as events]
    [em-notes.subs :as subs]
-   [em-notes.views.people.person-support :refer [person-support]]
-   [em-notes.views.people.person-growth :refer [person-growth]]))
+   [em-notes.views.people.person-components.person-support :refer [person-support]]
+   [em-notes.views.people.person-components.person-growth :refer [person-growth]]))
 
 (defn person-profile []
   (let [active-person (rf/subscribe [::subs/active-person])
