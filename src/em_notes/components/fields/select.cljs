@@ -6,7 +6,7 @@
     (fn []
       [:div.field
        [:label label]
-       [:p.control
+       [:div.control
         [:div.select
          [:select {:value (get-in @atom property)
                    :class className

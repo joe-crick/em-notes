@@ -172,8 +172,6 @@
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::save-db]]]})))
 
-;; TODO - Fix this :)
-
 (re-frame/reg-event-fx
  ::edit-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -182,7 +180,7 @@
                   person-id (get-person-id person)]
               {:db (assoc db :active-metric metric)
                :fx [[:dispatch [::set-active-person person-id]]
-                    [:dispatch [::set-modal {:title (grab :metric/title)
+                    [:dispatch [::set-modal {:title (grab :growth-metric/title)
                                              :content metric-view
                                              :display "is-block"}]]
                     [:dispatch [::save-db]]]})))

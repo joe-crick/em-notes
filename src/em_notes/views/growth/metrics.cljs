@@ -11,7 +11,8 @@
 
 (defn metrics []
   (let [active-person (rf/subscribe [::subs/active-person])
-        metrics (:growth-metrics @active-person)] 
+        metrics (:growth-metrics @active-person)
+        metric-view metric] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "subtitle"}
@@ -32,7 +33,7 @@
            ^{:key (random-uuid)} [:tr {:id metric-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"
-                                             :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric]])} (:name metric)]]
+                                             :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric-view]])} (:name metric)]]
                                   [:td {:class "pt-4"} (:details metric)]
                                   [:td {:class "pt-4"} (str (:completed metric))]
                                   [:td
