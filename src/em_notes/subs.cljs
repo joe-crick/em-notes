@@ -38,6 +38,11 @@
    (:active-task db)))
 
 (re-frame/reg-sub
+ ::active-metric
+ (fn [db _]
+   (:active-metric db)))
+
+(re-frame/reg-sub
  ::modal
  (fn [db _]
    (:modal db)))

@@ -37,6 +37,19 @@
            :mark-incomplete "Open"
            :true "true"
            :false "false"}
+    :growth-metrics {:title "Growth Metrics"
+                     :name "Name"
+                     :details "Details"
+                     :progress "Progress"
+                     :create-metric "Create Metric"}
+    :growth-metric {:title "Growth Metric"
+                    :name "Name"
+                    :details "Details"
+                    :progress "Progress"
+                    :comments "Comments"
+                    :begin "Begin"
+                    :in-progress "In progress"
+                    :achieved "Achieved"}
     :confirm {:title "Confirm"
               :yes "Yes"}
     :people

@@ -6,24 +6,24 @@
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.show-modal :refer [show-modal]]
             [em-notes.lib.table-style :refer [table-style]] 
-            [em-notes.views.growth.metric :as metric]
+            [em-notes.views.growth.metric :refer [metric]]
             [re-frame.core :as rf]))
 
 (defn metrics []
   (let [active-person (rf/subscribe [::subs/active-person])
-        metrics (:metrics @active-person)] 
+        metrics (:growth-metrics @active-person)] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "title"}
-                           (grab :metrics/title)])
+                           (grab :growth-metrics/title)])
         (fn [] [:button {:class "button is-primary"
-                         :on-click #(show-modal (grab :metric/title) metric/metric)} (grab :metrics/create-metric)])]
+                         :on-click #(show-modal (grab :growth-metric/title) metric)} (grab :growth-metrics/create-metric)])]
        [:table {:class (table-style)}
         [:thead
          [:tr
-          [:th (grab :metrics/title)]
-          [:th (grab :metrics/details)]
-          [:th (grab :metrics/completed)]
+          [:th (grab :growth-metrics/title)]
+          [:th (grab :growth-metrics/details)]
+          [:th (grab :growth-metrics/progress)]
           [:th (grab :table/actions)]]]
         [:tbody
          (for [metric metrics

@@ -21,7 +21,6 @@
     (fn []
       [:div.container
        [:div.is-hidden (:last-name @active-person)]
-       [:h1 {:class "is-size-3"} (grab :task/title)]
        [:form
         [text-input {:label (grab :task/name)
                      :property [:name]}]

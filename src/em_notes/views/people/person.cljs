@@ -9,26 +9,27 @@
             [em-notes.subs :as subs]
             [em-notes.views.people.person-profile :refer [person-profile]]
             [em-notes.views.tasks.tasks :refer [tasks]]
+            [em-notes.views.growth.metrics :refer [metrics]]
             [re-frame.core :as rf]))
 
-(defn task-view [active-person]
-  [tasks active-person])
+(defn task-view []
+  [tasks])
 
 (defn performance []
   [:div.container "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
 
-(defn profile [active-person]
-  [person-profile active-person])
+(defn profile []
+  [person-profile])
 
 (defn career-growth []
-  [:div.container "Need to be able to load in a career ladder, then track a person's progress against that ladder"])
+  [metrics])
 
-(defn active-tab [tab active-person]
+(defn active-tab [tab]
   (case tab
-    :tasks [task-view active-person]
+    :tasks [task-view]
     :performance [performance]
     :career-growth [career-growth]
-    [profile active-person]))
+    [profile]))
 
 (defn current-tab? [tab cur-tab]
   (if (= cur-tab tab) "is-info" ""))
@@ -58,4 +59,4 @@
         (fn [] [:div
                 [:h1 {:class "title"}
                  (str (:first-name @active-person) " " (:last-name @active-person))]
-                [active-tab @tab active-person]])]])))
+                [active-tab @tab]])]])))

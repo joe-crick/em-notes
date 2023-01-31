@@ -7,11 +7,13 @@
    [em-notes.views.people.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-mood :refer [person-mood]]
    [em-notes.events :as events]
-   [em-notes.views.people.person-support :refer [person-support]] 
+   [em-notes.subs :as subs]
+   [em-notes.views.people.person-support :refer [person-support]]
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
-(defn person-profile [active-person]
-  (let [[person revise!] (local-state @active-person)]
+(defn person-profile []
+  (let [active-person (rf/subscribe [::subs/active-person])
+        [person revise!] (local-state @active-person)]
     (fn []
       [:div.container
        [:div
