@@ -28,17 +28,14 @@
         [:tbody
          (for [metric metrics
                :let [[_ metric] metric
-                     metric-id (:metric-id metric)
-                     completed? (:completed metric)]]
+                     metric-id (:metric-id metric)]]
            ^{:key (random-uuid)} [:tr {:id metric-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"
-                                             :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric/metric]])} (:name metric)]]
+                                             :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric]])} (:name metric)]]
                                   [:td {:class "pt-4"} (:details metric)]
                                   [:td {:class "pt-4"} (str (:completed metric))]
-                                  [:td  
+                                  [:td
                                    [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-info is-fixed-100"
-                                              :on-click  #(rf/dispatch [::events/toggle-metric-status [@active-person metric]])} (if completed? (grab :metric/mark-incomplete) (grab :metric/mark-complete))]
                                     [:button {:class "button is-danger is-fixed-50"
                                               :on-click  #(show-confirm (grab :metric/confirm-delete) [::events/delete-metric [@active-person metric]])} (grab :form/delete)]]]])]]])))

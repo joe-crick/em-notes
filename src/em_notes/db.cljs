@@ -58,7 +58,7 @@
                  :details ""
                  :due-date ""
                  :completed false}
-   :default-grwoth-metric {:metric-id ""
+   :default-growth-metric {:metric-id ""
                            :name ""
                            :details ""
                            :progress ""

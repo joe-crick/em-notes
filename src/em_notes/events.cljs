@@ -154,6 +154,78 @@
                :fx [[:dispatch [::set-active-person person-id]]
                     [:dispatch [::save-db]]]})))
 
+
+;; GROWTH METRIC
+
+(re-frame/reg-event-fx
+ ::save-metric
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person metric] data
+                  person-id (get-person-id person)
+                  new-metric? (nil? (:metric-id metric))
+                  metric-id (if new-metric? (str (random-uuid)) (:metric-id metric))
+                  updated-metric (assoc metric :metric-id metric-id)]
+              {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id)] updated-metric)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-metric
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person metric metric-view] data
+                  person-id (get-person-id person)]
+              {:db (assoc db :active-metric metric)
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal {:title (grab :metric/title)
+                                             :content metric-view
+                                             :display "is-block"}]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-metric
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person metric] data
+                  person-id (get-person-id person)
+                  metric-id (:metric-id metric)]
+              {:db (dissoc-in db [:people (keyword person-id) :growth-metrics] (keyword metric-id))
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-metric]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::cancel-metric
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            {:db (assoc db :active-metric (:default-metric db))
+             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+
+(re-frame/reg-event-db
+ ::set-active-metric
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ [_ [person metric-id]]]]
+            (let [metric (get-in db [:people (keyword person) :growth-metrics (keyword metric-id)])]
+              (assoc db :active-metric metric))))
+
+(re-frame/reg-event-fx
+ ::toggle-metric-status
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person metric] data
+                  person-id (get-person-id person)
+                  metric-complete? (:completed metric)
+                  metric-id (:metric-id metric)]
+              {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id) :completed] (not metric-complete?))
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::save-db]]]})))
+
+
 ;; MODAL
 
 (re-frame/reg-event-db

@@ -3,11 +3,6 @@
    [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
- ::name
- (fn [db]
-   (:name db)))
-
-(re-frame/reg-sub
  ::active-panel
  (fn [db _]
    (:active-panel db)))
@@ -16,11 +11,6 @@
  ::people
  (fn [db _]
    (:people db)))
-
-(re-frame/reg-sub
- ::tasks
- (fn [db person-id]
-   (get-in db [:person (keyword person-id) :tasks])))
 
 (re-frame/reg-sub
  ::toasts
