@@ -214,17 +214,64 @@
             (let [metric (get-in db [:people (keyword person) :growth-metrics (keyword metric-id)])]
               (assoc db :active-metric metric))))
 
+;; PERFORMANCE
+
 (re-frame/reg-event-fx
- ::toggle-metric-status
+ ::save-perf
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person metric] data
+            (let [[person perf] data
                   person-id (get-person-id person)
-                  metric-complete? (:completed metric)
-                  metric-id (:metric-id metric)]
-              {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id) :completed] (not metric-complete?))
-               :fx [[:dispatch [::set-active-person person-id]]
+                  new-perf? (nil? (:perf-id perf))
+                  perf-id (if new-perf? (str (random-uuid)) (:perf-id perf))
+                  updated-perf (assoc perf :perf-id perf-id)]
+              (prn "data: " data)
+              {:db (assoc-in db [:people (keyword person-id) :perfs (keyword perf-id)] updated-perf)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-perf
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person perf perf-view] data
+                  person-id (get-person-id person)]
+              {:db (assoc db :active-perf perf)
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal {:title (grab :perf/title)
+                                             :content perf-view
+                                             :display "is-block"}]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-perf
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person perf] data
+                  person-id (get-person-id person)
+                  perf-id (:perf-id perf)]
+              {:db (dissoc-in db [:people (keyword person-id) :perfs] (keyword perf-id))
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-perf]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::cancel-perf
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            {:db (assoc db :active-perf (:default-perf db))
+             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+
+(re-frame/reg-event-db
+ ::set-active-perf
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ [_ [person perf-id]]]]
+            (let [perf (get-in db [:people (keyword person) :perfs (keyword perf-id)])]
+              (assoc db :active-perf perf))))
 
 
 ;; MODAL

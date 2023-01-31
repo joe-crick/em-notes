@@ -7,16 +7,17 @@
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
-            [em-notes.views.people.person-components.person-profile :refer [person-profile]]
+            [em-notes.views.people.person-profile.person-profile :refer [person-profile]]
             [em-notes.views.tasks.tasks :refer [tasks]]
-            [em-notes.views.growth.metrics :refer [metrics]]
+            [em-notes.views.growth.metrics :refer [metrics]] 
+            [em-notes.views.performance.perfs :refer [perfs]]
             [re-frame.core :as rf]))
 
 (defn task-view []
   [tasks])
 
 (defn performance []
-  [:div.container "A record of a person's performance over the last reporting period. Contains productivity and soft skills notes"])
+  [perfs])
 
 (defn profile []
   [person-profile])

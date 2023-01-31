@@ -1,32 +1,37 @@
 (ns em-notes.views.performance.perf
-  (:require [em-notes.components.fields.text-input :refer [set-text-input]]
-            [em-notes.components.fields.date-input :refer [set-date-input]]
+  (:require [em-notes.components.fields.date-input :refer [set-date-input]]
+            [em-notes.components.fields.text-input :refer [set-text-input]]
             [em-notes.components.fields.textarea :refer [set-text-area]]
             [em-notes.components.form-footer :refer [form-footer]]
+            [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.subs :as subs]
-            [em-notes.events :as events]
             [re-frame.core :as rf]))
 
-(defn performance []
+(defn perf []
   (let [active-perf (rf/subscribe [::subs/active-perf])
-        [perf revise!] (local-state @active-perf)
+        active-person (rf/subscribe [::subs/active-person])
+        [perf revise!] (local-state (assoc @active-perf :progress (grab :perf/begin)))
         text-input (set-text-input perf revise!)
-        date-input (set-date-input perf revise!)
-        text-area (set-text-area perf revise!)]
+        text-area (set-text-area perf revise!)
+        date-input (set-date-input perf revise!)]
     (fn []
       [:div.container
-       [:h1 {:class "is-size-3"} (grab :perf/title)]
+       [:div.is-hidden (:last-name @active-person)]
        [:form
-        [text-input {:label (grab :perf/name)
-                     :property [:name]}]
-        [text-area {:label (grab :perf/details)
-                    :property [:details]}]
-        [date-input {:label (grab :perf/due-date)
-                     :property [:due-date]}]
-        [text-input {:label (grab :perf/completed)
-                     :property [:completed]}]
+        [date-input {:label (grab :perf/week)
+                     :property [:week]}]
+        [text-input {:label (grab :perf/velocity)
+                     :property [:velocity]}]
+        [text-input {:label (grab :perf/prs)
+                     :property [:prs]}]
+        [text-input {:label (grab :perf/collaboration)
+                     :property [:collaboration]}]
+        [text-input {:label (grab :perf/avg-est-accuracy)
+                     :property [:avg-est-accuracy]}]
+        [text-area {:label (grab :perf/notes)
+                    :property [:notes]}]
+
         [form-footer (fn []
-                       (rf/dispatch [::events/save-perf @perf])), #(rf/dispatch [::events/cancel-perf])]]]))
-  )
+                       (rf/dispatch [::events/save-perf [@active-person @perf]])), #(rf/dispatch [::events/cancel-perf])]]])))

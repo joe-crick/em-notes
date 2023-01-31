@@ -20,7 +20,8 @@
                          :what-doing-now ""
                          :what-need-to-do ""}}
               :tasks []
-              :growth-metrics []}
+              :growth-metrics []
+              :perfs []}
    :active-person   {:first-name ""
                      :last-name ""
                      :team ""
@@ -39,7 +40,8 @@
                                :what-doing-now ""
                                :what-need-to-do ""}}
                      :tasks []
-                     :growth-metrics []}
+                     :growth-metrics []
+                     :perfs []}
    :default-modal {:title ""
                    :content nil
                    :footer []
@@ -68,6 +70,20 @@
                           :details ""
                           :progress ""
                           :comments ""}
+   :default-perf {:perf-id ""
+                  :week ""
+                  :velocity ""
+                  :prs ""
+                  :collaboration ""
+                  :avg-est-accuracy ""
+                  :notes ""}
+   :active-perf {:perf-id ""
+                 :week ""
+                 :velocity ""
+                 :prs ""
+                 :collaboration ""
+                 :avg-est-accuracy ""
+                 :notes ""}
    :toasts []
    :modal {}
    :init-queue []})

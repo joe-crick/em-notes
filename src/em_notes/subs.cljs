@@ -33,6 +33,11 @@
    (:active-metric db)))
 
 (re-frame/reg-sub
+ ::active-perf
+ (fn [db _]
+   (:active-perf db)))
+
+(re-frame/reg-sub
  ::modal
  (fn [db _]
    (:modal db)))

@@ -20,6 +20,19 @@
      :deleted "Deleted!"
      :delete "Delete"
      :del "del"}
+    :perfs
+    {:create-perf "Create Perf"
+     :estimation "Est. Acc."
+     }
+    :perf
+    {:title "Performance"
+     :week "Week of"
+     :velocity "Velocity"
+     :prs "PRs"
+     :collaboration "Collaboration"
+     :avg-est-accuracy "Avg. Estimation Accuracy"
+     :notes "Notes"
+     :create-perf "Create Perf"}
     :tasks
     {:title "Tasks"
      :details "Details"
