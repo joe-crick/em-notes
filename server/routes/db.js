@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const file = './server/default-db.json'
+const file = './server/app-db.json'
 
 
 router.get('/', function(req, res, next) {

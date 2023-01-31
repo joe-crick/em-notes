@@ -1,4 +1,4 @@
-(ns em-notes.views.people.person-overview
+(ns em-notes.views.people.person-profile
   (:require
    [re-frame.core :as rf]
    [em-notes.lib.local-state :refer [local-state]]
@@ -10,7 +10,7 @@
    [em-notes.views.people.person-support :refer [person-support]] 
    [em-notes.views.people.person-growth :refer [person-growth]]))
 
-(defn person-overivew [active-person]
+(defn person-profile [active-person]
   (let [[person revise!] (local-state @active-person)]
     (fn []
       [:div.container

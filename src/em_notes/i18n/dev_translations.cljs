@@ -65,7 +65,7 @@
      :first-name "First Name"
      :last-name "Last Name"
      :team "Team"
-     :overview "Overview"
+     :profile "Profile"
      :performance "Performance"
      :career-growth "Career Growth"
      :tasks "Tasks"

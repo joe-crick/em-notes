@@ -5,6 +5,8 @@
 		"watch": "npx shadow-cljs watch app browser-test karma-test",
 		"release": "npx shadow-cljs release app",
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
+		"start": "run-p server jack-in",
+		"jack-in": "npx.cmd shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app",
 		"server": "node ./server/bin/www"
 	},
 	"dependencies": {
