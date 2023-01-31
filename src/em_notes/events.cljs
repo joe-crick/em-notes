@@ -166,6 +166,7 @@
                   new-metric? (nil? (:metric-id metric))
                   metric-id (if new-metric? (str (random-uuid)) (:metric-id metric))
                   updated-metric (assoc metric :metric-id metric-id)]
+              (prn "data: " data)
               {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id)] updated-metric)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]

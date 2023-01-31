@@ -13,7 +13,7 @@
 (defn metric []
   (let [active-metric (rf/subscribe [::subs/active-metric])
         active-person (rf/subscribe [::subs/active-person])
-        [metric revise!] (local-state @active-metric)
+        [metric revise!] (local-state (assoc @active-metric :progress (grab :growth-metric/begin)))
         text-input (set-text-input metric revise!) 
         text-area (set-text-area metric revise!)
         select (set-select metric revise!)]
@@ -27,9 +27,9 @@
                     :property [:details]}]
         [select {:label (grab :growth-metric/progress)
                  :property [:progress]
-                 :values [[0 (grab :growth-metric/begin)]
-                          [1 (grab :growth-metric/in-progress)]
-                          [2 (grab :growth-metric/achieved)]]}]
+                 :values [[nil (grab :growth-metric/begin)]
+                          [nil (grab :growth-metric/in-progress)]
+                          [nil (grab :growth-metric/achieved)]]}]
         [text-area {:label (grab :growth-metric/comments)
                     :property [:comments]}]
 

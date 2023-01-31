@@ -22,7 +22,7 @@
        [:table {:class (table-style)}
         [:thead
          [:tr
-          [:th (grab :growth-metrics/title)]
+          [:th (grab :growth-metric/title)]
           [:th (grab :growth-metrics/details)]
           [:th (grab :growth-metrics/progress)]
           [:th (grab :table/actions)]]]
@@ -35,7 +35,7 @@
                                    [:button {:class "button is-ghost"
                                              :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric-view]])} (:name metric)]]
                                   [:td {:class "pt-4"} (:details metric)]
-                                  [:td {:class "pt-4"} (str (:completed metric))]
+                                  [:td {:class "pt-4"} (str (:progress metric))]
                                   [:td
                                    [:div {:class "buttons are-small is-grouped"}
                                     [:button {:class "button is-danger is-fixed-50"
