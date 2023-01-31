@@ -14,7 +14,7 @@
         metrics (:growth-metrics @active-person)] 
     (fn []
       [:div.container
-       [left-right (fn [] [:h1 {:class "title"}
+       [left-right (fn [] [:h1 {:class "subtitle"}
                            (grab :growth-metrics/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :growth-metric/title) metric)} (grab :growth-metrics/create-metric)])]
@@ -38,4 +38,4 @@
                                   [:td
                                    [:div {:class "buttons are-small is-grouped"}
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :metric/confirm-delete) [::events/delete-metric [@active-person metric]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :growth-metrics/confirm-delete) [::events/delete-metric [@active-person metric]])} (grab :form/delete)]]]])]]])))

@@ -32,7 +32,7 @@
            :details "Details"
            :due-date "Due Date"
            :completed "Completed"
-           :confirm-delete "Are you certain you want to delete this task"
+           :confirm-delete "Are you certain you want to delete this task?"
            :mark-complete "Complete"
            :mark-incomplete "Open"
            :true "true"
@@ -41,7 +41,8 @@
                      :name "Name"
                      :details "Details"
                      :progress "Progress"
-                     :create-metric "Create Metric"}
+                     :create-metric "Create Metric"
+                     :confirm-delete "Are you certain you want to delete this metric?"}
     :growth-metric {:title "Growth Metric"
                     :name "Name"
                     :details "Details"

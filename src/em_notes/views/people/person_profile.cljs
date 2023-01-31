@@ -6,6 +6,7 @@
    [em-notes.views.people.person-details :refer [person-details]]
    [em-notes.views.people.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-mood :refer [person-mood]]
+    [em-notes.i18n.tr :refer [grab]]
    [em-notes.events :as events]
    [em-notes.subs :as subs]
    [em-notes.views.people.person-support :refer [person-support]]
@@ -16,6 +17,8 @@
         [person revise!] (local-state @active-person)]
     (fn []
       [:div.container
+       [:h1 {:class "subtitle"}
+        (grab :person/profile)]
        [:div
         [:form
          [person-details person revise!]

@@ -14,7 +14,7 @@
         tasks (:tasks @active-person)] 
     (fn []
       [:div.container
-       [left-right (fn [] [:h1 {:class "title"}
+       [left-right (fn [] [:h1 {:class "subtitle"}
                            (grab :tasks/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]

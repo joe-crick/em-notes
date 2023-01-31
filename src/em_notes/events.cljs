@@ -172,6 +172,8 @@
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::save-db]]]})))
 
+;; TODO - Fix this :)
+
 (re-frame/reg-event-fx
  ::edit-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
