@@ -15,5 +15,5 @@
                                 [:teams (grab :teams/title)]]
                      :views {:people people
                              :teams (fn [] [:div.container "Teams"])}
-                     :action-buttons [[#(nav/go :person) (grab :home/create-person) "is-link"]]
+                     :action-buttons []
                      :title title}]])))
