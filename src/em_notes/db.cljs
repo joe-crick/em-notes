@@ -1,7 +1,14 @@
 (ns em-notes.db)
 
 (def default-db
-  {:people {}
+  {:teams {}
+   :team {:name ""
+          :people []
+          :team-id ""}
+   :active-team {:name ""
+                 :people []
+                 :team-id ""}
+   :people {}
    :person   {:first-name ""
               :last-name ""
               :team ""

@@ -1,16 +1,15 @@
 (ns em-notes.views.teams.team
-  (:require
-   [em-notes.components.tabbed-view :refer [tabbed-view]]
-   [em-notes.events :as events]
-   [em-notes.i18n.tr :refer [grab]]
-   [em-notes.lib.show-confirm :refer [show-confirm]]
-   [em-notes.routing.nav :as nav]
-   [em-notes.subs :as subs]
-   [em-notes.views.growth.metrics :refer [metrics]]
-   [em-notes.views.people.team-profile.team-profile :refer [team-profile]]
-   [em-notes.views.performance.perfs :refer [perfs]]
-   [em-notes.views.tasks.tasks :refer [tasks]]
-   [re-frame.core :as rf]))
+  (:require [em-notes.components.tabbed-view :refer [tabbed-view]]
+            [em-notes.events :as events]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.show-confirm :refer [show-confirm]]
+            [em-notes.routing.nav :as nav]
+            [em-notes.subs :as subs]
+            [em-notes.views.performance.perfs :refer [perfs]]
+            [em-notes.views.tasks.tasks :refer [tasks]]
+            [em-notes.views.teams.capacity.capacity :refer [capacity]]
+            [em-notes.views.teams.profile.team-profile :refer [team-profile]]
+            [re-frame.core :as rf]))
 
 
 (defn team []
@@ -26,7 +25,7 @@
                                 [:tasks (grab :team/tasks)]]
                      :views {:profile team-profile
                              :performance perfs
-                             :capacity metrics
+                             :capacity capacity
                              :tasks tasks}
                      :action-buttons [[#(show-confirm (grab :team/confirm-delete) [::events/delete-team @active-team])
                                        (str (grab :form/delete) " " (grab :team/title))

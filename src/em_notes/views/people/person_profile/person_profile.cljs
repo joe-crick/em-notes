@@ -6,7 +6,7 @@
    [em-notes.views.people.person-profile.person-details :refer [person-details]]
    [em-notes.views.people.person-profile.person-feedback :refer [person-feedback]]
    [em-notes.views.people.person-profile.person-mood :refer [person-mood]]
-    [em-notes.i18n.tr :refer [grab]]
+   [em-notes.i18n.tr :refer [grab]]
    [em-notes.events :as events]
    [em-notes.subs :as subs]
    [em-notes.views.people.person-profile.person-support :refer [person-support]]

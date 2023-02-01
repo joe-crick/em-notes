@@ -7,6 +7,7 @@
     {:title "EM Notes"
      :home "Home"
      :create-person "Create a Person"
+     :create-team "Create a Team"
      :greet "Hello %1"
      :farewell "Goodbye %1"
      :foo "foo"
@@ -67,6 +68,15 @@
               :yes "Yes"}
     :teams
     {:title "Teams"}
+    :team {:title "Team"
+           :profile "Profile"
+           :capacity "Capacity"
+           :performance "Performance"
+           :tasks "Tasks"
+           :name "Name"
+           :people "People"
+           :charter "Charter"
+           :values "Values"}
     :people
     {:title "People"}
     :table {:actions "Actions"}

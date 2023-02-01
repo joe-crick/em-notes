@@ -2,3 +2,6 @@
 * Add person availability (integrate with calendar?)
 * Add Team view
 * Refactor events, make them more generic
+* Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
+* Remove all hard-coded bulma class references. Add them to a Map.
+* BUG: Growth Metric - unable to select progress from select

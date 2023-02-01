@@ -13,9 +13,19 @@
    (:people db)))
 
 (re-frame/reg-sub
+ ::teams
+ (fn [db _]
+   (:teams db)))
+
+(re-frame/reg-sub
  ::toasts
  (fn [db _]
    (:toasts db)))
+
+(re-frame/reg-sub
+ ::active-team
+ (fn [db _]
+   (:active-team db)))
 
 (re-frame/reg-sub
  ::active-person

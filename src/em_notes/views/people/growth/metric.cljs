@@ -1,4 +1,4 @@
-(ns em-notes.views.growth.metric
+(ns em-notes.views.people.growth.metric
   (:require
    [em-notes.components.fields.select :refer [set-select]]
    [em-notes.components.fields.text-input :refer [set-text-input]]

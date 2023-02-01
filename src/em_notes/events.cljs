@@ -43,6 +43,43 @@
             (assoc-in db [:toasts] [])))
 
 
+;; TEAM
+
+(re-frame/reg-event-fx
+ ::save-team
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ team]]
+            {:db (assoc-in db [:teams :team-id] team)
+             :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                  [:dispatch [::set-active-team (:team-id team)]]
+                  [:dispatch [::save-db]]]}))
+
+(re-frame/reg-event-fx
+ ::delete-team
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ team]]
+            {:db (dissoc-in db [:teams] :team-id)
+             :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                  [:dispatch [::reset-active-team]]
+                  [:dispatch [::save-db]]
+                  [:dispatch [::navigate "/"]]]}))
+
+(re-frame/reg-event-db
+ ::set-active-team
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ team-id]]
+            (let [team (get-in db [:teams (keyword team-id)])]
+              (assoc db :active-team team))))
+
+(re-frame/reg-event-fx
+ ::reset-active-team
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            (let [team (get-in db [:team])]
+              {:db  (assoc db :active-team team)
+               :fx [[:dispatch [::navigate "/"]]]})))
+
+
 ;; PERSON
 
 (re-frame/reg-event-fx
@@ -166,7 +203,6 @@
                   new-metric? (nil? (:metric-id metric))
                   metric-id (if new-metric? (str (random-uuid)) (:metric-id metric))
                   updated-metric (assoc metric :metric-id metric-id)]
-              (prn "data: " data)
               {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id)] updated-metric)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
@@ -225,7 +261,6 @@
                   new-perf? (nil? (:perf-id perf))
                   perf-id (if new-perf? (str (random-uuid)) (:perf-id perf))
                   updated-perf (assoc perf :perf-id perf-id)]
-              (prn "data: " data)
               {:db (assoc-in db [:people (keyword person-id) :perfs (keyword perf-id)] updated-perf)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]

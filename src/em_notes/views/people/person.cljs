@@ -6,7 +6,7 @@
    [em-notes.lib.show-confirm :refer [show-confirm]]
    [em-notes.routing.nav :as nav]
    [em-notes.subs :as subs]
-   [em-notes.views.growth.metrics :refer [metrics]]
+   [em-notes.views.people.growth.metrics :refer [metrics]]
    [em-notes.views.people.person-profile.person-profile :refer [person-profile]]
    [em-notes.views.performance.perfs :refer [perfs]]
    [em-notes.views.tasks.tasks :refer [tasks]]
