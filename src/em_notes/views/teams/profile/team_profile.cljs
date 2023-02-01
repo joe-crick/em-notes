@@ -13,11 +13,11 @@
   [(get-person-id person) (str (:first-name person) " " (:last-name person))]
   )
 
-(defn team-profile []
+(defn team-profile [query]
   (let [active-team (rf/subscribe [::subs/active-team])
         raw-people (rf/subscribe [::subs/people])
         people (map get-person (vals @raw-people))
-        [team revise!] (local-state @active-team)
+        [team revise!] (local-state (if (nil? query) (assoc @active-team :people []) @active-team))
         text-input (set-text-input team revise!)
         select (set-select team revise!)
         ]
@@ -34,6 +34,7 @@
           [select {:label (grab :team/people)
                    :property [:people]
                    :multi? true
+                   :default-value []
                    :values people}]
          [text-input {:label (grab :team/charter)
                       :property [:charter]}]

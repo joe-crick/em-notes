@@ -4,10 +4,14 @@
   {:teams {}
    :team {:name ""
           :people []
-          :team-id ""}
+          :team-id ""
+          :charter ""
+          :values ""}
    :active-team {:name ""
                  :people []
-                 :team-id ""}
+                 :team-id ""
+                 :charter ""
+                 :values ""}
    :people {}
    :person   {:first-name ""
               :last-name ""
