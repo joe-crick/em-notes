@@ -4,7 +4,9 @@
    [em-notes.events :as events]
    [em-notes.views.home :refer [home]]
    [em-notes.views.people.person :refer [person]]
-   [em-notes.views.people.people :refer [people]]))
+   [em-notes.views.people.people :refer [people]]
+   [em-notes.views.teams.team :refer [team]]
+   [em-notes.views.teams.teams :refer [teams]]))
 
 (def routes
   (atom
@@ -12,4 +14,8 @@
     "/people" [people #(identity 1)]
     "/person" [person (fn [query]
                         (let [event [::events/set-active-person (:id query)]]
-                          (re-frame/dispatch [::events/add-to-route-queue [:dispatch event]])))]}))
+                          (re-frame/dispatch [::events/add-to-route-queue [:dispatch event]])))]
+    "/teams" [teams #(identity 1)]
+    "/team" [team (fn [query]
+                    (let [event [::events/set-active-team (:id query)]]
+                      (re-frame/dispatch [::events/add-to-route-queue [:dispatch event]])))]}))

@@ -1,7 +1,6 @@
 (ns em-notes.views.home
   (:require [em-notes.components.tabbed-view :refer [tabbed-view]]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
             [em-notes.views.people.people :refer [people]]
             [re-frame.core :as rf]))
