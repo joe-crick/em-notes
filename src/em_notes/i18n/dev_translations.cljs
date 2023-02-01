@@ -22,8 +22,7 @@
      :del "del"}
     :perfs
     {:create-perf "Create Perf"
-     :estimation "Est. Acc."
-     }
+     :estimation "Est. Acc."}
     :perf
     {:title "Performance"
      :week "Week of"
@@ -32,7 +31,7 @@
      :collaboration "Collaboration"
      :avg-est-accuracy "Avg. Estimation Accuracy"
      :notes "Notes"
-     :create-perf "Create Perf"}
+     :confirm-delete "Are you certain you want to delete this perf record?"}
     :tasks
     {:title "Tasks"
      :details "Details"
@@ -66,6 +65,8 @@
                     :achieved "Achieved"}
     :confirm {:title "Confirm"
               :yes "Yes"}
+    :teams
+    {:title "Teams"}
     :people
     {:title "People"}
     :table {:actions "Actions"}

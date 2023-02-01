@@ -1,2 +1,4 @@
 * Use UNIDs for all people, instead of fname-lname
 * Add person availability (integrate with calendar?)
+* Add Team view
+* Refactor events, make them more generic

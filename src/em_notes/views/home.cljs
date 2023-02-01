@@ -1,6 +1,19 @@
 (ns em-notes.views.home
-  (:require
-   [em-notes.views.people.people :refer [people]]))
+  (:require [em-notes.components.tabbed-view :refer [tabbed-view]]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.routing.nav :as nav]
+            [em-notes.subs :as subs]
+            [em-notes.views.people.people :refer [people]]
+            [re-frame.core :as rf]))
 
 (defn home []
-  [people])
+  (let [active-person (rf/subscribe [::subs/active-person])
+        title (str (:first-name @active-person) " " (:last-name @active-person))]
+    (fn []
+      [:div
+       [tabbed-view {:tab-navs [[:people (grab :people/title)]
+                                [:teams (grab :teams/title)]]
+                     :views {:people people
+                             :teams (fn [] [:div.container "Teams"])}
+                     :action-buttons [[#(nav/go :person) (grab :home/create-person) "is-link"]]
+                     :title title}]])))

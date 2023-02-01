@@ -1,4 +1,4 @@
-(ns em-notes.lib.update-atom)
+(ns em-notes.lib.revise)
 
 (defn revise!
   ;; replace a value

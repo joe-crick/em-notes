@@ -1,7 +1,7 @@
 (ns em-notes.lib.local-state
   (:require
    [reagent.core :as r]
-   [em-notes.lib.update-atom :refer [set-revise]]))
+   [em-notes.lib.revise :refer [set-revise]]))
 
 (defn local-state [val]
   "Given any valid data structure, will create an atom for it, and a revise! function,
