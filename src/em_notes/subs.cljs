@@ -38,6 +38,11 @@
    (:active-task db)))
 
 (re-frame/reg-sub
+ ::active-one-on-one
+ (fn [db _]
+   (:active-one-on-one db)))
+
+(re-frame/reg-sub
  ::active-growth-metric
  (fn [db _]
    (:active-growth-metric db)))

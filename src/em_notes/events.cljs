@@ -308,6 +308,64 @@
             (let [perf (get-in db [:people (keyword person) :perfs (keyword perf-id)])]
               (assoc db :active-perf perf))))
 
+;; ONE ON ONE
+
+(re-frame/reg-event-fx
+ ::save-one-on-one
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person one-on-one] data
+                  person-id (get-person-id person)
+                  new-one-on-one? (= (:one-on-one-id one-on-one) "")
+                  one-on-one-id (if new-one-on-one? (str (random-uuid)) (:one-on-one-id one-on-one))
+                  updated-one-on-one (assoc one-on-one :one-on-one-id one-on-one-id)] 
+              {:db (assoc-in db [:people (keyword person-id) :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-one-on-one
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person one-on-one one-on-one-view] data
+                  person-id (get-person-id person)]
+              {:db (assoc db :active-one-on-one one-on-one)
+               :fx [[:dispatch [::set-active-person person-id]]
+                    [:dispatch [::set-modal {:title (grab :one-on-one/title)
+                                             :content one-on-one-view
+                                             :display "is-block"}]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-one-on-one
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person one-on-one] data
+                  person-id (get-person-id person)
+                  one-on-one-id (:one-on-one-id one-on-one)]
+              {:db (dissoc-in db [:people (keyword person-id) :one-on-ones] (keyword one-on-one-id))
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-one-on-one]]
+                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::save-db]]]})))
+
+(re-frame/reg-event-fx
+ ::cancel-one-on-one
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            {:db (assoc db :active-one-on-one (:default-one-on-one db))
+             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+
+(re-frame/reg-event-db
+ ::set-active-one-on-one
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ [_ [person one-on-one-id]]]]
+            (let [one-on-one (get-in db [:people (keyword person) :one-on-ones (keyword one-on-one-id)])]
+              (assoc db :active-one-on-one one-on-one))))
+
 
 ;; MODAL
 

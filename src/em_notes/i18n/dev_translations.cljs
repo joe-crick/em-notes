@@ -64,6 +64,16 @@
                     :begin "Begin"
                     :in-progress "In progress"
                     :achieved "Achieved"}
+    :one-on-ones {:title "One on Ones"
+                  :create-one-on-one "Create One on One"
+                  }
+    :one-on-one {:title "One on One"
+                 :week-of "Week Of"
+                 :perf "Performance Review"
+                 :alignment "Alignment"
+                 :development "Development"
+                 :notes "Notes"
+                 :next-steps "Next Steps"}
     :confirm {:title "Confirm"
               :yes "Yes"}
     :teams
@@ -106,6 +116,7 @@
      :profile "Profile"
      :performance "Performance"
      :career-growth "Career Growth"
+     :one-on-ones "One on Ones"
      :tasks "Tasks"
      :attachment-style "Potential Attachment Style"
      :secure "Secure"

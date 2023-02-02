@@ -9,6 +9,7 @@
    [em-notes.views.people.growth.metrics :refer [metrics]]
    [em-notes.views.people.person-profile.profile-form :refer [profile]]
    [em-notes.views.performance.perfs :refer [perfs]]
+   [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
    [em-notes.views.tasks.tasks :refer [tasks]]
    [re-frame.core :as rf]))
 
@@ -23,11 +24,13 @@
        [tabbed-view {:tab-navs [[:profile (grab :person/profile)]
                                 [:performance (grab :person/performance)]
                                 [:career-growth (grab :person/career-growth)]
-                                [:tasks (grab :person/tasks)]]
+                                [:tasks (grab :person/tasks)]
+                                [:one-on-ones (grab :person/one-on-ones)]]
                      :views {:profile profile
                              :performance perfs
                              :career-growth metrics
-                             :tasks tasks}
+                             :tasks tasks
+                             :one-on-ones one-on-ones}
                      :action-buttons [[#(show-confirm (grab :person/confirm-delete) [::events/delete-person @active-person])
                                        (str (grab :form/delete) " " (grab :person/title))
                                        "is-danger"]]

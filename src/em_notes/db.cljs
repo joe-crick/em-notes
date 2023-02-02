@@ -39,7 +39,8 @@
               :agreableness ""
               :neuroticism ""
               :three-hardest-things ""
-              :perfs []}
+              :perfs []
+              :one-on-ones []}
    :active-person   {:first-name ""
                      :last-name ""
                      :team ""
@@ -66,7 +67,8 @@
                      :agreableness ""
                      :neuroticism ""
                      :three-hardest-things ""
-                     :perfs []}
+                     :perfs []
+                     :one-on-ones []}
    :default-modal {:title ""
                    :content nil
                    :footer []
@@ -95,6 +97,18 @@
                           :details ""
                           :progress ""
                           :comments ""}
+   :default-one-on-one {:one-on-one-id ""
+                        :week-of ""
+                        :perf-improvement ""
+                        :development ""
+                        :next-steps ""
+                        :notes ""}
+   :active-one-on-one {:one-on-one-id ""
+                       :week-of ""
+                       :perf-improvement ""
+                       :development ""
+                       :next-steps ""
+                       :notes ""}
    :default-perf {:perf-id ""
                   :week ""
                   :velocity ""
