@@ -49,16 +49,16 @@
  ::save-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            {:db (assoc-in db [:teams :team-id] team)
+            {:db (assoc-in db [:teams (keyword (:name team))] team)
              :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                  [:dispatch [::set-active-team (:team-id team)]]
+                  [:dispatch [::set-active-team (:name team)]]
                   [:dispatch [::save-db]]]}))
 
 (re-frame/reg-event-fx
  ::delete-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            {:db (dissoc-in db [:teams] :team-id)
+            {:db (dissoc-in db [:teams] (keyword (:name team)))
              :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                   [:dispatch [::reset-active-team]]
                   [:dispatch [::save-db]]

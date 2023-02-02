@@ -4,12 +4,11 @@
      [em-notes.routing.nav :as nav]
      [em-notes.subs :as subs]
      [em-notes.i18n.tr :refer [grab]]
-     [em-notes.lib.table-style :refer [table-style]]
-     [em-notes.lib.nab :refer [nab]]))
+     [em-notes.lib.table-style :refer [table-style]]))
 
 (defn teams []
   ;; setup local state
-  (let [team (re-frame/subscribe [::subs/teams])]
+  (let [teams (re-frame/subscribe [::subs/teams])]
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:div
@@ -22,13 +21,12 @@
           [:tr
            [:th (grab :team/title)]]]
          [:tbody
-          (for [rec @team
-                :let [team (second (clj->js rec))
-                      team-id (:team-id rec)
-                      team-name (:name rec)]]
-            ^{:key (random-uuid)} [:tr {:id team-id}
+          (for [[_ team] @teams
+                :let [team-name (:name team)]]
+            (do
+              (prn "name" team)
+              ^{:key (random-uuid)} [:tr {:id team-name}
                                    [:td {:class "name"}
                                     [:button {:class "button is-ghost"
-                                              :on-click #(nav/go :team (str "id=" team-id))} team-name]]
-                                   [:td {:class "team pt-4"} (nab :team team)]])]]]])))
+                                              :on-click #(nav/go :team (str "id=" team-name))} team-name]]]))]]]])))
 

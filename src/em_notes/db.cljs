@@ -4,7 +4,6 @@
   {:teams {}
    :team {:name ""
           :people []
-          :team-id ""
           :charter ""
           :values ""}
    :active-team {:name ""
