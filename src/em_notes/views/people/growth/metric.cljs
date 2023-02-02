@@ -11,9 +11,9 @@
    [re-frame.core :as rf]))
 
 (defn metric []
-  (let [active-metric (rf/subscribe [::subs/active-metric])
+  (let [active-growth-metric (rf/subscribe [::subs/active-growth-metric])
         active-person (rf/subscribe [::subs/active-person])
-        [metric revise!] (local-state (assoc @active-metric :progress (grab :growth-metric/begin)))
+        [metric revise!] (local-state (if (nil? (:progress @active-growth-metric)) (assoc @active-growth-metric :progress (grab :growth-metric/begin)) @active-growth-metric))
         text-input (set-text-input metric revise!) 
         text-area (set-text-area metric revise!)
         select (set-select metric revise!)]

@@ -38,9 +38,9 @@
    (:active-task db)))
 
 (re-frame/reg-sub
- ::active-metric
+ ::active-growth-metric
  (fn [db _]
-   (:active-metric db)))
+   (:active-growth-metric db)))
 
 (re-frame/reg-sub
  ::active-perf

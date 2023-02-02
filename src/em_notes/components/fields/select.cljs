@@ -8,6 +8,7 @@
 (defn select [atom revise! config]
   (let [{label :label property :property className :class values :values default-value :default-value multi? :multi?} config
         name (last property)]
+    (prn "atom" @atom)
     (fn []
       [:div.field
        [:label label]
@@ -21,6 +22,7 @@
                    :size (if multi? "5" "1")
                    :on-change (fn [evt]
                                 (let [new-val (.. evt -target -value)]
+                                  (prn "new val" (swap! atom assoc-in property (if multi? (get-multi-val (get-in @atom property) new-val) new-val)))
                                   (swap! atom assoc-in property (if multi? (get-multi-val (get-in @atom property) new-val) new-val))))}
           (for [[v text] values
                 :let [val (if (nil? v) text v)]]

@@ -31,8 +31,7 @@
         [:tbody
          (for [perf perfs
                :let [[_ perf] perf
-                     perf-id (:perf-id perf)
-                     completed? (:completed perf)]]
+                     perf-id (:perf-id perf)]]
            ^{:key (random-uuid)} [:tr {:id perf-id}
                                   [:td.name
                                    [:button {:class "button is-ghost"

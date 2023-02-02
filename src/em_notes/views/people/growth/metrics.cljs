@@ -31,7 +31,7 @@
                :let [[_ metric] metric
                      metric-id (:metric-id metric)]]
            ^{:key (random-uuid)} [:tr {:id metric-id}
-                                  [:td.name
+                                  [:td.name {:data-progress (:progress metric)}
                                    [:button {:class "button is-ghost"
                                              :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric-view]])} (:name metric)]]
                                   [:td {:class "pt-4"} (:details metric)]

@@ -215,7 +215,7 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person metric metric-view] data
                   person-id (get-person-id person)]
-              {:db (assoc db :active-metric metric)
+              {:db (assoc db :active-growth-metric metric)
                :fx [[:dispatch [::set-active-person person-id]]
                     [:dispatch [::set-modal {:title (grab :growth-metric/title)
                                              :content metric-view
@@ -240,15 +240,15 @@
  ::cancel-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
-            {:db (assoc db :active-metric (:default-metric db))
+            {:db (assoc db :active-growth-metric (:default-metric db))
              :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
 
 (re-frame/reg-event-db
- ::set-active-metric
+ ::set-active-growth-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person metric-id]]]]
             (let [metric (get-in db [:people (keyword person) :growth-metrics (keyword metric-id)])]
-              (assoc db :active-metric metric))))
+              (assoc db :active-growth-metric metric))))
 
 ;; PERFORMANCE
 
