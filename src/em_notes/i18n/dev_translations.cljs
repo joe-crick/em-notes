@@ -66,6 +66,7 @@
                     :achieved "Achieved"}
     :one-on-ones {:title "One on Ones"
                   :create-one-on-one "Create One on One"
+                   :confirm-delete "Are you certain you want to delete this One on One?"
                   }
     :one-on-one {:title "One on One"
                  :week-of "Week Of"
