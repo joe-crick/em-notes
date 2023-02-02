@@ -7,7 +7,7 @@
    [em-notes.routing.nav :as nav]
    [em-notes.subs :as subs]
    [em-notes.views.people.growth.metrics :refer [metrics]]
-   [em-notes.views.people.person-profile.profile-form :refer [person-profile]]
+   [em-notes.views.people.person-profile.profile-form :refer [profile]]
    [em-notes.views.performance.perfs :refer [perfs]]
    [em-notes.views.tasks.tasks :refer [tasks]]
    [re-frame.core :as rf]))
@@ -24,7 +24,7 @@
                                 [:performance (grab :person/performance)]
                                 [:career-growth (grab :person/career-growth)]
                                 [:tasks (grab :person/tasks)]]
-                     :views {:profile person-profile
+                     :views {:profile profile
                              :performance perfs
                              :career-growth metrics
                              :tasks tasks}

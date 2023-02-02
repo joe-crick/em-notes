@@ -13,7 +13,9 @@
       [text-input {:label (grab :person/how-to-know-grumpy)
                    :property [:feedback :how-to-know-grumpy]}]
       [text-input {:label (grab :person/how-to-help-grumpy)
-                   :property [:feedback :how-to-help-grumpy]}]])))
+                   :property [:feedback :how-to-help-grumpy]}]
+      [text-input {:label (grab :person/three-hardest-things)
+                   :property [:feedback :three-hardest-things]}]])))
 
 (defn person-mood [person revise!]
   [section-toggle #(mood person revise!) (grab :person/mood)])

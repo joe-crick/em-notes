@@ -32,6 +32,13 @@
                          :what-need-to-do ""}}
               :tasks []
               :growth-metrics []
+              :attachment-style ""
+              :openness ""
+              :conscientiousness ""
+              :extroversion ""
+              :agreableness ""
+              :neuroticism ""
+              :three-hardest-things ""
               :perfs []}
    :active-person   {:first-name ""
                      :last-name ""
@@ -52,6 +59,13 @@
                                :what-need-to-do ""}}
                      :tasks []
                      :growth-metrics []
+                     :attachment-style ""
+                     :openness ""
+                     :conscientiousness ""
+                     :extroversion ""
+                     :agreableness ""
+                     :neuroticism ""
+                     :three-hardest-things ""
                      :perfs []}
    :default-modal {:title ""
                    :content nil
