@@ -2,12 +2,11 @@
   (:require
    [re-frame.core :as re-frame]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
-   [em-notes.lib.lower-case :refer [lower-case]]
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.notification-types :refer [notify]]
    [em-notes.lib.dissoc-in :refer [dissoc-in]]
    [em-notes.networking.api :refer [get-app-db, save-app-db]]
-   [em-notes.db :as db] 
+   [em-notes.db :as db]
    [em-notes.lib.get-person-id :refer [get-person-id]]))
 
 ;; NAVIGATION
@@ -86,9 +85,12 @@
  ::save-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
-            (let [{fname :first-name lname :last-name} person
-                  person-id (lower-case (str fname "-" lname))]
-              {:db (assoc-in db [:people (keyword person-id)] person)
+            (let [new-person? (nil? (:person-id person))
+                  person-id (if new-person? (str (random-uuid)) (:person-id person))
+                  {fname :first-name lname :last-name} person
+                  full-name (str fname " " lname)
+                  ]
+              {:db (assoc-in db [:people (keyword person-id)] (assoc person :full-name full-name :person-id person-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-person person-id]]
                     [:dispatch [::save-db]]]})))
@@ -97,13 +99,11 @@
  ::delete-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
-            (let [{fname :first-name lname :last-name} person
-                  name (lower-case (str fname "-" lname))]
-              {:db (dissoc-in db [:people] (keyword name))
-               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
-                    [:dispatch [::reset-active-person]]
-                    [:dispatch [::save-db]]
-                    [:dispatch [::navigate "/"]]]})))
+            {:db (dissoc-in db [:people] (keyword (:person-id person)))
+             :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                  [:dispatch [::reset-active-person]]
+                  [:dispatch [::save-db]]
+                  [:dispatch [::navigate "/"]]]}))
 
 (re-frame/reg-event-db
  ::set-active-person

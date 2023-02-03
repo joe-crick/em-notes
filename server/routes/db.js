@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const jsonFormat = require ('json-format');
 const file = './server/app-db.json'
 
 
@@ -16,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-  fs.writeFile(file, JSON.stringify(req.body), err => {
+  fs.writeFile(file, jsonFormat(req.body), err => {
     if (err) {
       console.error(err);
     }

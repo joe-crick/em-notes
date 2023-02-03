@@ -1,8 +1,9 @@
 (ns em-notes.views.people.person-profile.person-profile
-  (:require [em-notes.i18n.tr :refer [grab]]
-            [em-notes.components.section-toggle :refer [section-toggle]]
-            [em-notes.components.fields.text-input :refer [set-text-input]] 
-            [em-notes.components.fields.select :refer [set-select]]))
+  (:require
+   [em-notes.i18n.tr :refer [grab]]
+   [em-notes.components.section-toggle :refer [section-toggle]]
+   [em-notes.components.fields.text-input :refer [set-text-input]]
+   [em-notes.components.fields.select :refer [set-select]]))
 
 (defn profile [person revise!] 
   (let [text-input (set-text-input person revise!)

@@ -5,3 +5,5 @@
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
 * Remove all hard-coded bulma class references. Add them to a Map.
 * Persist tabbed views with query strings (People / Team, and Inside Person each tab.)
+* Format JSON of app-db
+* Migrate to Mongo

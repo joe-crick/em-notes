@@ -4,9 +4,7 @@
      [em-notes.routing.nav :as nav]
      [em-notes.subs :as subs]
      [em-notes.i18n.tr :refer [grab]]
-     [em-notes.lib.lower-case :refer [lower-case]] 
-     [em-notes.lib.table-style :refer [table-style]]
-     [em-notes.lib.nab :refer [nab]]))
+     [em-notes.lib.table-style :refer [table-style]]))
 
 (defn people []
   ;; setup local state
@@ -24,13 +22,12 @@
            [:th (grab :person/title)]
            [:th (grab :person/team)]]]
          [:tbody
-          (for [rec @people
-                :let [person (second (clj->js rec))
-                      person-id (lower-case (str (nab :first-name person) "-" (nab :last-name person)))
-                      person-name (str (nab :first-name person) " " (nab :last-name person))]]
+          (for [[_ person] @people
+                :let [person-id (:person-id person)
+                      person-name (:full-name person)]]
             ^{:key (random-uuid)} [:tr {:id person-id}
                                    [:td {:class "name"}
                                     [:button {:class "button is-ghost"
                                               :on-click #(nav/go :person (str "id=" person-id))} person-name]]
-                                   [:td {:class "team pt-4"} (nab :team person)]])]]]])))
+                                   [:td {:class "team pt-4"} (:team person)]])]]]])))
 

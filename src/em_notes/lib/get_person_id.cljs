@@ -1,7 +1,4 @@
-(ns em-notes.lib.get-person-id
-  (:require  
-   [em-notes.lib.lower-case :refer [lower-case]]))
+(ns em-notes.lib.get-person-id)
 
 (defn get-person-id [person]
-  (lower-case (str (:first-name person) "-" (:last-name person)))
-  )
+  (:person-id person))
