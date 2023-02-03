@@ -2,7 +2,7 @@
   (:require [em-notes.components.confirmation :refer [confirm]]
             [em-notes.components.modal :refer [modal]]
             [em-notes.components.toast :refer [toast]]
-            [em-notes.lib.join-str :refer [join-str]]
+            [em-notes.lib.bulma-cls :refer [bulma-cls]]
             [em-notes.subs :as subs]
             [em-notes.views.loading :as loading]
             [re-frame.core :as re-frame]))
@@ -17,7 +17,7 @@
         {m-content :content m-title :title m-display :display} @modal-config
         {msg :msg on-confirm :on-confirm c-display :display} @confirm-config
         [active-panel query] @route]
-    [:div {:class (join-str [:is-flex :is-flex-direction-column])} 
+    [:div {:class (bulma-cls :is-flex :is-flex-direction-column)} 
      [:section.hero-bg
       [:div {:class :container} [:img {:src "/img/em-notes-transp.png"}]]]
      [:section {:style {:margin-top "35px"}}

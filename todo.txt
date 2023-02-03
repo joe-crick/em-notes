@@ -2,5 +2,4 @@
 * Refactor events, make them more generic
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
 * Persist tabbed views with query strings (People / Team, and Inside Person each tab.)
-* Format JSON of app-db
 * Migrate to Mongo
