@@ -19,7 +19,10 @@
   (read-response (get-request) callback))
 
 (defn save-app-db [db] 
-  (http/post "http://localhost:3000/db" {:json-params  (dissoc db :active-panel)}))
+  (http/post "http://localhost:3000/db" {:json-params (dissoc db :active-panel)}))
+
+(defn save-person [person]
+  (http/post "http://localhost:3000/person" {:json-params person}))
 
 
 

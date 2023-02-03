@@ -2,11 +2,16 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const jsonFormat = require ('json-format');
-const file = './server/data/app-db.json'
+const filePath = './server/data/people/'
 
+
+function getFilePath(person) {
+  return `${filePath}${person["person-id"]}.json`
+}
 
 router.get('/', function(req, res, next) {
-  fs.readFile(file, 'utf8', (err, data) => {
+  const person = req.body;
+  fs.readFile(getFilePath(person), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
@@ -17,7 +22,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-  fs.writeFile(file, jsonFormat(req.body), err => {
+  const person = req.body;
+  fs.writeFile(getFilePath(person), jsonFormat(person), err => {
     if (err) {
       console.error(err);
     }
