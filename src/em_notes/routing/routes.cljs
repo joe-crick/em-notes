@@ -13,7 +13,7 @@
    {"/"      [home #(identity 1)]
     "/people" [people #(identity 1)]
     "/person" [person (fn [query]
-                        (let [event [::events/set-active-person (:id query)]]
+                        (let [event [::events/get-active-person (:id query)]]
                           (re-frame/dispatch [::events/add-to-route-queue [:dispatch event]])))]
     "/teams" [teams #(identity 1)]
     "/team" [team (fn [query]

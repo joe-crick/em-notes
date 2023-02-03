@@ -7,22 +7,38 @@
   (let [js-obj (.parse js/JSON json)]
     (js->clj js-obj :keywordize-keys true)))
 
-(defn get-request []
-  (go (<! (http/get "http://localhost:3000/db"))))
-
 
 (defn read-response [response-chan callback]
   (go (let [resp (<! response-chan)]  
         (callback (json-parse (:body resp))))))
 
-(defn get-app-db [callback]
-  (read-response (get-request) callback))
+(def api-url "http://localhost:3000/")
 
-(defn save-app-db [db] 
-  (http/post "http://localhost:3000/db" {:json-params (dissoc db :active-panel)}))
+;; APP DB
+
+(defn _get-app-db []
+  (go (<! (http/get (str api-url "db")))))
+
+(defn get-app-db [callback]
+  (read-response (_get-app-db) callback))
+
+(defn save-app-db [db]
+  (http/post (str api-url "db") {:json-params (dissoc db :active-panel)}))
+
+;; PERSON
+
+(defn _get-person [person-id]
+  (go (<! (http/get (str api-url "person?id=" person-id)))))
+
+(defn get-person [person-id callback]
+  (read-response (_get-person person-id) callback))
 
 (defn save-person [person]
-  (http/post "http://localhost:3000/person" {:json-params person}))
+  (http/post (str api-url "person") {:json-params person}))
+
+
+
+
 
 
 

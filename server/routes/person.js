@@ -5,12 +5,12 @@ const jsonFormat = require ('json-format');
 const filePath = './server/data/people/'
 
 
-function getFilePath(person) {
-  return `${filePath}${person["person-id"]}.json`
+function getFilePath(personId) {
+  return `${filePath}${personId}.json`
 }
 
 router.get('/', function(req, res, next) {
-  const person = req.body;
+  const person = req.query.id;
   fs.readFile(getFilePath(person), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-  const person = req.body;
+  const person = req.query.id;
   fs.writeFile(getFilePath(person), jsonFormat(person), err => {
     if (err) {
       console.error(err);

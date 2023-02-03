@@ -5,8 +5,7 @@
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
             [em-notes.lib.get-person-id :refer [get-person-id]]
             [em-notes.lib.notification-types :refer [notify]]
-            [em-notes.networking.api :refer [get-app-db save-app-db
-                                             save-person]]
+            [em-notes.networking.api :as api]
             [re-frame.core :as re-frame]))
 
 ;; NAVIGATION
@@ -83,6 +82,21 @@
 
 ;; PERSON
 
+(re-frame/reg-event-db
+ ::get-active-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ person-id]]
+            (api/get-person person-id (fn [person]
+                                        (re-frame/dispatch [::set-active-person person])))
+            db))
+
+(re-frame/reg-event-db
+ ::set-active-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ person]]
+            (prn "returned person" person)
+            (assoc db :active-person person)))
+
 (re-frame/reg-event-fx
  ::save-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -94,10 +108,9 @@
                   ]
               {:db (assoc-in db [:people (keyword person-id)] (assoc person :full-name full-name :person-id person-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]
-                    [:dispatch [::commit-db]]
-                    [:dispatch [::commit-person person]]
-                    ]})))
+                    [:dispatch-sync [::commit-db]]
+                    [:dispatch-sync [::commit-person person]]
+                    [:dispatch [::get-active-person person-id]]]})))
 
 (re-frame/reg-event-fx
  ::delete-person
@@ -108,13 +121,6 @@
                   [:dispatch [::reset-active-person]]
                   [:dispatch [::commit-db]]
                   [:dispatch [::navigate "/"]]]}))
-
-(re-frame/reg-event-db
- ::set-active-person
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ person-id]]
-            (let [person (get-in db [:people (keyword person-id)])]
-              (assoc db :active-person person))))
 
 (re-frame/reg-event-fx
  ::reset-active-person
@@ -138,7 +144,7 @@
                   updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))] 
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] updated-task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::commit-db]]]})))
 
@@ -149,7 +155,7 @@
             (let [[person task task-view] data
                   person-id (get-person-id person)]
               {:db (assoc db :active-task task)
-               :fx [[:dispatch [::set-active-person person-id]]
+               :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal {:title (grab :task/title)
                                              :content task-view
                                              :display "is-block"}]]
@@ -166,7 +172,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-task]]
                     [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -192,7 +198,7 @@
                   task-complete? (:completed task)
                   task-id (:task-id task)]
               {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id) :completed] (not task-complete?))
-               :fx [[:dispatch [::set-active-person person-id]]
+               :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
 
@@ -209,7 +215,7 @@
                   updated-metric (assoc metric :metric-id metric-id)]
               {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id)] updated-metric)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::commit-db]]]})))
 
@@ -220,7 +226,7 @@
             (let [[person metric metric-view] data
                   person-id (get-person-id person)]
               {:db (assoc db :active-growth-metric metric)
-               :fx [[:dispatch [::set-active-person person-id]]
+               :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal {:title (grab :growth-metric/title)
                                              :content metric-view
                                              :display "is-block"}]]
@@ -237,7 +243,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-metric]]
                     [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -267,7 +273,7 @@
                   updated-perf (assoc perf :perf-id perf-id)]
               {:db (assoc-in db [:people (keyword person-id) :perfs (keyword perf-id)] updated-perf)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::commit-db]]]})))
 
@@ -278,7 +284,7 @@
             (let [[person perf perf-view] data
                   person-id (get-person-id person)]
               {:db (assoc db :active-perf perf)
-               :fx [[:dispatch [::set-active-person person-id]]
+               :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal {:title (grab :perf/title)
                                              :content perf-view
                                              :display "is-block"}]]
@@ -295,7 +301,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-perf]]
                     [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -325,7 +331,7 @@
                   updated-one-on-one (assoc one-on-one :one-on-one-id one-on-one-id)] 
               {:db (assoc-in db [:people (keyword person-id) :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
                     [:dispatch [::commit-db]]]})))
 
@@ -336,7 +342,7 @@
             (let [[person one-on-one one-on-one-view] data
                   person-id (get-person-id person)]
               {:db (assoc db :active-one-on-one one-on-one)
-               :fx [[:dispatch [::set-active-person person-id]]
+               :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal {:title (grab :one-on-one/title)
                                              :content one-on-one-view
                                              :display "is-block"}]]
@@ -353,7 +359,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-one-on-one]]
                     [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::set-active-person person-id]]
+                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -433,7 +439,7 @@
  ::initialize-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [_ _]
-            (get-app-db (fn [db]
+            (api/get-app-db (fn [db]
                           (re-frame/dispatch [::set-init-db db])))
             db/default-db))
 
@@ -449,12 +455,12 @@
  ::commit-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (save-app-db {:people (:people db) :teams (:teams db)})
+            (api/save-app-db {:people (:people db) :teams (:teams db)})
             db))
 
 (re-frame/reg-event-db
  ::commit-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ save-person]]
-            (save-person person)
+ (fn-traced [db [_ person]]
+            (api/save-person person)
             db))
