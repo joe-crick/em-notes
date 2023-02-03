@@ -25,7 +25,6 @@
                 :let [team-name (:name team)
                       team-id (:team-id team)]]
             (do
-              (prn "name" team)
               ^{:key (random-uuid)} [:tr {:id team-id}
                                    [:td {:class "name"}
                                     [:button {:class "button is-ghost"

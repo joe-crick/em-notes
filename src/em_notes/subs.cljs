@@ -53,6 +53,11 @@
    (:active-perf db)))
 
 (re-frame/reg-sub
+ ::active-home-view
+ (fn [db _]
+   (:active-home-view db)))
+
+(re-frame/reg-sub
  ::modal
  (fn [db _]
    (:modal db)))

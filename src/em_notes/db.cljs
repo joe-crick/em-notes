@@ -124,4 +124,5 @@
                  :notes ""}
    :toasts []
    :modal {}
-   :init-queue []})
+   :init-queue []
+   :active-home-view nil})

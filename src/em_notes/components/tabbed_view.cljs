@@ -2,14 +2,16 @@
   (:require [em-notes.components.card :refer [card]]
             [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.lib.local-state :refer [local-state]]
-            [reagent.core :as r]))
+            [re-frame.core :as rf]
+            [em-notes.events :as events]))
 
 
 (defn current-tab? [tab cur-tab]
   (if (= cur-tab tab) "is-info" "")) 
 
 (defn tabbed-view [views]
-  (let [[tab change-tab!] (local-state (ffirst (:tab-navs views)))
+  (let [active-view (:active-view views)
+        [tab change-tab!] (local-state (if (nil? active-view) (ffirst (:tab-navs views)) active-view))
         tab-navs (:tab-navs views)
         action-buttons (:action-buttons views)]
     (fn []
@@ -20,17 +22,21 @@
 
      ;; Tabs
        [:div {:class "container mb-1"}
-        [left-right (fn []) (fn [] [:div
-                                    (for [[name label] tab-navs]
-                                      ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
-                                                                      :data-name name
-                                                                      :on-click #(change-tab! name)} label])])]]
+        [left-right (fn []) (fn []
+                              [:div
+                               (for [[name label] tab-navs]
+                                 ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                                                 :data-name name
+                                                                 :on-click (fn []
+                                                                              (rf/dispatch [::events/set-active-home-view name])
+                                                                              (change-tab! name))} label])])]]
      ;; Actions
        [:div.container
         [left-right (fn [])
-         (fn [] [:div.container
-                 (for [[on-click label btn-type] action-buttons]
-                   ^{:key (random-uuid)} [:button {:class (str "button mt-5 mb-3 " btn-type) :on-click on-click} label])])]]
+         (fn []
+           [:div.container
+            (for [[on-click label btn-type] action-buttons]
+              ^{:key (random-uuid)} [:button {:class (str "button mt-5 mb-3 " btn-type) :on-click on-click} label])])]]
 
      ;; Body
        [card

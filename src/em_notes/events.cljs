@@ -411,6 +411,20 @@
               {:db update
                :fx [events]})))
 
+;; ACTIVE HOME VIEW
+
+(re-frame/reg-event-db
+ ::set-active-home-view
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ active-view]]
+            (assoc db :active-home-view active-view)))
+
+(re-frame/reg-event-fx
+ ::reset-active-home-view
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ _]]
+            (assoc db :active-home-view "")))
+
 ;; DB
 
 (re-frame/reg-event-db
