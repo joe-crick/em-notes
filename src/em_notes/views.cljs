@@ -1,11 +1,11 @@
 (ns em-notes.views
-  (:require
-   [re-frame.core :as re-frame]
-   [em-notes.subs :as subs]
-   [em-notes.views.loading :as loading]
-   [em-notes.components.toast :refer [toast]]
-   [em-notes.components.modal :refer [modal]]
-   [em-notes.components.confirmation :refer [confirm]]))
+  (:require [em-notes.components.confirmation :refer [confirm]]
+            [em-notes.components.modal :refer [modal]]
+            [em-notes.components.toast :refer [toast]]
+            [em-notes.lib.join-str :refer [join-str]]
+            [em-notes.subs :as subs]
+            [em-notes.views.loading :as loading]
+            [re-frame.core :as re-frame]))
 
 ;; See routes.cljs for the full routing table.
 (defn main-panel []
@@ -17,9 +17,9 @@
         {m-content :content m-title :title m-display :display} @modal-config
         {msg :msg on-confirm :on-confirm c-display :display} @confirm-config
         [active-panel query] @route]
-    [:div {:class "is-flex is-flex-direction-column "}
+    [:div {:class (join-str [:is-flex :is-flex-direction-column])} 
      [:section.hero-bg
-      [:div {:class "container"} [:img {:src "/img/em-notes-transp.png"}]]]
+      [:div {:class :container} [:img {:src "/img/em-notes-transp.png"}]]]
      [:section {:style {:margin-top "35px"}}
       [toast toasts]
       [confirm c-display msg on-confirm]

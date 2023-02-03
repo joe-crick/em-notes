@@ -1,8 +1,6 @@
 * Add person availability (integrate with calendar?)
-* Adjust the db structure to support teams
 * Refactor events, make them more generic
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
-* Remove all hard-coded bulma class references. Add them to a Map.
 * Persist tabbed views with query strings (People / Team, and Inside Person each tab.)
 * Format JSON of app-db
 * Migrate to Mongo
