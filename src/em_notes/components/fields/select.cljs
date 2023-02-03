@@ -13,7 +13,7 @@
        [:label label]
        [:div.control
         [:div {:class (str "select" (if multi? " is-multiple" ""))}
-         [:select {:value (if (nil? (get-in @atom property)) default-value (get-in @atom property))
+         [:select {:value (if (nil? (get-in @atom property)) (or default-value "") (get-in @atom property))
                    :class className
                    :id name
                    :html-for name
