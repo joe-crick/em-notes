@@ -22,11 +22,12 @@
            [:th (grab :team/title)]]]
          [:tbody
           (for [[_ team] @teams
-                :let [team-name (:name team)]]
+                :let [team-name (:name team)
+                      team-id (:team-id team)]]
             (do
               (prn "name" team)
-              ^{:key (random-uuid)} [:tr {:id team-name}
+              ^{:key (random-uuid)} [:tr {:id team-id}
                                    [:td {:class "name"}
                                     [:button {:class "button is-ghost"
-                                              :on-click #(nav/go :team (str "id=" team-name))} team-name]]]))]]]])))
+                                              :on-click #(nav/go :team (str "id=" team-id))} team-name]]]))]]]])))
 

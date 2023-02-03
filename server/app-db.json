@@ -1,9 +1,20 @@
 {
-	"4e002447-0d56-42cb-8de8-95ce3907ce34": {
-		"first-name": "Rodney",
-		"last-name": "Fartfinger",
-		"team": "Cheese Patrol",
-		"full-name": "Rodney Fartfinger",
-		"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+	"people": {
+		"4e002447-0d56-42cb-8de8-95ce3907ce34": {
+			"first-name": "Rodney",
+			"last-name": "Fartfinger",
+			"team": "Cheese Patrol",
+			"full-name": "Rodney Fartfinger",
+			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+		}
+	},
+	"teams": {
+		"6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b": {
+			"people": [],
+			"name": "Test Team",
+			"charter": "Farting",
+			"values": "Poo",
+			"team-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b"
+		}
 	}
 }

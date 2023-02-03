@@ -48,16 +48,18 @@
  ::save-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            {:db (assoc-in db [:teams (keyword (:name team))] team)
-             :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                  [:dispatch [::set-active-team (:name team)]]
-                  [:dispatch [::save-db]]]}))
+            (let [new-team? (nil? (:team-id team))
+                  team-id (if new-team? (str (random-uuid)) (:team-id team))]
+              {:db (assoc-in db [:teams (keyword team-id)] (assoc team :team-id team-id))
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::set-active-team (:team-id team)]]
+                    [:dispatch [::save-db]]]})))
 
 (re-frame/reg-event-fx
  ::delete-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            {:db (dissoc-in db [:teams] (keyword (:name team)))
+            {:db (dissoc-in db [:teams] (keyword (:team-id team)))
              :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                   [:dispatch [::reset-active-team]]
                   [:dispatch [::save-db]]
@@ -424,12 +426,12 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ api-db]]
             (let [events (:init-queue db)]
-              {:db (assoc db :people api-db :initialised true)
+              {:db (assoc db :people (:people api-db) :teams (:teams api-db) :initialised true)
                :fx events})))
 
 (re-frame/reg-event-db
  ::save-db
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (save-app-db (:people db))
+            (save-app-db {:people (:people db) :teams (:teams db)})
             db))

@@ -1,4 +1,3 @@
-* Use UNIDs for all people, instead of fname-lname
 * Add person availability (integrate with calendar?)
 * Adjust the db structure to support teams
 * Refactor events, make them more generic
