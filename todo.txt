@@ -2,3 +2,4 @@
 * Refactor events, make them more generic
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
 * Migrate to mongo
+* Title not working in tabbed-view - active-person not being set???

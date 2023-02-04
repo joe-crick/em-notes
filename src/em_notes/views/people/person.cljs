@@ -16,11 +16,11 @@
 
 (defn person []
   (let [active-person (rf/subscribe [::subs/active-person])]
+    (prn "person " @active-person)
     (fn []
       [:section {:style {:margin-top "-40px"}}
        [:div {:class "container"}
         [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
-
        [tabbed-view {:tab-navs [[:profile (grab :person/profile)]
                                 [:performance (grab :person/performance)]
                                 [:career-growth (grab :person/career-growth)]
@@ -34,4 +34,4 @@
                      :action-buttons [[#(show-confirm (grab :person/confirm-delete) [::events/delete-person @active-person])
                                        (str (grab :form/delete) " " (grab :person/title))
                                        "is-danger"]]
-                     :title (str (:first-name @active-person) " " (:last-name @active-person))}]])))
+                     :title (:full-name @active-person)}]])))

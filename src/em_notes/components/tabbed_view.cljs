@@ -9,11 +9,11 @@
 (defn current-tab? [tab cur-tab]
   (if (= cur-tab tab) "is-info" "")) 
 
-(defn tabbed-view [views is-home?]
-  (let [active-view (:active-view views)
-        [tab change-tab!] (local-state (if (nil? active-view) (ffirst (:tab-navs views)) active-view))
-        tab-navs (:tab-navs views)
-        action-buttons (:action-buttons views)
+(defn tabbed-view [views-config is-home?]
+  (let [active-view (:active-view views-config)
+        [tab change-tab!] (local-state (if (nil? active-view) (ffirst (:tab-navs views-config)) active-view))
+        tab-navs (:tab-navs views-config)
+        action-buttons (:action-buttons views-config)
         save-tab-view (if (or (nil? is-home?) (= is-home? false))
                         (fn [])
                         (fn [name] (rf/dispatch [::events/set-active-home-view name])))]
@@ -44,7 +44,7 @@
      ;; Body
        [card
         (fn [] [:div
-                [:h1 {:class "title"} (:title views)]
-                [(get-in views [:views @tab] (fn [] [:div.container "Not Found"]))]])]])))
+                [:h1 {:class "title"} (:title views-config)]
+                [(get-in views-config [:views @tab] (fn [] [:div.container "Not Found"]))]])]])))
 
 

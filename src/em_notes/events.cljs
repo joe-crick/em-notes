@@ -4,8 +4,11 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
             [em-notes.lib.get-person-id :refer [get-person-id]]
+            [em-notes.lib.get-sub-person :refer [get-sub-person]]
             [em-notes.lib.notification-types :refer [notify]]
             [em-notes.lib.is-blank-id :refer [is-blank-id]]
+            [em-notes.lib.person-full-name :refer [person-full-name]]
+            [em-notes.lib.get-unid :refer [get-unid]]
             [em-notes.networking.api :as api]
             [re-frame.core :as re-frame]))
 
@@ -101,15 +104,15 @@
  ::save-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
-            (let [new-person? (is-blank-id :person-id person)
-                  person-id (if new-person? (str (random-uuid)) (:person-id person))
-                  {fname :first-name lname :last-name} person
-                  full-name (str fname " " lname)
-                  ]
-              {:db (assoc-in db [:people (keyword person-id)] (assoc person :full-name full-name :person-id person-id))
+            (let [person-id (get-unid :person-id person)
+                  full-name (person-full-name person)
+                  new? (is-blank-id :person-id person)
+                  new-person (if new? (assoc person :full-name full-name :person-id person-id) person)
+                  new-db (assoc-in db [:people (keyword person-id)] (get-sub-person new-person))]
+              {:db (assoc-in db [:people (keyword person-id)] new-db)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::commit-db]]
-                    [:dispatch [::commit-person person]]
+                    [:dispatch [::commit-person new-person]]
                     [:dispatch [::get-active-person person-id]]]})))
 
 (re-frame/reg-event-fx
@@ -138,15 +141,13 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
-                  person-id (get-person-id person)
-                  new-task? (is-blank-id :task-id task)
-                  task-id (if new-task? (str (random-uuid)) (:task-id task))
-                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))] 
-              {:db (assoc-in db [:people (keyword person-id) :data :tasks (keyword task-id)] updated-task)
+                  task-id (get-unid :task-id task)
+                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))
+                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)] 
+              {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::commit-db]]]})))
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::commit-person new-person]]]})))
 
 (re-frame/reg-event-fx
  ::edit-task
@@ -166,21 +167,20 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
-                  person-id (get-person-id person)
-                  task-id (:task-id task)]
-              {:db (dissoc-in db [:people (keyword person-id) :data :tasks] (keyword task-id))
+                  task-id (:task-id task)
+                  new-person (dissoc-in person [:data :tasks] (keyword task-id))]
+              {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-task]]
-                    [:dispatch [::set-modal (:default-modal db)]]
-                    [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::commit-db]]]})))
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::commit-person new-person]]]})))
 
 (re-frame/reg-event-fx
  ::cancel-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-task (:default-task db))
-             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+             :fx [[:dispatch [::reset-modal]]]}))
 
 (re-frame/reg-event-db
  ::set-active-task
@@ -210,13 +210,13 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person metric] data
                   person-id (get-person-id person)
-                  new-metric? (is-blank-id :metric-id metric) 
-                  metric-id (if new-metric? (str (random-uuid)) (:metric-id metric))
-                  updated-metric (assoc metric :metric-id metric-id)]
+                  metric-id (get-unid :metric-id metric)
+                  updated-metric (assoc metric :metric-id metric-id)
+                  new-person (assoc-in person [:data :growth-metrics (keyword task-id)] updated-task)]
               {:db (assoc-in db [:people (keyword person-id) :data :growth-metrics (keyword metric-id)] updated-metric)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -242,7 +242,7 @@
               {:db (dissoc-in db [:people (keyword person-id) :data :growth-metrics] (keyword metric-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-metric]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
@@ -251,7 +251,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-growth-metric (:default-metric db))
-             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+             :fx [[:dispatch [::reset-modal]]]}))
 
 (re-frame/reg-event-db
  ::set-active-growth-metric
@@ -268,13 +268,12 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person perf] data
                   person-id (get-person-id person)
-                  new-perf? (is-blank-id :perf-id perf)
-                  perf-id (if new-perf? (str (random-uuid)) (:perf-id perf))
+                  perf-id (get-unid :perf-id perf)
                   updated-perf (assoc perf :perf-id perf-id)]
               {:db (assoc-in db [:people (keyword person-id) :data :perfs (keyword perf-id)] updated-perf)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -300,7 +299,7 @@
               {:db (dissoc-in db [:people (keyword person-id) :data :perfs] (keyword perf-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-perf]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
@@ -309,7 +308,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-perf (:default-perf db))
-             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+             :fx [[:dispatch [::reset-modal]]]}))
 
 (re-frame/reg-event-db
  ::set-active-perf
@@ -326,13 +325,12 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person one-on-one] data
                   person-id (get-person-id person)
-                  new-one-on-one? (is-blank-id :one-on-one-id one-on-one)
-                  one-on-one-id (if new-one-on-one? (str (random-uuid)) (:one-on-one-id one-on-one))
+                  one-on-one-id (get-unid :one-on-one-id one-on-one)
                   updated-one-on-one (assoc one-on-one :one-on-one-id one-on-one-id)] 
               {:db (assoc-in db [:people (keyword person-id) :data :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
@@ -358,7 +356,7 @@
               {:db (dissoc-in db [:people (keyword person-id) :data :one-on-ones] (keyword one-on-one-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-one-on-one]]
-                    [:dispatch [::set-modal (:default-modal db)]]
+                    [:dispatch [::reset-modal]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
@@ -367,7 +365,7 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-one-on-one (:default-one-on-one db))
-             :fx [[:dispatch [::set-modal (:default-modal db)]]]}))
+             :fx [[:dispatch [::reset-modal]]]}))
 
 (re-frame/reg-event-db
  ::set-active-one-on-one
@@ -384,6 +382,12 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ modal-config]]
             (assoc db :modal modal-config)))
+
+(re-frame/reg-event-db
+ ::reset-modal
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ _]]
+            (assoc db :modal (:default-modal db))))
 
 ;; CONFIRM
 
@@ -425,7 +429,6 @@
  ::set-active-home-view
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ active-view]]
-            (prn "active-home-view" active-view)
             (assoc db :active-home-view active-view)))
 
 (re-frame/reg-event-fx
