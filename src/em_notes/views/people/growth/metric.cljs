@@ -34,4 +34,4 @@
                     :property [:comments]}]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-metric [@active-person @metric]])), #(rf/dispatch [::events/cancel-metric])]]])))
+                       (rf/dispatch [::events/save-item [@active-person @metric :growth-metrics :metric-id]])), #(rf/dispatch [::events/cancel-metric])]]])))

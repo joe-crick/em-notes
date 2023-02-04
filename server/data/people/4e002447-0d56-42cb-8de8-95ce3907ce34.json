@@ -12,6 +12,40 @@
 	"data": {
 		"tasks": {
 			
+		},
+		"growth-metrics": {
+			"a500ef2f-746a-4ad6-95cc-c67f29926e7e": {
+				"metric-id": "a500ef2f-746a-4ad6-95cc-c67f29926e7e",
+				"name": "qwer",
+				"details": "qwer",
+				"progress": "In progress",
+				"comments": "qwer"
+			}
+		},
+		"perfs": {
+			"db2e4dd7-06bf-4bae-a928-226bbc39d987": {
+				"perf-id": "db2e4dd7-06bf-4bae-a928-226bbc39d987",
+				"week": "2023-02-06",
+				"velocity": "asdf",
+				"prs": "asdf",
+				"collaboration": "asdf",
+				"avg-est-accuracy": "asdf",
+				"notes": "asdf",
+				"progress": ":en missing text"
+			}
+		},
+		"one-on-ones": {
+			"613ad000-6f4c-49b4-b721-f61996071d8c": {
+				"perf-improvement": "",
+				"perf": "asdf",
+				"week-of": "2023-02-06",
+				"alignment": "asdf",
+				"development": "asdf",
+				"one-on-one-id": "613ad000-6f4c-49b4-b721-f61996071d8c",
+				"notes": "asdf",
+				"progress": ":en missing text",
+				"next-steps": "asdf"
+			}
 		}
 	}
 }

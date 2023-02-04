@@ -15,8 +15,7 @@
 
 
 (defn person []
-  (let [active-person (rf/subscribe [::subs/active-person])]
-    (prn "person " @active-person)
+  (let [active-person (rf/subscribe [::subs/active-person])] 
     (fn []
       [:section {:style {:margin-top "-40px"}}
        [:div {:class "container"}

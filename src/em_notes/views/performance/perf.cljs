@@ -34,4 +34,4 @@
                     :property [:notes]}]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-perf [@active-person @perf]])), #(rf/dispatch [::events/cancel-perf])]]])))
+                       (rf/dispatch [::events/save-item [@active-person @perf :perfs :perf-id]])), #(rf/dispatch [::events/cancel-perf])]]])))

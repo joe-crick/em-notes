@@ -33,4 +33,4 @@
                     :property [:notes]}]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-one-on-one [@active-person @one-on-one]])), #(rf/dispatch [::events/cancel-one-on-one])]]])))
+                       (rf/dispatch [::events/save-item [@active-person @one-on-one :one-on-ones :one-on-one-id]])), #(rf/dispatch [::events/cancel-one-on-one])]]])))

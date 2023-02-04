@@ -202,22 +202,24 @@
                     [:dispatch [::commit-db]]]})))
 
 
-;; GROWTH METRIC
+
+;; GENERIC
 
 (re-frame/reg-event-fx
- ::save-metric
+ ::save-item
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person metric] data
-                  person-id (get-person-id person)
-                  metric-id (get-unid :metric-id metric)
-                  updated-metric (assoc metric :metric-id metric-id)
-                  new-person (assoc-in person [:data :growth-metrics (keyword task-id)] updated-task)]
-              {:db (assoc-in db [:people (keyword person-id) :data :growth-metrics (keyword metric-id)] updated-metric)
+            (let [[person item item-set-key item-id-key] data 
+                  item-id (get-unid item-id-key item)
+                  updated-item (assoc item item-id-key item-id)
+                  new-person (assoc-in person [:data item-set-key item-id] updated-item)]
+              {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::get-active-person person-id]]
                     [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-db]]]})))
+                    [:dispatch [::commit-person new-person]]]})))
+
+
+;; GROWTH METRIC
 
 (re-frame/reg-event-fx
  ::edit-metric
@@ -263,20 +265,6 @@
 ;; PERFORMANCE
 
 (re-frame/reg-event-fx
- ::save-perf
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[person perf] data
-                  person-id (get-person-id person)
-                  perf-id (get-unid :perf-id perf)
-                  updated-perf (assoc perf :perf-id perf-id)]
-              {:db (assoc-in db [:people (keyword person-id) :data :perfs (keyword perf-id)] updated-perf)
-               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-db]]]})))
-
-(re-frame/reg-event-fx
  ::edit-perf
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
@@ -318,20 +306,6 @@
               (assoc db :active-perf perf))))
 
 ;; ONE ON ONE
-
-(re-frame/reg-event-fx
- ::save-one-on-one
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[person one-on-one] data
-                  person-id (get-person-id person)
-                  one-on-one-id (get-unid :one-on-one-id one-on-one)
-                  updated-one-on-one (assoc one-on-one :one-on-one-id one-on-one-id)] 
-              {:db (assoc-in db [:people (keyword person-id) :data :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
-               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::get-active-person person-id]]
-                    [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-db]]]})))
 
 (re-frame/reg-event-fx
  ::edit-one-on-one
