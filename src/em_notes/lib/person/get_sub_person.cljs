@@ -3,5 +3,6 @@
 (defn get-sub-person [person]
   {:first-name (:first-name person)
    :last-name (:last-name person)
+   :full-name (:full-name person)
    :team (:team person)
    :person-id (:person-id person)})

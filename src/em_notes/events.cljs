@@ -107,9 +107,8 @@
             (let [person-id (get-unid :person-id person)
                   full-name (person-full-name person)
                   new? (is-blank-id :person-id person)
-                  new-person (if new? (assoc person :full-name full-name :person-id person-id) person)
-                  new-db (assoc-in db [:people (keyword person-id)] (get-sub-person new-person))]
-              {:db (assoc-in db [:people (keyword person-id)] new-db)
+                  new-person (if new? (assoc person :full-name full-name :person-id person-id) person)]
+              {:db (assoc-in db [:people (keyword person-id)] (get-sub-person new-person))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::commit-db]]
                     [:dispatch [::commit-person new-person]]
