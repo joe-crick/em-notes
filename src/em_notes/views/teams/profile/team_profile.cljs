@@ -4,7 +4,7 @@
             [em-notes.components.form-footer :refer [form-footer]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.get-person-id :refer [get-person-id]]
+            [em-notes.lib.person.get-person-id :refer [get-person-id]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]))

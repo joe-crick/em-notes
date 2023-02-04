@@ -1,4 +1,4 @@
-(ns em-notes.lib.get-sub-person)
+(ns em-notes.lib.person.get-sub-person)
 
 (defn get-sub-person [person]
   {:first-name (:first-name person)

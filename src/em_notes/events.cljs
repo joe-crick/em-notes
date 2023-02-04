@@ -3,11 +3,11 @@
             [em-notes.db :as db]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
-            [em-notes.lib.get-person-id :refer [get-person-id]]
-            [em-notes.lib.get-sub-person :refer [get-sub-person]]
+            [em-notes.lib.person.get-person-id :refer [get-person-id]]
+            [em-notes.lib.person.get-sub-person :refer [get-sub-person]]
             [em-notes.lib.notification-types :refer [notify]]
             [em-notes.lib.is-blank-id :refer [is-blank-id]]
-            [em-notes.lib.person-full-name :refer [person-full-name]]
+            [em-notes.lib.person.person-full-name :refer [person-full-name]]
             [em-notes.lib.get-unid :refer [get-unid]]
             [em-notes.networking.api :as api]
             [re-frame.core :as re-frame]))
@@ -133,6 +133,58 @@
               {:db  (assoc db :active-person person)
                :fx [[:dispatch [::navigate "/"]]]})))
 
+;; GENERIC
+
+(re-frame/reg-event-fx
+ ::save-item
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person item item-set-key item-id-key data-mod] data
+                  item-id (get-unid item-id-key item)
+                  updated-item (assoc item item-id-key item-id)
+                  new-person (assoc-in person [:data item-set-key (keyword item-id)] (if (nil? data-mod) updated-item (data-mod updated-item)))]
+              {:db (assoc db :active-person new-person)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::commit-person new-person]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-item
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person item item-set-key item-id-key] data
+                  item-id (item-id-key item)
+                  new-person (dissoc-in person [:data item-set-key] (keyword item-id))]
+              {:db (assoc db :active-person new-person)
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-active :active-growth-metric (:default-metric db)]]
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::commit-person new-person]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-item
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [{person :person
+                   item :item
+                   item-form :item-form
+                   active-item-key :active-item-key
+                   title :title} data
+                  person-id (get-person-id person)]
+              {:db (assoc db active-item-key item)
+               :fx [[:dispatch [::get-active-person person-id]]
+                    [:dispatch [::set-modal {:title title
+                                             :content item-form
+                                             :display "is-block"}]]
+                    [:dispatch [::commit-db]]]})))
+
+(re-frame/reg-event-fx
+ ::cancel-active
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ active-key default]]
+            {:db (assoc db active-key default)
+             :fx [[:dispatch [::reset-modal]]]}))
+
 
 ;; TASK
 
@@ -169,13 +221,6 @@
             {:db (assoc db :active-task (:default-task db))
              :fx [[:dispatch [::reset-modal]]]}))
 
-(re-frame/reg-event-db
- ::set-active-task
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ [_ [person task-id]]]]
-            (let [task (get-in db [:people (keyword person) :data :tasks (keyword task-id)])]
-              (assoc db :active-task task))))
-
 (re-frame/reg-event-fx
  ::toggle-task-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -189,57 +234,19 @@
                     [:dispatch [::commit-db]]]})))
 
 
-
-;; GENERIC
-
-(re-frame/reg-event-fx
- ::save-item
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[person item item-set-key item-id-key data-mod] data
-                  new? (is-blank-id item)
-                  item-id (get-unid item-id-key item)
-                  updated-item (if new? (assoc item item-id-key item-id) item) 
-                  new-person (assoc-in person [:data item-set-key item-id] (if (nil? data-mod) updated-item (data-mod updated-item)))]
-              {:db (assoc db :active-person new-person)
-               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-person new-person]]]})))
-
-(re-frame/reg-event-fx
- ::delete-item
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[person item item-set-key item-id-key] data
-                  item-id (item-id-key item)
-                  new-person (dissoc-in person [:data item-set-key] (keyword item-id))]
-              {:db (assoc db :active-person new-person)
-               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
-                    [:dispatch [::cancel-active :active-growth-metric (:default-metric db)]]
-                    [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-person new-person]]]})))
-
-(re-frame/reg-event-fx
- ::cancel-active
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ active-key default]]
-            {:db (assoc db active-key default)
-             :fx [[:dispatch [::reset-modal]]]}))
-
 ;; GROWTH METRIC
 
 (re-frame/reg-event-fx
  ::edit-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person metric metric-view] data
-                  person-id (get-person-id person)]
-              {:db (assoc db :active-growth-metric metric)
-               :fx [[:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal {:title (grab :growth-metric/title)
-                                             :content metric-view
-                                             :display "is-block"}]]
-                    [:dispatch [::commit-db]]]})))
+            (let [[person metric metric-view] data]
+              {:db db
+               :fx [[:dispatch [::edit-item {:person person
+                                             :item metric
+                                             :item-form metric-view
+                                             :active-item-key :active-growth-metric
+                                             :title (grab :growth-metric/title)}]]]})))
 
 (re-frame/reg-event-fx
  ::cancel-metric
@@ -248,12 +255,6 @@
             {:db (assoc db :active-growth-metric (:default-metric db))
              :fx [[:dispatch [::reset-modal]]]}))
 
-(re-frame/reg-event-db
- ::set-active-growth-metric
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ [_ [person metric-id]]]]
-            (let [metric (get-in db [:people (keyword person) :data :growth-metrics (keyword metric-id)])]
-              (assoc db :active-growth-metric metric))))
 
 ;; PERFORMANCE
 
@@ -261,14 +262,13 @@
  ::edit-perf
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person perf perf-view] data
-                  person-id (get-person-id person)]
-              {:db (assoc db :active-perf perf)
-               :fx [[:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal {:title (grab :perf/title)
-                                             :content perf-view
-                                             :display "is-block"}]]
-                    [:dispatch [::commit-db]]]})))
+            (let [[person perf perf-view] data]
+              {:db db
+               :fx [[:dispatch [::edit-item {:person person
+                                             :item perf
+                                             :item-form perf-view
+                                             :active-item-key :active-perf
+                                             :title (grab :perf/title)}]]]})))
 
 (re-frame/reg-event-fx
  ::cancel-perf
@@ -277,12 +277,6 @@
             {:db (assoc db :active-perf (:default-perf db))
              :fx [[:dispatch [::reset-modal]]]}))
 
-(re-frame/reg-event-db
- ::set-active-perf
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ [_ [person perf-id]]]]
-            (let [perf (get-in db [:people (keyword person) :data :perfs (keyword perf-id)])]
-              (assoc db :active-perf perf))))
 
 ;; ONE ON ONE
 
@@ -290,14 +284,13 @@
  ::edit-one-on-one
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person one-on-one one-on-one-view] data
-                  person-id (get-person-id person)]
-              {:db (assoc db :active-one-on-one one-on-one)
-               :fx [[:dispatch [::get-active-person person-id]]
-                    [:dispatch [::set-modal {:title (grab :one-on-one/title)
-                                             :content one-on-one-view
-                                             :display "is-block"}]]
-                    [:dispatch [::commit-db]]]})))
+            (let [[person one-on-one one-on-one-view] data]
+              {:db db
+               :fx [[:dispatch [::edit-item {:person person
+                                             :item one-on-one
+                                             :item-form one-on-one-view
+                                             :active-item-key :active-one-on-one
+                                             :title (grab :one-on-one/title)}]]]})))
 
 (re-frame/reg-event-fx
  ::cancel-one-on-one
@@ -305,13 +298,6 @@
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-one-on-one (:default-one-on-one db))
              :fx [[:dispatch [::reset-modal]]]}))
-
-(re-frame/reg-event-db
- ::set-active-one-on-one
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ [_ [person one-on-one-id]]]]
-            (let [one-on-one (get-in db [:people (keyword person) :data :one-on-ones (keyword one-on-one-id)])]
-              (assoc db :active-one-on-one one-on-one))))
 
 
 ;; MODAL
