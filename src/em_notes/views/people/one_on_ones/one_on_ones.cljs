@@ -11,7 +11,7 @@
 
 (defn one-on-ones []
   (let [active-person (rf/subscribe [::subs/active-person])
-        one-on-ones (:one-on-ones @active-person)
+        one-on-ones (get-in @active-person [:data :one-on-ones])
         one-on-one-view one_on_one] 
     (fn []
       [:div.container

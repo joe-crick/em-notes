@@ -17,4 +17,4 @@
                              :teams teams}
                      :action-buttons []
                      :title (grab :home/home)
-                     :active-view view}]])))
+                     :active-view view} true]])))

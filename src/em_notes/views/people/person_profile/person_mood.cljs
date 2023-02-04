@@ -9,13 +9,13 @@
      [:fieldset
       [:legend (grab :person/mood)]
       [text-input {:label (grab :person/what-makes-grumpy)
-                   :property [:feedback :what-makes-grumpy]}]
+                   :property [:profile :feedback :what-makes-grumpy]}]
       [text-input {:label (grab :person/how-to-know-grumpy)
-                   :property [:feedback :how-to-know-grumpy]}]
+                   :property [:profile :feedback :how-to-know-grumpy]}]
       [text-input {:label (grab :person/how-to-help-grumpy)
-                   :property [:feedback :how-to-help-grumpy]}]
+                   :property [:profile :feedback :how-to-help-grumpy]}]
       [text-input {:label (grab :person/three-hardest-things)
-                   :property [:feedback :three-hardest-things]}]])))
+                   :property [:profile :feedback :three-hardest-things]}]])))
 
 (defn person-mood [person revise!]
   [section-toggle #(mood person revise!) (grab :person/mood)])

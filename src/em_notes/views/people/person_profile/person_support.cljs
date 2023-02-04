@@ -9,11 +9,11 @@
      [:fieldset
       [:legend (grab :person/support)]
       [text-input {:label (grab :person/support-manager)
-                   :property [:support :manager]}]
+                   :property [:profile :support :manager]}]
       [text-input {:label (grab :person/support-team)
-                   :property [:support :team]}]
+                   :property [:profile :support :team]}]
       [text-input {:label (grab :person/peers-outside)
-                   :property [:support :peers-outside]}]])))
+                   :property [:profile :support :peers-outside]}]])))
 
 (defn person-support [person revise!]
   [section-toggle #(support person revise!) (grab :person/support)])

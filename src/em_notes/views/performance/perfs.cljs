@@ -11,7 +11,7 @@
 
 (defn perfs []
   (let [active-person (rf/subscribe [::subs/active-person])
-        perfs (:perfs @active-person)] 
+        perfs (get-in @active-person [:data :perfs])] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "subtitle"}

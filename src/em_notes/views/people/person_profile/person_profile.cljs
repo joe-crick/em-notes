@@ -21,19 +21,19 @@
         {:class "columns"}
         [:div {:class "column"}
          [text-input {:label (grab :person/openness)
-                      :property [:openness]}]]
+                      :property [:profile :openness]}]]
         [:div {:class "column"}
          [text-input {:label (grab :person/conscientiousness)
-                      :property [:conscientiousness]}]]
+                      :property [:profile :conscientiousness]}]]
         [:div {:class "column"}
          [text-input {:label (grab :person/attachment-style)
-                      :property [:extroversion]}]]
+                      :property [:profile :extroversion]}]]
         [:div {:class "column"}
          [text-input {:label (grab :person/agreableness)
-                      :property [:agreableness]}]]
+                      :property [:profile :agreableness]}]]
         [:div {:class "column"}
          [text-input {:label (grab :person/neuroticism)
-                      :property [:neuroticism]}]]]])))
+                      :property [:profile :neuroticism]}]]]])))
 
 (defn person-profile [person revise!]
   [section-toggle #(profile person revise!) (grab :person/profile) false])

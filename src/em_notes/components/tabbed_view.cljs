@@ -9,11 +9,14 @@
 (defn current-tab? [tab cur-tab]
   (if (= cur-tab tab) "is-info" "")) 
 
-(defn tabbed-view [views]
+(defn tabbed-view [views is-home?]
   (let [active-view (:active-view views)
         [tab change-tab!] (local-state (if (nil? active-view) (ffirst (:tab-navs views)) active-view))
         tab-navs (:tab-navs views)
-        action-buttons (:action-buttons views)]
+        action-buttons (:action-buttons views)
+        save-tab-view (if (or (nil? is-home?) (= is-home? false))
+                        (fn [])
+                        (fn [name] (rf/dispatch [::events/set-active-home-view name])))]
     (fn []
       [:section
 
@@ -28,8 +31,8 @@
                                  ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
                                                                  :data-name name
                                                                  :on-click (fn []
-                                                                              (rf/dispatch [::events/set-active-home-view name])
-                                                                              (change-tab! name))} label])])]]
+                                                                             (save-tab-view name)
+                                                                             (change-tab! name))} label])])]]
      ;; Actions
        [:div.container
         [left-right (fn [])

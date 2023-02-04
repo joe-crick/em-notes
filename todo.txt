@@ -1,4 +1,4 @@
 * Add person availability (integrate with calendar?)
 * Refactor events, make them more generic
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
-* Migrate to multiple files on the local machine
+* Migrate to mongo

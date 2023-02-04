@@ -22,8 +22,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-  const person = req.query.id;
-  fs.writeFile(getFilePath(person), jsonFormat(person), err => {
+  const person = req.body;
+  fs.writeFile(getFilePath(person["person-id"]), jsonFormat(person), err => {
     if (err) {
       console.error(err);
     }

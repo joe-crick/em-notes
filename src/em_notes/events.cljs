@@ -5,6 +5,7 @@
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
             [em-notes.lib.get-person-id :refer [get-person-id]]
             [em-notes.lib.notification-types :refer [notify]]
+            [em-notes.lib.is-blank-id :refer [is-blank-id]]
             [em-notes.networking.api :as api]
             [re-frame.core :as re-frame]))
 
@@ -47,7 +48,7 @@
  ::save-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            (let [new-team? (nil? (:team-id team))
+            (let [new-team? (is-blank-id :team-id team)
                   team-id (if new-team? (str (random-uuid)) (:team-id team))]
               {:db (assoc-in db [:teams (keyword team-id)] (assoc team :team-id team-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
@@ -93,23 +94,22 @@
 (re-frame/reg-event-db
  ::set-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ person]]
-            (prn "returned person" person)
+ (fn-traced [db [_ person]] 
             (assoc db :active-person person)))
 
 (re-frame/reg-event-fx
  ::save-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ person]]
-            (let [new-person? (nil? (:person-id person))
+            (let [new-person? (is-blank-id :person-id person)
                   person-id (if new-person? (str (random-uuid)) (:person-id person))
                   {fname :first-name lname :last-name} person
                   full-name (str fname " " lname)
                   ]
               {:db (assoc-in db [:people (keyword person-id)] (assoc person :full-name full-name :person-id person-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch-sync [::commit-db]]
-                    [:dispatch-sync [::commit-person person]]
+                    [:dispatch [::commit-db]]
+                    [:dispatch [::commit-person person]]
                     [:dispatch [::get-active-person person-id]]]})))
 
 (re-frame/reg-event-fx
@@ -139,10 +139,10 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
                   person-id (get-person-id person)
-                  new-task? (= (:task-id task) "")
+                  new-task? (is-blank-id :task-id task)
                   task-id (if new-task? (str (random-uuid)) (:task-id task))
                   updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))] 
-              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id)] updated-task)
+              {:db (assoc-in db [:people (keyword person-id) :data :tasks (keyword task-id)] updated-task)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -168,7 +168,7 @@
             (let [[person task] data
                   person-id (get-person-id person)
                   task-id (:task-id task)]
-              {:db (dissoc-in db [:people (keyword person-id) :tasks] (keyword task-id))
+              {:db (dissoc-in db [:people (keyword person-id) :data :tasks] (keyword task-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-task]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -186,7 +186,7 @@
  ::set-active-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person task-id]]]]
-            (let [task (get-in db [:people (keyword person) :tasks (keyword task-id)])]
+            (let [task (get-in db [:people (keyword person) :data :tasks (keyword task-id)])]
               (assoc db :active-task task))))
 
 (re-frame/reg-event-fx
@@ -197,7 +197,7 @@
                   person-id (get-person-id person)
                   task-complete? (:completed task)
                   task-id (:task-id task)]
-              {:db (assoc-in db [:people (keyword person-id) :tasks (keyword task-id) :completed] (not task-complete?))
+              {:db (assoc-in db [:people (keyword person-id) :data :tasks (keyword task-id) :completed] (not task-complete?))
                :fx [[:dispatch [::get-active-person person-id]]
                     [:dispatch [::commit-db]]]})))
 
@@ -210,10 +210,10 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person metric] data
                   person-id (get-person-id person)
-                  new-metric? (nil? (:metric-id metric))
+                  new-metric? (is-blank-id :metric-id metric) 
                   metric-id (if new-metric? (str (random-uuid)) (:metric-id metric))
                   updated-metric (assoc metric :metric-id metric-id)]
-              {:db (assoc-in db [:people (keyword person-id) :growth-metrics (keyword metric-id)] updated-metric)
+              {:db (assoc-in db [:people (keyword person-id) :data :growth-metrics (keyword metric-id)] updated-metric)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -239,7 +239,7 @@
             (let [[person metric] data
                   person-id (get-person-id person)
                   metric-id (:metric-id metric)]
-              {:db (dissoc-in db [:people (keyword person-id) :growth-metrics] (keyword metric-id))
+              {:db (dissoc-in db [:people (keyword person-id) :data :growth-metrics] (keyword metric-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-metric]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -257,7 +257,7 @@
  ::set-active-growth-metric
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person metric-id]]]]
-            (let [metric (get-in db [:people (keyword person) :growth-metrics (keyword metric-id)])]
+            (let [metric (get-in db [:people (keyword person) :data :growth-metrics (keyword metric-id)])]
               (assoc db :active-growth-metric metric))))
 
 ;; PERFORMANCE
@@ -268,10 +268,10 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person perf] data
                   person-id (get-person-id person)
-                  new-perf? (nil? (:perf-id perf))
+                  new-perf? (is-blank-id :perf-id perf)
                   perf-id (if new-perf? (str (random-uuid)) (:perf-id perf))
                   updated-perf (assoc perf :perf-id perf-id)]
-              {:db (assoc-in db [:people (keyword person-id) :perfs (keyword perf-id)] updated-perf)
+              {:db (assoc-in db [:people (keyword person-id) :data :perfs (keyword perf-id)] updated-perf)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -297,7 +297,7 @@
             (let [[person perf] data
                   person-id (get-person-id person)
                   perf-id (:perf-id perf)]
-              {:db (dissoc-in db [:people (keyword person-id) :perfs] (keyword perf-id))
+              {:db (dissoc-in db [:people (keyword person-id) :data :perfs] (keyword perf-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-perf]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -315,7 +315,7 @@
  ::set-active-perf
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person perf-id]]]]
-            (let [perf (get-in db [:people (keyword person) :perfs (keyword perf-id)])]
+            (let [perf (get-in db [:people (keyword person) :data :perfs (keyword perf-id)])]
               (assoc db :active-perf perf))))
 
 ;; ONE ON ONE
@@ -326,10 +326,10 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person one-on-one] data
                   person-id (get-person-id person)
-                  new-one-on-one? (= (:one-on-one-id one-on-one) "")
+                  new-one-on-one? (is-blank-id :one-on-one-id one-on-one)
                   one-on-one-id (if new-one-on-one? (str (random-uuid)) (:one-on-one-id one-on-one))
                   updated-one-on-one (assoc one-on-one :one-on-one-id one-on-one-id)] 
-              {:db (assoc-in db [:people (keyword person-id) :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
+              {:db (assoc-in db [:people (keyword person-id) :data :one-on-ones (keyword one-on-one-id)] updated-one-on-one)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::get-active-person person-id]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -355,7 +355,7 @@
             (let [[person one-on-one] data
                   person-id (get-person-id person)
                   one-on-one-id (:one-on-one-id one-on-one)]
-              {:db (dissoc-in db [:people (keyword person-id) :one-on-ones] (keyword one-on-one-id))
+              {:db (dissoc-in db [:people (keyword person-id) :data :one-on-ones] (keyword one-on-one-id))
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                     [:dispatch [::cancel-one-on-one]]
                     [:dispatch [::set-modal (:default-modal db)]]
@@ -373,7 +373,7 @@
  ::set-active-one-on-one
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ [_ [person one-on-one-id]]]]
-            (let [one-on-one (get-in db [:people (keyword person) :one-on-ones (keyword one-on-one-id)])]
+            (let [one-on-one (get-in db [:people (keyword person) :data :one-on-ones (keyword one-on-one-id)])]
               (assoc db :active-one-on-one one-on-one))))
 
 
@@ -425,6 +425,7 @@
  ::set-active-home-view
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ active-view]]
+            (prn "active-home-view" active-view)
             (assoc db :active-home-view active-view)))
 
 (re-frame/reg-event-fx

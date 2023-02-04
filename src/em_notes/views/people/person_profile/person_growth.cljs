@@ -9,11 +9,11 @@
       [:fieldset
        [:legend (grab :person/growth)]
        [text-input {:label (grab :person/current-goals)
-                    :property [:growth :current-goals]}]
+                    :property [:profile :growth :current-goals]}]
        [text-input {:label (grab :person/what-doing-now)
-                    :property [:growth :what-doing-now]}]
+                    :property [:profile :growth :what-doing-now]}]
        [text-input {:label (grab :person/what-need-to-do)
-                    :property [:growth :what-need-to-do]}]])))
+                    :property [:profile :growth :what-need-to-do]}]])))
 
 (defn person-growth [person revise!]
   [section-toggle #(growth person revise!) (grab :person/growth)])

@@ -11,7 +11,7 @@
 
 (defn metrics []
   (let [active-person (rf/subscribe [::subs/active-person])
-        metrics (:growth-metrics @active-person)
+        metrics (get-in @active-person [:data :growth-metrics])
         metric-view metric] 
     (fn []
       [:div.container

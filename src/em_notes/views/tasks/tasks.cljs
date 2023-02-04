@@ -11,7 +11,7 @@
 
 (defn tasks []
   (let [active-person (rf/subscribe [::subs/active-person])
-        tasks (:tasks @active-person)] 
+        tasks (get-in @active-person [:data :tasks])] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "subtitle"}
