@@ -1,5 +1,5 @@
 * Add person availability (integrate with calendar?)
 * Refactor Tasks and Perf views to have dynamic subscriptions (if possible)
 * Migrate to mongo
-* Title not working in tabbed-view - active-person not being set???
 * Restore default value of Begin to Metric dropdown in event (add callback)
+* Sub-views in person not refreshing

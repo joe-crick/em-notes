@@ -40,5 +40,5 @@
          [text-input {:label (grab :person/neuroticism)
                       :property [:profile :neuroticism]}]]]])))
 
-(defn person-profile [person revise!]
-  [section-toggle #(profile person revise!) (grab :person/profile) false])
+(defn person-profile []
+  [section-toggle #(profile) (grab :person/profile) false])

@@ -11,7 +11,6 @@
 
 (defn one-on-ones []
   (let [active-person (rf/subscribe [::subs/active-person])
-        one-on-ones (get-in @active-person [:data :one-on-ones])
         one-on-one-view one_on_one] 
     (fn []
       [:div.container
@@ -30,7 +29,7 @@
           [:th (grab :one-on-one/notes)]
           [:th (grab :table/actions)]]]
         [:tbody
-         (for [one-on-one one-on-ones
+         (for [one-on-one (get-in @active-person [:data :one-on-ones])
                :let [[_ one-on-one] one-on-one
                      one-on-one-id (:one-on-one-id one-on-one)]]
            ^{:key (random-uuid)} [:tr {:id one-on-one-id}

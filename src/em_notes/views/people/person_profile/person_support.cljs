@@ -21,5 +21,5 @@
        [text-input {:label (grab :person/peers-outside)
                     :property [:profile :support :peers-outside]}]])))
 
-(defn person-support [person revise!]
-  [section-toggle #(support person revise!) (grab :person/support)])
+(defn person-support []
+  [section-toggle #(support) (grab :person/support)])

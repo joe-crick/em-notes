@@ -10,8 +10,7 @@
             [re-frame.core :as rf]))
 
 (defn perfs []
-  (let [active-person (rf/subscribe [::subs/active-person])
-        perfs (get-in @active-person [:data :perfs])] 
+  (let [active-person (rf/subscribe [::subs/active-person])] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "subtitle"}
@@ -29,7 +28,7 @@
           [:th (grab :perf/notes)]
           [:th (grab :table/actions)]]]
         [:tbody
-         (for [perf perfs
+         (for [perf (get-in @active-person [:data :perfs])
                :let [[_ perf] perf
                      perf-id (:perf-id perf)]]
            ^{:key (random-uuid)} [:tr {:id perf-id}

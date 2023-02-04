@@ -106,8 +106,7 @@
  (fn-traced [{:keys [db]} [_ person]]
             (let [person-id (get-unid :person-id person)
                   full-name (person-full-name person)
-                  new? (is-blank-id :person-id person)
-                  new-person (if new? (assoc person :full-name full-name :person-id person-id) person)]
+                  new-person (assoc person :full-name full-name :person-id person-id)]
               {:db (assoc-in db [:people (keyword person-id)] (get-sub-person new-person))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::commit-db]]
@@ -132,6 +131,15 @@
               {:db  (assoc db :active-person person)
                :fx [[:dispatch [::navigate "/"]]]})))
 
+
+(re-frame/reg-event-db
+ ::set-person-field
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ val-update]]
+            (let [[property value] val-update]
+              (assoc-in db (apply conj [:active-person] property) value))))
+
+
 ;; GENERIC
 
 (re-frame/reg-event-fx
@@ -142,6 +150,8 @@
                   item-id (get-unid item-id-key item)
                   updated-item (assoc item item-id-key item-id)
                   new-person (assoc-in person [:data item-set-key (keyword item-id)] (if (nil? data-mod) updated-item (data-mod updated-item)))]
+              (prn "person" person)
+              (prn "new-person" new-person)
               {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]

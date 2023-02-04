@@ -22,5 +22,5 @@
        [text-input {:label (grab :person/what-rewards-wanted)
                     :property [:profile :feedback :what-rewards-wanted]}]])))
 
-(defn person-feedback [person revise!]
-  [section-toggle #(feedback person revise!) (grab :person/feedback)])
+(defn person-feedback []
+  [section-toggle #(feedback) (grab :person/feedback)])

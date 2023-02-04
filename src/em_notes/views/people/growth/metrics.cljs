@@ -10,11 +10,12 @@
             [re-frame.core :as rf]))
 
 (defn metrics []
-  (let [active-person (rf/subscribe [::subs/active-person])
-        metrics (get-in @active-person [:data :growth-metrics])
+  (let [active-person (rf/subscribe [::subs/active-person]) 
         metric-view metric] 
+    (prn "metrics"  (get-in @active-person [:data :growth-metrics]))
     (fn []
       [:div.container
+       [:div.is-hidden (:full-name @active-person)]
        [left-right (fn [] [:h1 {:class "subtitle"}
                            (grab :growth-metrics/title)])
         (fn [] [:button {:class "button is-primary"
@@ -27,7 +28,7 @@
           [:th (grab :growth-metrics/progress)]
           [:th (grab :table/actions)]]]
         [:tbody
-         (for [metric metrics
+         (for [metric (get-in @active-person [:data :growth-metrics])
                :let [[_ metric] metric
                      metric-id (:metric-id metric)]]
            ^{:key (random-uuid)} [:tr {:id metric-id}

@@ -20,5 +20,5 @@
        [text-input {:label (grab :person/what-need-to-do)
                     :property [:profile :growth :what-need-to-do]}]])))
 
-(defn person-growth [person revise!]
-  [section-toggle #(growth person revise!) (grab :person/growth)])
+(defn person-growth []
+  [section-toggle #(growth) (grab :person/growth)])

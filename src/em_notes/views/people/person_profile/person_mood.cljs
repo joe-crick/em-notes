@@ -22,5 +22,5 @@
        [text-input {:label (grab :person/three-hardest-things)
                     :property [:profile :feedback :three-hardest-things]}]])))
 
-(defn person-mood [person revise!]
-  [section-toggle #(mood person revise!) (grab :person/mood)])
+(defn person-mood []
+  [section-toggle #(mood) (grab :person/mood)])

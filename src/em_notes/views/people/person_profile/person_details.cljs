@@ -1,15 +1,17 @@
 (ns em-notes.views.people.person-profile.person-details
-  (:require
-   [em-notes.i18n.tr :refer [grab]]
-   [re-frame.core :as rf]
-   [em-notes.components.section-toggle :refer [section-toggle]]
-   [em-notes.components.fields.text-input :refer [set-text-input]]
-   [em-notes.subs :as subs]
-   [em-notes.lib.revise :refer [set-revise]]))
+  (:require [em-notes.components.fields.text-input :refer [set-text-input]]
+            [em-notes.components.section-toggle :refer [section-toggle]]
+            [em-notes.events :as events]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.get-evt-val :refer [get-evt-val]]
+            [em-notes.subs :as subs]
+            [re-frame.core :as rf]))
 
 (defn details [] 
   (let [person (rf/subscribe [::subs/active-person])
-        revise! (set-revise person)
+        revise! (fn [_ evt] 
+                  (let [value (get-evt-val evt)]
+                    (rf/dispatch [::events/set-person-field value])))
         text-input (set-text-input person revise!)]
     (fn []
       [:fieldset
@@ -21,5 +23,5 @@
        [text-input {:label (grab :person/team)
                     :property [:team]}]])))
 
-(defn person-details [person revise!]
-  [section-toggle #(details person revise!) (grab :person/details) true])
+(defn person-details []
+  [section-toggle #(details) (grab :person/details) true])

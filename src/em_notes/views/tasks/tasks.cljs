@@ -10,8 +10,7 @@
             [re-frame.core :as rf]))
 
 (defn tasks []
-  (let [active-person (rf/subscribe [::subs/active-person])
-        tasks (get-in @active-person [:data :tasks])] 
+  (let [active-person (rf/subscribe [::subs/active-person])] 
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class "subtitle"}
@@ -26,7 +25,7 @@
           [:th (grab :tasks/completed)]
           [:th (grab :table/actions)]]]
         [:tbody
-         (for [task tasks
+         (for [task (get-in @active-person [:data :tasks])
                :let [[_ task] task
                      task-id (:task-id task)
                      completed? (:completed task)]]
