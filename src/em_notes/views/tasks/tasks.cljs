@@ -41,4 +41,4 @@
                                     [:button {:class "button is-info is-fixed-100"
                                               :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task [@active-person task]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-person task :tasks :task-id]])} (grab :form/delete)]]]])]]])))

@@ -45,4 +45,4 @@
                                   [:td
                                    [:div {:class "buttons are-small is-grouped"}
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :one-on-ones/confirm-delete) [::events/delete-one-on-one [@active-person one-on-one]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :one-on-ones/confirm-delete) [::events/delete-item [@active-person one-on-one :one-on-ones :one-on-one-id]])} (grab :form/delete)]]]])]]])))

@@ -44,4 +44,4 @@
                                   [:td  
                                    [:div {:class "buttons are-small is-grouped"} 
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :perf/confirm-delete) [::events/delete-perf [@active-person perf]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :perf/confirm-delete) [::events/delete-item [@active-person perf :perfs :perf-id]])} (grab :form/delete)]]]])]]])))

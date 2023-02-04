@@ -39,4 +39,4 @@
                                   [:td
                                    [:div {:class "buttons are-small is-grouped"}
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :growth-metrics/confirm-delete) [::events/delete-metric [@active-person metric]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :growth-metrics/confirm-delete) [::events/delete-item [@active-person metric :growth-metrics :metric-id]])} (grab :form/delete)]]]])]]])))
