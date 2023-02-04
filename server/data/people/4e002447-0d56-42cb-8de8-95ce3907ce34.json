@@ -16,10 +16,10 @@
 		"growth-metrics": {
 			"06a70e9e-863a-4f2d-808f-3745a58cc7b8": {
 				"metric-id": "06a70e9e-863a-4f2d-808f-3745a58cc7b8",
-				"name": "Test Metric",
+				"name": "Test Metrics",
 				"details": "details",
 				"progress": "In progress",
-				"comments": "asdf"
+				"comments": "asdfs"
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 (ns em-notes.views.people.person
   (:require
-   [em-notes.components.tabbed-view :refer [tabbed-view]]
    [em-notes.events :as events]
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.lib.show-confirm :refer [show-confirm]]
@@ -10,27 +9,59 @@
    [em-notes.views.people.person-profile.profile-form :refer [profile]]
    [em-notes.views.performance.perfs :refer [perfs]]
    [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
+   [em-notes.lib.local-state :refer [local-state]]
    [em-notes.views.tasks.tasks :refer [tasks]]
+   [em-notes.components.card :refer [card]]
+   [em-notes.components.left-right-cols :refer [left-right]]
    [re-frame.core :as rf]))
 
+(defn current-tab? [tab cur-tab]
+  (if (= cur-tab tab) "is-info" ""))
 
 (defn person []
-  (let [active-person (rf/subscribe [::subs/active-person])] 
+  (let [active-person (rf/subscribe [::subs/active-person])
+        [tab change-tab!] (local-state :profile)
+        tab-navs [[:profile (grab :person/profile)]
+                  [:performance (grab :person/performance)]
+                  [:career-growth (grab :person/career-growth)]
+                  [:tasks (grab :person/tasks)]
+                  [:one-on-ones (grab :person/one-on-ones)]]
+        views {:profile profile
+               :performance perfs
+               :career-growth metrics
+               :tasks tasks
+               :one-on-ones one-on-ones}
+        action-buttons [[#(show-confirm (grab :person/confirm-delete) [::events/delete-person @active-person])
+                         (str (grab :form/delete) " " (grab :person/title))
+                         "is-danger"]]]
     (fn []
       [:section {:style {:margin-top "-40px"}}
        [:div {:class "container"}
         [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
-       [tabbed-view {:tab-navs [[:profile (grab :person/profile)]
-                                [:performance (grab :person/performance)]
-                                [:career-growth (grab :person/career-growth)]
-                                [:tasks (grab :person/tasks)]
-                                [:one-on-ones (grab :person/one-on-ones)]]
-                     :views {:profile profile
-                             :performance perfs
-                             :career-growth metrics
-                             :tasks tasks
-                             :one-on-ones one-on-ones}
-                     :action-buttons [[#(show-confirm (grab :person/confirm-delete) [::events/delete-person @active-person])
-                                       (str (grab :form/delete) " " (grab :person/title))
-                                       "is-danger"]]
-                     :title (:full-name @active-person)}]])))
+       [:section
+
+     ;; show in view to make atom reactive
+        [:div.is-hidden (str @tab)]
+
+     ;; Tabs
+        [:div {:class "container mb-1"}
+         [left-right (fn []) (fn []
+                               [:div
+                                (for [[name label] tab-navs]
+                                  ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                                                  :data-name name
+                                                                  :on-click (fn []
+                                                                              (change-tab! name))} label])])]]
+     ;; Actions
+        [:div.container
+         [left-right (fn [])
+          (fn []
+            [:div.container
+             (for [[on-click label btn-type] action-buttons]
+               ^{:key (random-uuid)} [:button {:class (str "button mt-5 mb-3 " btn-type) :on-click on-click} label])])]]
+
+     ;; Body
+        [card
+         (fn [] [:div
+                 [:h1 {:class "title"} (:full-name @active-person)]
+                 [(get views @tab (fn [] [:div.container "Not Found"]))]])]]])))

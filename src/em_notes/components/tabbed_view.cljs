@@ -1,9 +1,10 @@
 (ns em-notes.components.tabbed-view
-  (:require [em-notes.components.card :refer [card]]
-            [em-notes.components.left-right-cols :refer [left-right]]
-            [em-notes.lib.local-state :refer [local-state]]
-            [re-frame.core :as rf]
-            [em-notes.events :as events]))
+  (:require
+   [em-notes.components.card :refer [card]]
+   [em-notes.components.left-right-cols :refer [left-right]]
+   [em-notes.lib.local-state :refer [local-state]]
+   [re-frame.core :as rf]
+   [em-notes.events :as events]))
 
 
 (defn current-tab? [tab cur-tab]

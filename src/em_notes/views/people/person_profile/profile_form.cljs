@@ -1,7 +1,6 @@
 (ns em-notes.views.people.person-profile.profile-form
   (:require
    [re-frame.core :as rf]
-   [em-notes.lib.local-state :refer [local-state]]
    [em-notes.components.form-footer :refer [form-footer]]
    [em-notes.views.people.person-profile.person-details :refer [person-details]]
    [em-notes.views.people.person-profile.person-feedback :refer [person-feedback]]
@@ -14,25 +13,24 @@
    [em-notes.views.people.person-profile.person-profile :refer [person-profile]]))
 
 (defn profile []
-  (let [active-person (rf/subscribe [::subs/active-person])
-        [person revise!] (local-state @active-person)]
+  (let [active-person (rf/subscribe [::subs/active-person])]
     (fn []
       [:div.container
        [:h1 {:class "subtitle"}
         (grab :person/profile)]
        [:div
         [:form
-         [person-details person revise!]
+         [person-details]
          [:hr]
-         [person-feedback person revise!]
+         [person-feedback]
          [:hr]
-         [person-mood person revise!]
+         [person-mood]
          [:hr]
-         [person-support person revise!]
+         [person-support]
          [:hr]
-         [person-growth person revise!]
+         [person-growth]
          [:hr]
-         [person-profile person revise!]]
+         [person-profile]]
 
-        [form-footer #(rf/dispatch [::events/save-person @person]),
+        [form-footer #(rf/dispatch [::events/save-person @active-person]),
          #(rf/dispatch-sync [::events/reset-active-person])]]])))

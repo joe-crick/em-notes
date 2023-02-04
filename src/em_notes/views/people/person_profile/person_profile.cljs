@@ -3,11 +3,16 @@
    [em-notes.i18n.tr :refer [grab]]
    [em-notes.components.section-toggle :refer [section-toggle]]
    [em-notes.components.fields.text-input :refer [set-text-input]]
-   [em-notes.components.fields.select :refer [set-select]]))
+   [em-notes.components.fields.select :refer [set-select]]
+   [re-frame.core :as rf]
+   [em-notes.subs :as subs]
+   [em-notes.lib.revise :refer [set-revise]]))
 
-(defn profile [person revise!] 
-  (let [text-input (set-text-input person revise!)
-         select (set-select person revise!)]
+(defn profile [] 
+  (let [person (rf/subscribe [::subs/active-person])
+        revise! (set-revise person)
+        text-input (set-text-input person revise!)
+        select (set-select person revise!)]
     (fn []
       [:fieldset
        [:legend (grab :person/details)]

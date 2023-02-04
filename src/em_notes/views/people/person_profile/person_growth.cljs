@@ -1,10 +1,15 @@
 (ns em-notes.views.people.person-profile.person-growth
   (:require [em-notes.i18n.tr :refer [grab]]
             [em-notes.components.section-toggle :refer [section-toggle]]
-            [em-notes.components.fields.text-input :refer [set-text-input]]))
+            [em-notes.components.fields.text-input :refer [set-text-input]]
+            [re-frame.core :as rf]
+            [em-notes.subs :as subs]
+            [em-notes.lib.revise :refer [set-revise]]))
 
-(defn growth [person revise!]
-  (let [text-input (set-text-input person revise!)]
+(defn growth []
+  (let [person (rf/subscribe [::subs/active-person])
+        revise! (set-revise person)
+        text-input (set-text-input person revise!)]
     (fn []
       [:fieldset
        [:legend (grab :person/growth)]
