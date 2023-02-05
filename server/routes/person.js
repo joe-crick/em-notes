@@ -29,5 +29,17 @@ router.post('/', (req, res) => {
     }
   });
   res.send(JSON.stringify(req.body));
-})
+});
+
+router.delete('/', (req, res) => {
+  const person = req.body;
+  fs.unlink(getFilePath(person["person-id"]), (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+  })
+});
+
+
 module.exports = router;

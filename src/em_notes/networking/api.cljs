@@ -36,6 +36,9 @@
 (defn save-person [person]
   (http/post (str api-url "person") {:json-params person}))
 
+(defn del-person [person]
+  (http/delete (str api-url "person") {:json-params person}))
+
 
 
 

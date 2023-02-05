@@ -3,13 +3,13 @@
             [em-notes.db :as db]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
+            [em-notes.lib.get-unid :refer [get-unid]]
+            [em-notes.lib.is-blank-id :refer [is-blank-id]]
+            [em-notes.lib.notification-types :refer [notify]]
             [em-notes.lib.person.get-person-id :refer [get-person-id]]
             [em-notes.lib.person.get-sub-person :refer [get-sub-person]]
-            [em-notes.lib.notification-types :refer [notify]]
-            [em-notes.lib.is-blank-id :refer [is-blank-id]]
             [em-notes.lib.person.person-full-name :refer [person-full-name]]
-            [em-notes.lib.get-unid :refer [get-unid]]
-            [em-notes.networking.api :as api]
+            [em-notes.networking.api :as api :refer [del-person]]
             [re-frame.core :as re-frame]))
 
 ;; NAVIGATION
@@ -140,7 +140,24 @@
              :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
                   [:dispatch [::reset-active-person]]
                   [:dispatch [::commit-db]]
+                  [:dispatch [::commit-person-delete person]]
                   [:dispatch [::navigate "/"]]]}))
+
+(re-frame/reg-event-fx
+ ::create-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            (let [person (get-in db [:person])]
+              {:db  (assoc db :active-person person)
+               :fx [[:dispatch [::navigate #js{:name "person"}]]]})))
+
+(re-frame/reg-event-fx
+ ::commit-person-delete
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ person]]
+            (del-person person)
+            {}))
+
 
 (re-frame/reg-event-fx
  ::reset-active-person

@@ -14,7 +14,7 @@
     (fn []
       [:div
        [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
-        [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :person)}
+        [:div>button {:class (bulma-cls :button :is-link) :on-click #(re-frame/dispatch [::events/create-person])}
          (grab :home/create-person)]]
        [:div.container {:style {:margin-top "15px"}}
         [:table {:class (table-style)}
