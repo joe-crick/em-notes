@@ -1,14 +1,14 @@
 (ns em-notes.views.people.person-profile.person-mood
-  (:require [em-notes.i18n.tr :refer [grab]]
+  (:require [em-notes.components.fields.text-input :refer [set-text-input]]
             [em-notes.components.section-toggle :refer [section-toggle]]
-            [em-notes.components.fields.text-input :refer [set-text-input]]
-            [re-frame.core :as rf]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.revise :refer [get-revise!]]
             [em-notes.subs :as subs]
-            [em-notes.lib.revise :refer [set-revise]]))
+            [re-frame.core :as rf]))
 
 (defn mood []
   (let [person (rf/subscribe [::subs/active-person])
-        revise! (set-revise person)
+        revise! (get-revise!)
         text-input (set-text-input person revise!)]
     (fn []
       [:fieldset

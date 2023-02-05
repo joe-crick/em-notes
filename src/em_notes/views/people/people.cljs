@@ -4,6 +4,7 @@
               [em-notes.lib.table-style :refer [table-style]]
               [em-notes.routing.nav :as nav]
               [em-notes.subs :as subs]
+              [em-notes.events :as events]
               [re-frame.core :as re-frame]))
 
 (defn people []
@@ -28,6 +29,6 @@
             ^{:key (random-uuid)} [:tr {:id person-id}
                                    [:td.name
                                     [:button {:class (bulma-cls :button :is-ghost)
-                                              :on-click #(nav/go :person (str "id=" person-id))} person-name]]
+                                              :on-click #(re-frame/dispatch [::events/show-person person-id])} person-name]]
                                    [:td {:class (bulma-cls :team :pt-4)} (:team person)]])]]]])))
 

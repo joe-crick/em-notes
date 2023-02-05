@@ -17,7 +17,7 @@
 (re-frame/reg-event-fx
  ::navigate
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [_ [_ handler params]]
+ (fn-traced [_ [_ handler params]]          
             ;; Calls a registered effect (see routing.cljs)
             {:navigate [handler params]}))
 
@@ -86,19 +86,34 @@
 
 ;; PERSON
 
-(re-frame/reg-event-db
+(re-frame/reg-event-fx
  ::get-active-person
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ person-id]]
-            (api/get-person person-id (fn [person]
-                                        (re-frame/dispatch [::set-active-person person])))
-            db))
+ (fn [_ [_ person-id]]
+   (api/get-person person-id (fn [person]
+                               (re-frame/dispatch [::set-active-person person])))
+   {}))
+
 
 (re-frame/reg-event-db
  ::set-active-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [db [_ person]] 
+ (fn-traced [db [_ person]]
             (assoc db :active-person person)))
+
+(re-frame/reg-event-fx
+ ::show-person
+ (fn [_ [_ person-id]]
+   (api/get-person person-id (fn [person]
+                               (re-frame/dispatch [::set-returned-person person])))
+   {}))
+
+(re-frame/reg-event-fx
+ ::set-returned-person
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ person]]
+            {:db  (assoc db :active-person person)
+             :fx [[:dispatch [::navigate #js{:name "person"} (str "id=" (:person-id person))]]]}))
+
 
 (re-frame/reg-event-fx
  ::save-person
@@ -111,7 +126,7 @@
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::commit-db]]
                     [:dispatch [::commit-person new-person]]
-                    [:dispatch [::get-active-person person-id]]]})))
+                    [:dispatch [::set-active-person new-person]]]})))
 
 (re-frame/reg-event-fx
  ::delete-person
@@ -150,8 +165,6 @@
                   item-id (get-unid item-id-key item)
                   updated-item (assoc item item-id-key item-id)
                   new-person (assoc-in person [:data item-set-key (keyword item-id)] (if (nil? data-mod) updated-item (data-mod updated-item)))]
-              (prn "person" person)
-              (prn "new-person" new-person)
               {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]

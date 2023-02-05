@@ -1,15 +1,14 @@
 (ns em-notes.views.people.person-profile.person-support
-  (:require
-   [em-notes.i18n.tr :refer [grab]]
-   [em-notes.components.section-toggle :refer [section-toggle]]
-   [em-notes.components.fields.text-input :refer [set-text-input]]
-   [re-frame.core :as rf]
-   [em-notes.subs :as subs]
-   [em-notes.lib.revise :refer [set-revise]]))
+  (:require [em-notes.components.fields.text-input :refer [set-text-input]]
+            [em-notes.components.section-toggle :refer [section-toggle]]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.revise :refer [get-revise!]]
+            [em-notes.subs :as subs]
+            [re-frame.core :as rf]))
 
 (defn support []
   (let [person (rf/subscribe [::subs/active-person])
-        revise! (set-revise person)
+        revise! (get-revise!)
         text-input (set-text-input person revise!)]
     (fn []
       [:fieldset
