@@ -4,5 +4,16 @@
 	"team": "Pisces",
 	"attachment-style": "Anxious",
 	"full-name": "Tiffany Fishjuggler",
-	"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc"
+	"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc",
+	"data": {
+		"tasks": {
+			"2c018cbb-b269-4da7-a942-b5ac19d44039": {
+				"task-id": "2c018cbb-b269-4da7-a942-b5ac19d44039",
+				"name": "Get Course for Tiffany",
+				"details": "Spring Book Course from Coursera",
+				"due-date": "2023-02-15",
+				"completed": false
+			}
+		}
+	}
 }

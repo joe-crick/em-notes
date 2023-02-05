@@ -100,6 +100,8 @@
  (fn-traced [db [_ person]]
             (assoc db :active-person person)))
 
+;; BEGIN person navigation
+
 (re-frame/reg-event-fx
  ::show-person
  (fn [_ [_ person-id]]
@@ -113,6 +115,8 @@
  (fn-traced [{:keys [db]} [_ person]]
             {:db  (assoc db :active-person person)
              :fx [[:dispatch [::navigate #js{:name "person"} (str "id=" (:person-id person))]]]}))
+
+;; END person navigation
 
 
 (re-frame/reg-event-fx
@@ -244,16 +248,28 @@
              :fx [[:dispatch [::reset-modal]]]}))
 
 (re-frame/reg-event-fx
+ ::save-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task] data
+                  task-id (get-unid :task-id task)
+                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))
+                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)]
+              {:db (assoc db :active-person new-person)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::commit-person new-person]]]})))
+
+(re-frame/reg-event-fx
  ::toggle-task-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
             (let [[person task] data
-                  person-id (get-person-id person)
-                  task-complete? (:completed task)
-                  task-id (:task-id task)]
-              {:db (assoc-in db [:people (keyword person-id) :data :tasks (keyword task-id) :completed] (not task-complete?))
-               :fx [[:dispatch [::get-active-person person-id]]
-                    [:dispatch [::commit-db]]]})))
+                  task-id (get-unid :task-id task)
+                  updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
+                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)]
+              {:db (assoc db :active-person new-person)
+               :fx [[:dispatch [::commit-person new-person]]]})))
 
 
 ;; GROWTH METRIC

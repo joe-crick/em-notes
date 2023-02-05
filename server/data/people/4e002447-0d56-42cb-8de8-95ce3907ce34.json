@@ -1,8 +1,8 @@
 {
-	"first-name": "Rodney",
+	"first-name": "Rodman",
 	"last-name": "Goatler",
 	"team": "Cheese Patrol",
-	"full-name": "Rodney Goatler",
+	"full-name": "Rodman Goatler",
 	"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
 	"profile": {
 		"feedback": {
@@ -26,6 +26,13 @@
 				"details": "details",
 				"progress": "In progress",
 				"comments": "asdfs"
+			},
+			"827ff0aa-c6a3-4f6b-8373-514a9f687a3a": {
+				"metric-id": "827ff0aa-c6a3-4f6b-8373-514a9f687a3a",
+				"name": "Another Metric",
+				"details": "test",
+				"progress": "In progress",
+				"comments": "test"
 			}
 		},
 		"perfs": {

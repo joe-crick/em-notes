@@ -1,9 +1,9 @@
 {
 	"people": {
 		"4e002447-0d56-42cb-8de8-95ce3907ce34": {
-			"first-name": "Rodney",
+			"first-name": "Rodman",
 			"last-name": "Goatler",
-			"full-name": "Rodney Goatler",
+			"full-name": "Rodman Goatler",
 			"team": "Cheese Patrol",
 			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 		},
@@ -12,7 +12,14 @@
 			"last-name": "Fishjuggler",
 			"team": "Pisces",
 			"full-name": "Tiffany Fishjuggler",
-			"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc"
+			"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc",
+			"data": {
+				"tasks": {
+					"2c018cbb-b269-4da7-a942-b5ac19d44039": {
+						"completed": true
+					}
+				}
+			}
 		}
 	},
 	"teams": {
