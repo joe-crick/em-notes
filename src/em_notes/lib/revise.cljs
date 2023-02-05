@@ -1,4 +1,8 @@
-(ns em-notes.lib.revise)
+(ns em-notes.lib.revise
+  (:require 
+   [em-notes.lib.get-evt-val :refer [get-evt-val]]
+   [em-notes.events :as events]
+    [re-frame.core :as rf]))
 
 (defn revise!
   ;; replace a value
@@ -11,3 +15,9 @@
 
 (defn set-revise [atom]
   (partial revise! atom))
+
+(defn get-revise! []
+  (fn [property evt]
+    (let [value (get-evt-val evt)]
+      (rf/dispatch [::events/set-person-field [property value]])))
+  )
