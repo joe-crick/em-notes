@@ -8,7 +8,7 @@
    [em-notes.views.people.growth.metrics :refer [metrics]]
    [em-notes.views.people.person-profile.profile-form :refer [profile]]
    [em-notes.views.performance.perfs :refer [perfs]]
-   [em-notes.views.teams.capacity.capacities :refer [one-on-ones]]
+   [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
    [em-notes.lib.local-state :refer [local-state]]
    [em-notes.views.tasks.tasks :refer [tasks]]
    [em-notes.components.card :refer [card]]

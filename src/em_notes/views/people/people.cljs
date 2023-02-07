@@ -1,8 +1,7 @@
 (ns em-notes.views.people.people
     (:require [em-notes.i18n.tr :refer [grab]]
               [em-notes.lib.bulma-cls :refer [bulma-cls]]
-              [em-notes.lib.table-style :refer [table-style]]
-              [em-notes.routing.nav :as nav]
+              [em-notes.lib.table-style :refer [table-style]] 
               [em-notes.subs :as subs]
               [em-notes.events :as events]
               [re-frame.core :as re-frame]))
