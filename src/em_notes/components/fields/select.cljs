@@ -21,12 +21,10 @@
                    :size (if multi? "5" "1")
                    :on-change (fn [evt]
                                 (let [new-val (.. evt -target -value)]
-                                  
                                   (swap! atom assoc-in property (if multi? (get-multi-val (get-in @atom property) new-val) new-val))))}
           (for [[v text] values
                 :let [val (if (nil? v) text v)]]
-            (do
-              ^{:key (random-uuid)} [:option {:value val} text]))]]]])))
+            ^{:key (random-uuid)} [:option {:value val} text])]]]])))
 
 (defn set-select [atom revise!]
   (partial select atom revise!))

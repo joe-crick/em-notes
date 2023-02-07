@@ -1,19 +1,21 @@
 (ns em-notes.views.performance.perfs
-  (:require [em-notes.components.left-right-cols :refer [left-right]]
-            [em-notes.events :as events]
-            [em-notes.subs :as subs]
-            [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.show-confirm :refer [show-confirm]]
-            [em-notes.lib.show-modal :refer [show-modal]]
-            [em-notes.lib.table-style :refer [table-style]] 
-            [em-notes.views.performance.perf :as perf]
-            [re-frame.core :as rf]))
+  (:require
+   [em-notes.components.left-right-cols :refer [left-right]]
+   [em-notes.events :as events]
+   [em-notes.i18n.tr :refer [grab]]
+   [em-notes.lib.bulma-cls :refer [bulma-cls]]
+   [em-notes.lib.show-confirm :refer [show-confirm]]
+   [em-notes.lib.show-modal :refer [show-modal]]
+   [em-notes.lib.table-style :refer [table-style]]
+   [em-notes.subs :as subs]
+   [em-notes.views.performance.perf :as perf]
+   [re-frame.core :as rf]))
 
 (defn perfs []
   (let [active-person (rf/subscribe [::subs/active-person])] 
     (fn []
       [:div.container
-       [left-right (fn [] [:h1 {:class "subtitle"}
+       [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
                            (grab :perf/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :perf/title) perf/perf)} (grab :perfs/create-perf)])]

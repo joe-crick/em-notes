@@ -1,20 +1,22 @@
 (ns em-notes.views.people.one-on-ones.one-on-ones
-  (:require [em-notes.components.left-right-cols :refer [left-right]]
-            [em-notes.events :as events]
-            [em-notes.subs :as subs]
-            [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.show-confirm :refer [show-confirm]]
-            [em-notes.lib.show-modal :refer [show-modal]]
-            [em-notes.lib.table-style :refer [table-style]] 
-            [em-notes.views.people.one-on-ones.one-on-one :refer [one_on_one]]
-            [re-frame.core :as rf]))
+  (:require
+   [em-notes.components.left-right-cols :refer [left-right]]
+   [em-notes.events :as events]
+   [em-notes.i18n.tr :refer [grab]]
+   [em-notes.lib.bulma-cls :refer [bulma-cls]]
+   [em-notes.lib.show-confirm :refer [show-confirm]]
+   [em-notes.lib.show-modal :refer [show-modal]]
+   [em-notes.lib.table-style :refer [table-style]]
+   [em-notes.subs :as subs]
+   [em-notes.views.people.one-on-ones.one-on-one :refer [one_on_one]]
+   [re-frame.core :as rf]))
 
 (defn one-on-ones []
   (let [active-person (rf/subscribe [::subs/active-person])
         one-on-one-view one_on_one] 
     (fn []
       [:div.container
-       [left-right (fn [] [:h1 {:class "subtitle"}
+       [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
                            (grab :one-on-ones/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :one-on-one/title) one_on_one)} (grab :one-on-ones/create-one-on-one)])]

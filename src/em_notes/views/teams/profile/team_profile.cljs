@@ -4,8 +4,9 @@
             [em-notes.components.form-footer :refer [form-footer]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.person.get-person-id :refer [get-person-id]]
+            [em-notes.lib.bulma-cls :refer [bulma-cls]]
             [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.lib.person.get-person-id :refer [get-person-id]]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]))
 
@@ -13,17 +14,16 @@
   [(get-person-id person) (str (:first-name person) " " (:last-name person))]
   )
 
-(defn team-profile [query]
+(defn team-profile []
   (let [active-team (rf/subscribe [::subs/active-team])
         raw-people (rf/subscribe [::subs/people])
         people (map get-person (vals @raw-people))
-        [team revise!] (local-state (if (nil? query) (assoc @active-team :people []) @active-team))
+        [team revise!] (local-state @active-team)
         text-input (set-text-input team revise!)
-        select (set-select team revise!)
-        ]
+        select (set-select team revise!)]
     (fn []
       [:div.container
-       [:h1 {:class "subtitle"}
+       [:h1 {:class (bulma-cls :subtitle)}
         (grab :team/profile)]
        [:div
         [:form
@@ -36,9 +36,9 @@
                    :multi? true
                    :default-value []
                    :values people}]
-         [text-input {:label (grab :team/charter)
-                      :property [:charter]}]
-         [text-input {:label (grab :team/values)
-                      :property [:values]}]]
+          [text-input {:label (grab :team/charter)
+                       :property [:charter]}]
+          [text-input {:label (grab :team/values)
+                       :property [:values]}]]
          [form-footer #(rf/dispatch [::events/save-team @team]),
           #(rf/dispatch-sync [::events/reset-active-team])]]]])))
