@@ -20,7 +20,7 @@
         people (map get-person (vals @raw-people))
         [team revise!] (local-state @active-team)
         text-input (set-text-input team revise!)
-        select (set-select team revise!)]
+        select (set-select team)]
     (fn []
       [:div.container
        [:h1 {:class (bulma-cls :subtitle)}

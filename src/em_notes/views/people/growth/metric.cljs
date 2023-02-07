@@ -16,7 +16,7 @@
         [metric revise!] (local-state (if (nil? (:progress @active-growth-metric)) (assoc @active-growth-metric :progress (grab :growth-metric/begin)) @active-growth-metric))
         text-input (set-text-input metric revise!) 
         text-area (set-text-area metric revise!)
-        select (set-select metric revise!)]
+        select (set-select metric)]
     (fn []
       [:div.container
        [:div.is-hidden (:last-name @active-person)]

@@ -19,9 +19,11 @@
                    :html-for name
                    :multiple multi?
                    :size (if multi? "5" "1")
-                   :on-change (fn [evt]
-                                (let [new-val (.. evt -target -value)]
-                                  (swap! atom assoc-in property (if multi? (get-multi-val (get-in @atom property) new-val) new-val))))}
+                   :on-change (if-not (nil? revise!)
+                                #(revise! property %)
+                                (fn [evt] 
+                                  (let [new-val (.. evt -target -value)]
+                                    (swap! atom assoc-in property (if multi? (get-multi-val (get-in @atom property) new-val) new-val)))))}
           (for [[v text] values
                 :let [val (if (nil? v) text v)]]
             ^{:key (random-uuid)} [:option {:value val} text])]]]])))
