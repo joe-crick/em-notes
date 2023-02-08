@@ -9,8 +9,6 @@
   (filter #(not= to-remove %) vec))
 
 (defn switch-select [value-atom left-options]
-  (prn "vals" (:values @value-atom))
-  (prn "left-opts" (remove-from-right left-options (:values @value-atom)))
   [:div
    {:class (bulma-cls :columns)}
    [:div {:class (bulma-cls :column :is-one-fifth)}

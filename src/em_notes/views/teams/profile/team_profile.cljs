@@ -6,31 +6,34 @@
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.bulma-cls :refer [bulma-cls]]
-            [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.lib.local-state :refer [local-state]] ;[em-notes.lib.person.get-person-by-id :refer [get-person-by-id]]
             [em-notes.lib.person.get-person-id :refer [get-person-id]]
+            [em-notes.lib.person.person-full-name :refer [person-full-name]]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]
             [reagent.core :as r]))
 
-(defn get-person [person]
-  [(get-person-id person) (str (:first-name person) " " (:last-name person))])
+(defn get-person-vector [person]
+  [(get-person-id person) (person-full-name person)])
+
+(defn get-person-option [person]
+  {:value (get-person-id person) :label (person-full-name person)})
 
 
-(def select-options [{:value "option1" :label "Option 1"}
-                     {:value "option2" :label "Option 2"}
-                     {:value "option3" :label "Option 3"}
-                     {:value "option4" :label "Option 4"}
-                     {:value "option5" :label "Option 5"}])
-
-(def select-value (r/atom {:values [{:value "option1" :label "Option 1"}]}))
+(defn get-person-by-id [people id]
+  (first (filter #(= (:person-id %) id) people)))
 
 (defn team-profile []
   (let [active-team (rf/subscribe [::subs/active-team])
         raw-people (rf/subscribe [::subs/people])
-        people (map get-person (vals @raw-people))
+        people (map get-person-vector (vals @raw-people))
         [team revise!] (local-state @active-team)
         text-input (set-text-input team revise!)
-        select (set-select team nil)]
+        select (set-select team nil)
+        selected-people (vec (map #(get-person-by-id (vals @raw-people) %) (:people @active-team)))
+        select-value (r/atom {:values (map get-person-option selected-people (vals @raw-people))})
+        select-options (vec (map get-person-option (vals @raw-people)))]
+    (prn @select-value)
     (fn []
       [:div.container
        [:h1 {:class (bulma-cls :subtitle)}
