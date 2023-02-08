@@ -58,6 +58,11 @@
    (:active-home-view db)))
 
 (re-frame/reg-sub
+ ::active-capacity
+ (fn [db _]
+   (:active-capacity db)))
+
+(re-frame/reg-sub
  ::modal
  (fn [db _]
    (:modal db)))

@@ -17,16 +17,13 @@
       [:div.container
        [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
                            (grab :capacities/title)])
-        (fn [] [:button {:class "button is-primary"
+        (fn [] [:button {:class (bulma-cls :button :is-primary)
                          :on-click #(show-modal (grab :capacity/title) capacity-view)} (grab :capacities/create-capacity)])]
        [:table {:class (table-style)}
         [:thead
          [:tr
-          [:th (grab :capacity/week-of)]
-          [:th (grab :capacity/perf)]
-          [:th (grab :capacity/alignment)]
-          [:th (grab :capacity/development)]
-          [:th (grab :capacity/next-steps)]
+          [:th (grab :capacity/week)]
+          [:th (grab :capacity/percent-capacity)]
           [:th (grab :capacity/notes)]
           [:th (grab :table/actions)]]]
         [:tbody
@@ -35,14 +32,11 @@
                      capacity-id (:capacity-id capacity)]]
            ^{:key (random-uuid)} [:tr {:id capacity-id}
                                   [:td.name
-                                   [:button {:class "button is-ghost"
+                                   [:button {:class (bulma-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-capacity [@active-team capacity capacity-view]])} (:week-of capacity)]]
-                                  [:td {:class "pt-4"} (:perf capacity)]
-                                  [:td {:class "pt-4"} (:alignment capacity)]
-                                  [:td {:class "pt-4"} (:development capacity)]
-                                  [:td {:class "pt-4"} (:next-steps capacity)]
+                                      [:td {:class "pt-4"} (:percent-capacity capacity)]
                                   [:td {:class "pt-4"} (:notes capacity)]
                                   [:td
                                    [:div {:class "buttons are-small is-grouped"}
                                     [:button {:class "button is-danger is-fixed-50"
-                                              :on-click  #(show-confirm (grab :capacities/confirm-delete) [::events/delete-item [@active-team capacity :capacities :capacity-id]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :capacities/confirm-delete) [::events/delete-capacity [@active-team capacity]])} (grab :form/delete)]]]])]]])))

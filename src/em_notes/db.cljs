@@ -5,12 +5,14 @@
    :team {:name ""
           :people []
           :charter ""
-          :values ""}
+          :values ""
+          :data {:capacities []}}
    :active-team {:name ""
                  :people []
                  :team-id ""
                  :charter ""
-                 :values ""}
+                 :values ""
+                 :data {:capacities []}}
    :people {}
    :person   {:first-name ""
               :last-name ""
@@ -120,6 +122,14 @@
                  :collaboration ""
                  :avg-est-accuracy ""
                  :notes ""}
+   :default-capacity {:capacity-id ""
+                      :week-of ""
+                      :percent-capacity ""
+                      :notes ""}
+   :active-capacity {:capacity-id ""
+                     :week-of ""
+                     :percent-capacity ""
+                     :notes ""}
    :toasts []
    :modal {}
    :init-queue []

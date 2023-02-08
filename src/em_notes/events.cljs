@@ -200,7 +200,7 @@
                   new-person (dissoc-in person [:data item-set-key] (keyword item-id))]
               {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
-                    [:dispatch [::cancel-active :active-growth-metric (:default-metric db)]]
+                    [:dispatch [::cancel-active (keyword (str "active-" item)) ((keyword (str "active-" item)) db)]]
                     [:dispatch [::reset-modal]]
                     [:dispatch [::commit-person new-person]]]})))
 
@@ -230,19 +230,6 @@
 
 
 ;; TASK
-
-(re-frame/reg-event-fx
- ::save-task
- #_{:clj-kondo/ignore [:unresolved-symbol]}
- (fn-traced [{:keys [db]} [_ data]]
-            (let [[person task] data
-                  task-id (get-unid :task-id task)
-                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))
-                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)] 
-              {:db (assoc db :active-person new-person)
-               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::reset-modal]]
-                    [:dispatch [::commit-person new-person]]]})))
 
 (re-frame/reg-event-fx
  ::edit-task
@@ -352,6 +339,56 @@
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ _]]
             {:db (assoc db :active-one-on-one (:default-one-on-one db))
+             :fx [[:dispatch [::reset-modal]]]}))
+
+
+;; CAPACITY
+
+(re-frame/reg-event-fx
+ ::save-capacity
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[team capacity] data
+                  capacity-id (get-unid :capacity-id capacity)
+                  updated-capacity (assoc capacity :capacity-id capacity-id :completed (boolean (:completed capacity)))
+                  new-team (assoc-in team [:data :capacities (keyword capacity-id)] updated-capacity)]
+              {:db (assoc-in db [:teams (keyword (:team-id new-team))] new-team)
+               :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::set-active-team (:team-id new-team)]]
+                    [:dispatch [::commit-db]]]})))
+
+(re-frame/reg-event-fx
+ ::delete-capacity
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[team capacity] data
+                  item-id (:capacity-id capacity)
+                  new-team (dissoc-in team [:data :capacities] (keyword item-id))]
+              {:db (assoc-in db [:teams (keyword (:team-id new-team))] new-team)
+               :fx [[:dispatch [::show-toasts [(grab :form/deleted) (:is-success notify)]]]
+                    [:dispatch [::cancel-active :active-capacity (:default-capacity db)]]
+                    [:dispatch [::reset-modal]]
+                    [:dispatch [::set-active-team (:team-id new-team)]]
+                    [:dispatch [::commit-db]]]})))
+
+(re-frame/reg-event-fx
+ ::edit-capacity
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person capacity capacity-view] data]
+              {:db db
+               :fx [[:dispatch [::edit-item {:person person
+                                             :item capacity
+                                             :item-form capacity-view
+                                             :active-item-key :active-capacity
+                                             :title (grab :capacity/title)}]]]})))
+
+(re-frame/reg-event-fx
+ ::cancel-capacity
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ _]]
+            {:db (assoc db :active-capacity (:default-capacity db))
              :fx [[:dispatch [::reset-modal]]]}))
 
 

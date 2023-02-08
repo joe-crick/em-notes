@@ -7,7 +7,7 @@
             [em-notes.subs :as subs]
             [em-notes.views.performance.perfs :refer [perfs]]
             [em-notes.views.tasks.tasks :refer [tasks]]
-            [em-notes.views.teams.capacity.capacity :refer [capacity]]
+            [em-notes.views.teams.capacity.capacities :refer [capacities]]
             [em-notes.views.teams.profile.team-profile :refer [team-profile]]
             [re-frame.core :as rf]))
 
@@ -25,7 +25,7 @@
                                 [:tasks (grab :team/tasks)]]
                      :views {:profile team-profile
                              :performance perfs
-                             :capacity capacity
+                             :capacity capacities
                              :tasks tasks}
                      :action-buttons [[#(show-confirm (grab :team/confirm-delete) [::events/delete-team @active-team])
                                        (str (grab :form/delete) " " (grab :team/title))

@@ -38,7 +38,18 @@
 			"name": "Test Team",
 			"charter": "Cheese, Grommets, and Weasels",
 			"values": "Fishing, Basketball, and World Hegemony",
-			"team-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b"
+			"team-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
+			"data": {
+				"capacities": {
+					"481526d6-9a72-4f84-8994-9f8ce56a2f08": {
+						"capacity-id": "481526d6-9a72-4f84-8994-9f8ce56a2f08",
+						"week-of": "2023-02-06",
+						"percent-capacity": "90",
+						"notes": "Brad",
+						"completed": false
+					}
+				}
+			}
 		}
 	}
 }

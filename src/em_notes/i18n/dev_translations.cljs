@@ -33,6 +33,14 @@
      :avg-est-accuracy "Avg. Estimation Accuracy"
      :notes "Notes"
      :confirm-delete "Are you certain you want to delete this perf record?"}
+    :capacity
+    {:title "Capacity"
+     :week "Week of"
+     :percent-capacity "Percent Capacity"
+     :notes "Notes"}
+    :capacities {:create-capacity "Create Capacity"
+                 :title "Capacities"
+                 :confirm-delete "Are you certain you want to delete this capacity record?"}
     :tasks
     {:title "Tasks"
      :details "Details"
@@ -66,8 +74,7 @@
                     :achieved "Achieved"}
     :one-on-ones {:title "One on Ones"
                   :create-one-on-one "Create One on One"
-                   :confirm-delete "Are you certain you want to delete this One on One?"
-                  }
+                  :confirm-delete "Are you certain you want to delete this One on One?"}
     :one-on-one {:title "One on One"
                  :week-of "Week Of"
                  :perf "Performance Review"
