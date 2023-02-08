@@ -94,7 +94,9 @@
            :name "Name"
            :people "People"
            :charter "Charter"
-           :values "Values"}
+           :values "Values"
+           :avialable-people "Available People"
+           :members "Members"}
     :people
     {:title "People"}
     :table {:actions "Actions"}

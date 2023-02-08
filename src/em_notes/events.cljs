@@ -53,6 +53,7 @@
  (fn-traced [{:keys [db]} [_ team]]
             (let [new-team? (is-blank-id :team-id team)
                   team-id (if new-team? (str (random-uuid)) (:team-id team))]
+              (prn team)
               {:db (assoc-in db [:teams (keyword team-id)] (assoc team :team-id team-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-team (:team-id team)]]
