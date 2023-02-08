@@ -26,14 +26,13 @@
 (defn team-profile []
   (let [active-team (rf/subscribe [::subs/active-team])
         raw-people (rf/subscribe [::subs/people])
-        people (map get-person-vector (vals @raw-people))
-        [team revise!] (local-state @active-team)
+        people-vals (vals @raw-people)
+        people (map get-person-vector people-vals)
+        selected-people (vec (map #(get-person-by-id people-vals %) (:people @active-team))) 
+        select-options (vec (map get-person-option people-vals))
+        [team revise!] (local-state (assoc @active-team :people-opts (map get-person-option selected-people people-vals)))
         text-input (set-text-input team revise!)
-        select (set-select team nil)
-        selected-people (vec (map #(get-person-by-id (vals @raw-people) %) (:people @active-team)))
-        select-value (r/atom {:values (map get-person-option selected-people (vals @raw-people))})
-        select-options (vec (map get-person-option (vals @raw-people)))]
-    (prn @select-value)
+        select (set-select team nil)]
     (fn []
       [:div.container
        [:h1 {:class (bulma-cls :subtitle)}
@@ -46,7 +45,7 @@
                        :property [:name]}]
           [:div
            [:h2 "Switch Select Example"]
-           [switch-select select-value select-options]]
+           [switch-select team [:people-opts] select-options]]
           [select {:label (grab :team/people)
                    :property [:people]
                    :multi? true
