@@ -43,6 +43,13 @@
 						"percent-capacity": "90",
 						"notes": "Brad",
 						"completed": false
+					},
+					"6daa1901-53b2-47f6-8f08-a1c057cbdf71": {
+						"capacity-id": "6daa1901-53b2-47f6-8f08-a1c057cbdf71",
+						"week-of": "2023-02-20",
+						"percent-capacity": "95",
+						"notes": "Nothing",
+						"completed": false
 					}
 				}
 			},
@@ -56,6 +63,12 @@
 					"label": "Rodman Goatler"
 				}
 			]
+		},
+		"07a95996-8fb9-4efc-b90f-065f10e2d723": {
+			"name": "Another Group",
+			"charter": "Stuff",
+			"values": "Things",
+			"team-id": "07a95996-8fb9-4efc-b90f-065f10e2d723"
 		}
 	}
 }
