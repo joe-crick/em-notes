@@ -4,7 +4,7 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.dissoc-in :refer [dissoc-in]]
             [em-notes.lib.get-unid :refer [get-unid]]
-            [em-notes.lib.is-blank-id :refer [is-blank-id]]
+            [em-notes.lib.is-blank :refer [is-blank?]]
             [em-notes.lib.notification-types :refer [notify]]
             [em-notes.lib.person.get-person-id :refer [get-person-id]]
             [em-notes.lib.person.get-sub-person :refer [get-sub-person]]
@@ -51,7 +51,7 @@
  ::save-team
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ team]]
-            (let [new-team? (is-blank-id :team-id team)
+            (let [new-team? (is-blank? :team-id team)
                   team-id (if new-team? (str (random-uuid)) (:team-id team))]
               (prn team)
               {:db (assoc-in db [:teams (keyword team-id)] (assoc team :team-id team-id))

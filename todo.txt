@@ -1,1 +1,1 @@
-* Add person availability (integrate with calendar?)
+* Ability to filter table data

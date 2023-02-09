@@ -99,7 +99,8 @@
            :members "Members"}
     :people
     {:title "People"}
-    :table {:actions "Actions"}
+    :table {:actions "Actions"
+            :search "Search"}
     :person
     {:title "Person"
      :details "Details"
