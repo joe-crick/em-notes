@@ -5,13 +5,14 @@
 (defn table-filter [atom revise!]
   [:div
    {:class (bulma-cls :columns)}
-   [:div {:class (bulma-cls :column :is-one-third)} [:div.field
-                                                     [:div {:class (bulma-cls :control :has-icons :has-icons-right)}
-                                                      [:input {:type "search"
-                                                               :class "input"
-                                                               :placeholder (grab :table/search)
-                                                               :on-change #(revise! :filter %)
-                                                               :value (:filter @atom)}]
-                                                      [:span
-                                                       {:class (bulma-cls :icon :is-small :is-right)}
-                                                       [:i {:class (bulma-cls :fas :fa-magnifying-glass)}]]]]]])
+   [:div {:class (bulma-cls :column :is-one-third)}
+    [:div.field
+     [:div {:class (bulma-cls :control :has-icons :has-icons-right)}
+      [:input {:type "search"
+               :class "input"
+               :placeholder (grab :table/search)
+               :on-change #(revise! :filter %)
+               :value (:filter @atom)}]
+      [:span
+       {:class (bulma-cls :icon :is-small :is-right)}
+       [:i {:class (bulma-cls :fas :fa-magnifying-glass)}]]]]]])
