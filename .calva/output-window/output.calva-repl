@@ -69,3 +69,85 @@ clj꞉shadow.user꞉> 
 ;    (There is a button in the status bar for this)
 ; Jack-in done.
 cljs꞉cljs.user꞉> 
+(def sut '({:task-id "a288c467-0198-47dd-aaa3-bce76365d9bb", :name "test 2345", :details "test 2345", :due-date "2023-02-06", :completed false, :person-id "4e002447-0d56-42cb-8de8-95ce3907ce34"}))
+:repl/exception!
+; 
+; Execution error (Error) at (<cljs repl>:1).
+; Invalid arity: 0
+cljs꞉em-notes.views.people.person꞉> 
+(def sut '({:task-id "a288c467-0198-47dd-aaa3-bce76365d9bb", :name "test 2345", :details "test 2345", :due-date "2023-02-06", :completed false, :person-id "4e002447-0d56-42cb-8de8-95ce3907ce34"}))
+#'em-notes.views.people.person/sut
+cljs꞉em-notes.views.people.person꞉> 
+sut
+({:task-id "a288c467-0198-47dd-aaa3-bce76365d9bb",
+  :name "test 2345",
+  :details "test 2345",
+  :due-date "2023-02-06",
+  :completed false,
+  :person-id "4e002447-0d56-42cb-8de8-95ce3907ce34"})
+cljs꞉em-notes.views.people.person꞉> 
+(defn filter-on-prop-str [items prop search-val]
+  (prn search-val)
+  (prn items)
+  (prn prop)
+  (filter #(includes?
+            (lower-case (get-in % prop)) (lower-case search-val))
+          items))
+nil
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:5:13
+;  Use of undeclared Var em-notes.views.people.person/includes?
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:6:14
+;  Use of undeclared Var em-notes.views.people.person/lower-case
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:6:43
+;  Use of undeclared Var em-notes.views.people.person/lower-case
+; --------------------------------------------------------------------------------
+; 
+cljs꞉em-notes.views.people.person꞉> 
+(defn filter-on-prop-str [items prop search-val]
+  (prn search-val)
+  (prn items)
+  (prn prop)
+  (filter #(string/includes?
+            (lower-case (get-in % prop)) (lower-case search-val))
+          items))
+nil
+; ------ WARNING - :undeclared-ns ------------------------------------------------
+;  Resource: <eval>:5:13
+;  No such namespace: string, could not locate string.cljs, string.cljc, or JavaScript source providing "string"
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:5:13
+;  Use of undeclared Var string/includes?
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:6:14
+;  Use of undeclared Var em-notes.views.people.person/lower-case
+; --------------------------------------------------------------------------------
+; 
+; 
+; ------ WARNING - :undeclared-var -----------------------------------------------
+;  Resource: <eval>:6:43
+;  Use of undeclared Var em-notes.views.people.person/lower-case
+; --------------------------------------------------------------------------------
+; 
+cljs꞉em-notes.views.people.person꞉> 
+(defn filter-on-prop [items prop search-val]
+  (filter #(= (get-in % prop) search-val) items))
+#'em-notes.views.people.person/filter-on-prop
+cljs꞉em-notes.views.people.person꞉> 
+(filter-on-prop sut [:name] nil)
+()
+cljs꞉em-notes.views.people.person꞉> 

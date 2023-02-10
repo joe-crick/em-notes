@@ -1,22 +1,19 @@
 (ns em-notes.views.people.person
-  (:require
-   [em-notes.events :as events]
-   [em-notes.i18n.tr :refer [grab]]
-   [em-notes.lib.show-confirm :refer [show-confirm]]
-   [em-notes.routing.nav :as nav]
-   [em-notes.subs :as subs]
-   [em-notes.views.people.growth.metrics :refer [metrics]]
-   [em-notes.views.people.person-profile.profile-form :refer [profile]]
-   [em-notes.views.performance.perfs :refer [perfs]]
-   [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
-   [em-notes.lib.local-state :refer [local-state]]
-   [em-notes.views.tasks.tasks :refer [tasks]]
-   [em-notes.components.card :refer [card]]
-   [em-notes.components.left-right-cols :refer [left-right]]
-   [re-frame.core :as rf]))
-
-(defn current-tab? [tab cur-tab]
-  (if (= cur-tab tab) "is-info" ""))
+  (:require [em-notes.components.card :refer [card]]
+            [em-notes.components.left-right-cols :refer [left-right]]
+            [em-notes.events :as events]
+            [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.current-tab :refer [current-tab?]]
+            [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.lib.show-confirm :refer [show-confirm]]
+            [em-notes.routing.nav :as nav]
+            [em-notes.subs :as subs]
+            [em-notes.views.people.growth.metrics :refer [metrics]]
+            [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
+            [em-notes.views.people.person-profile.profile-form :refer [profile]]
+            [em-notes.views.performance.perfs :refer [perfs]]
+            [em-notes.views.tasks.tasks :refer [tasks]]
+            [re-frame.core :as rf]))
 
 (defn person []
   (let [active-person (rf/subscribe [::subs/active-person])

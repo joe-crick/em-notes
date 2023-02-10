@@ -9,9 +9,11 @@
     filtered-items))
 
 (defn filter-on-prop-str [items prop search-val]
-  (filter #(includes?
-            (lower-case (get-in % prop)) (lower-case search-val))
-          items))
+  (if (or (= "" search-val) (nil? search-val))
+    items
+    (filter #(includes?
+              (lower-case (get-in % prop)) (lower-case search-val))
+            items)))
 
 (defn filter-on-prop [items prop search-val]
   (filter #(= (get-in % prop) search-val) items))

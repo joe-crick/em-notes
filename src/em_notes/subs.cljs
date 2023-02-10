@@ -38,6 +38,11 @@
    (:active-task db)))
 
 (re-frame/reg-sub
+ ::person-tasks
+ (fn [db [_ completed?]]
+   (filter-on-prop (vals (get-in (:active-person db) [:data :tasks])) [:completed] (not completed?))))
+
+(re-frame/reg-sub
  ::tasks
  (fn [db [_ completed?]]
    (filter-on-prop (:tasks db) [:completed] (not completed?))))

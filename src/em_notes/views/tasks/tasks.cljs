@@ -1,27 +1,32 @@
 (ns em-notes.views.tasks.tasks
-  (:require [em-notes.components.left-right-cols :refer [left-right]]
+  (:require [em-notes.components.card :refer [card]]
+            [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.components.table-filter :refer [table-filter]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.bulma-cls :refer [bulma-cls]]
-            [em-notes.lib.filter-map-on-prop :refer [filter-map-on-prop]]
+            [em-notes.lib.current-tab :refer [current-tab?]]
+            [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.show-modal :refer [show-modal]]
             [em-notes.lib.table-style :refer [table-style]]
+            [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
             [em-notes.views.tasks.task :as task]
             [re-frame.core :as rf]))
 
-(defn tasks []
+(defn task-list [completed?]
   (let [active-person (rf/subscribe [::subs/active-person])
-        [filter revise!] (local-state {:filter ""})]  
+        tasks (rf/subscribe [::subs/person-tasks completed?])
+        [filter revise!] (local-state {:filter ""})]
     (fn []
       [:div.container
        [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
                            (grab :tasks/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]
+       [:div.is-hidden (:full-name @active-person)]
        [table-filter filter revise!]
        [:table {:class (table-style)}
         [:thead
@@ -31,7 +36,7 @@
           [:th (grab :tasks/completed)]
           [:th (grab :table/actions)]]]
         [:tbody
-         (for [task (filter-map-on-prop (or (get-in @active-person [:data :tasks]) []) [:name] (:filter @filter))
+         (for [task (filter-on-prop-str @tasks [:name] (:filter @filter))
                :let [task-id (:task-id task)
                      completed? (:completed task)]]
            ^{:key (random-uuid)} [:tr {:id task-id}
@@ -46,3 +51,32 @@
                                               :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class "button is-danger is-fixed-50"
                                               :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-person task :tasks :task-id]])} (grab :form/delete)]]]])]]])))
+
+(defn open-tasks []
+  [task-list true])
+
+(defn closed-tasks []
+  [task-list false])
+
+(defn tasks []
+  (let [[tab change-tab!] (local-state :open)
+        views {:open open-tasks :closed closed-tasks}
+        tab-navs [[:open (grab :tasks/open)]
+                  [:closed (grab :tasks/closed)]]]
+    (fn []
+      [:div
+       [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
+        [:div {:class "container mb-1"}
+         [:div.is-hidden @tab]
+         [:div
+          (for [[name label] tab-navs]
+            ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                            :data-name name
+                                            :on-click (fn []
+                                                        (change-tab! name))} label])]]]
+       [left-right (fn []) (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :task)}
+                                   (grab :tasks/create-task)])]
+       [card
+        (fn [] [:div
+                [(get views (keyword @tab) (fn [] [:div.container "Not Found"]))]])]]))
+  )

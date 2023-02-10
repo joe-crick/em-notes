@@ -1,14 +1,11 @@
 (ns em-notes.components.tabbed-view
-  (:require
-   [em-notes.components.card :refer [card]]
-   [em-notes.components.left-right-cols :refer [left-right]]
-   [em-notes.lib.local-state :refer [local-state]]
-   [re-frame.core :as rf]
-   [em-notes.events :as events]))
+  (:require [em-notes.components.card :refer [card]]
+            [em-notes.components.left-right-cols :refer [left-right]]
+            [em-notes.events :as events]
+            [em-notes.lib.current-tab :refer [current-tab?]]
+            [em-notes.lib.local-state :refer [local-state]]
+            [re-frame.core :as rf]))
 
-
-(defn current-tab? [tab cur-tab]
-  (if (= cur-tab tab) "is-info" "")) 
 
 (defn tabbed-view [views-config is-home?]
   (let [active-view (:active-view views-config)

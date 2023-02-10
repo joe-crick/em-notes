@@ -4,16 +4,13 @@
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
-            [em-notes.views.tasklist.task-list :refer [closed-tasks
-                                                        open-tasks]]
+            [em-notes.views.tasklist.task-list :refer [closed-tasks open-tasks]]
             [re-frame.core :as rf]
             [reagent.core :as r]))
-
-(defn current-tab? [tab cur-tab]
-  (if (= cur-tab tab) "is-info" ""))
 
 (defn tasks []
   (r/create-class
