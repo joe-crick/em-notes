@@ -6,8 +6,9 @@
             [em-notes.lib.bulma-cls :refer [bulma-cls]]
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.local-state :refer [local-state]]
-            [em-notes.routing.nav :as nav]
+            [em-notes.lib.show-modal :refer [show-modal]]
             [em-notes.subs :as subs]
+            [em-notes.views.tasks.task :as task]
             [em-notes.views.tasklist.task-list :refer [closed-tasks open-tasks]]
             [re-frame.core :as rf]
             [reagent.core :as r]))
@@ -37,7 +38,7 @@
                                                             :data-name name
                                                             :on-click (fn []
                                                                         (change-tab! name))} label])])
-            (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :task)}
+            (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(show-modal (grab :task/title) task/task)}
                     (grab :tasks/create-task)])]
            [card
             (fn [] [:div

@@ -6,13 +6,11 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.bulma-cls :refer [bulma-cls]]
             [em-notes.lib.local-state :refer [local-state]]
-            [em-notes.lib.person.get-person-id :refer [get-person-id]]
-            [em-notes.lib.person.person-full-name :refer [person-full-name]]
+            [em-notes.lib.person.get-person-option :refer [get-person-option]]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]))
 
-(defn get-person-option [person]
-  {:value (get-person-id person) :label (person-full-name person)})
+
 
 (defn team-profile []
   (let [active-team (rf/subscribe [::subs/active-team])

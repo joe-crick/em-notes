@@ -59,6 +59,7 @@
            :confirm-delete "Are you certain you want to delete this task?"
            :mark-complete "Complete"
            :mark-incomplete "Open"
+           :person "Person"
            :true "true"
            :false "false"}
     :growth-metrics {:title "Career Growth"
