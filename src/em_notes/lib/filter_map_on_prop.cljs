@@ -8,10 +8,13 @@
                                items)]
     filtered-items))
 
-(defn filter-on-prop [items prop search-val]
+(defn filter-on-prop-str [items prop search-val]
   (filter #(includes?
             (lower-case (get-in % prop)) (lower-case search-val))
           items))
+
+(defn filter-on-prop [items prop search-val]
+  (filter #(= (get-in % prop) search-val) items))
 
 (defn filter-not-on-prop [items prop search-val]
   (filter #(not (includes?

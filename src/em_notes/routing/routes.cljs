@@ -3,7 +3,7 @@
             [em-notes.views.home :refer [home]]
             [em-notes.views.people.people :refer [people]]
             [em-notes.views.people.person :refer [person]]
-            [em-notes.views.all-tasks :refer [tasks]]
+            [em-notes.views.tasklist.all-tasks :refer [tasks]]
             [em-notes.views.teams.team :refer [team]]
             [em-notes.views.teams.teams :refer [teams]]
             [re-frame.core :as re-frame]))

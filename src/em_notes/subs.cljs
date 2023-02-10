@@ -1,6 +1,6 @@
 (ns em-notes.subs
-  (:require
-   [re-frame.core :as re-frame]))
+  (:require [em-notes.lib.filter-map-on-prop :refer [filter-on-prop]]
+            [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
  ::active-panel
@@ -39,8 +39,8 @@
 
 (re-frame/reg-sub
  ::tasks
- (fn [db _]
-   (:tasks db)))
+ (fn [db [_ completed?]]
+   (filter-on-prop (:tasks db) [:completed] (not completed?))))
 
 (re-frame/reg-sub
  ::active-one-on-one

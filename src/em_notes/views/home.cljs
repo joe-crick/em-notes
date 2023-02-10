@@ -3,7 +3,7 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.subs :as subs]
             [em-notes.views.people.people :refer [people]]
-            [em-notes.views.all-tasks :refer [tasks]]
+            [em-notes.views.tasklist.all-tasks :refer [tasks]]
             [em-notes.views.teams.teams :refer [teams]]
             [re-frame.core :as re-frame]))
 

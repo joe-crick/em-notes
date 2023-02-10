@@ -1,2 +1,1 @@
 * Tab task view to filter completed from open
-* Task view from main page with all tasks

@@ -48,6 +48,8 @@
      :completed "Completed"
      :name "Name"
      :person "Person"
+     :open "Open"
+     :closed "Closed"
      :create-task "Create Task"}
     :task {:title "Task"
            :name "Name"
