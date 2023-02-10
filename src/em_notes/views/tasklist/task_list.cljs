@@ -31,7 +31,9 @@
                      person-id (:person-id task)
                      person (get-person-by-id @people person-id)]]
            ^{:key (random-uuid)} [:tr {:id task-id}
-                                  [:td.person (:full-name person)]
+                                  [:td.name
+                                   [:button {:class (bulma-cls :button :is-ghost)
+                                             :on-click #(rf/dispatch [::events/show-person person-id])} (:full-name person)]]
                                   [:td.name
                                    [:button {:class (bulma-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-task [person task task/task]])} (:name task)]]

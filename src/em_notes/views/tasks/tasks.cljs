@@ -74,8 +74,6 @@
                                             :data-name name
                                             :on-click (fn []
                                                         (change-tab! name))} label])]]]
-       [left-right (fn []) (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :task)}
-                                   (grab :tasks/create-task)])]
        [card
         (fn [] [:div
                 [(get views (keyword @tab) (fn [] [:div.container "Not Found"]))]])]]))
