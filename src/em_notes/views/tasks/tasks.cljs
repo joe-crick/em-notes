@@ -11,7 +11,6 @@
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.show-modal :refer [show-modal]]
             [em-notes.lib.table-style :refer [table-style]]
-            [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
             [em-notes.views.tasks.task :as task]
             [re-frame.core :as rf]))
@@ -22,10 +21,8 @@
         [filter revise!] (local-state {:filter ""})]
     (fn []
       [:div.container
-       [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
-                           (grab :tasks/title)])
-        (fn [] [:button {:class "button is-primary"
-                         :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]
+       [:h1 {:class (bulma-cls :subtitle)}
+        (grab :tasks/title)]
        [:div.is-hidden (:full-name @active-person)]
        [table-filter filter revise!]
        [:table {:class (table-style)}
@@ -68,12 +65,15 @@
        [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
         [:div {:class "container mb-1"}
          [:div.is-hidden @tab]
-         [:div
-          (for [[name label] tab-navs]
-            ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
-                                            :data-name name
-                                            :on-click (fn []
-                                                        (change-tab! name))} label])]]]
+         [left-right (fn []
+                       [:div
+                        (for [[name label] tab-navs]
+                          ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                                          :data-name name
+                                                          :on-click (fn []
+                                                                      (change-tab! name))} label])])
+          (fn [] [:button {:class "button is-primary"
+                           :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]]]
        [card
         (fn [] [:div
                 [(get views (keyword @tab) (fn [] [:div.container "Not Found"]))]])]]))

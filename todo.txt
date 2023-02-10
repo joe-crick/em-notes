@@ -1,1 +1,1 @@
-* Tab task view to filter completed from open
+* Team Performance and Tasks (or remove them)

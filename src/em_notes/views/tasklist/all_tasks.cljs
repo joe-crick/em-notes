@@ -29,15 +29,16 @@
           [:div
            [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
             [:div {:class "container mb-1"}
-             [:div.is-hidden @tab]
-             [:div
-              (for [[name label] tab-navs]
-                ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
-                                                :data-name name
-                                                :on-click (fn []
-                                                            (change-tab! name))} label])]]]
-           [left-right (fn []) (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :task)}
-                                       (grab :tasks/create-task)])]
+             [:div.is-hidden @tab]]]
+           [left-right (fn []
+                         [:div
+                          (for [[name label] tab-navs]
+                            ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                                            :data-name name
+                                                            :on-click (fn []
+                                                                        (change-tab! name))} label])])
+            (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(nav/go :task)}
+                    (grab :tasks/create-task)])]
            [card
             (fn [] [:div
                     [(get views (keyword @tab) (fn [] [:div.container "Not Found"])) people filter revise!]])]])))}))
