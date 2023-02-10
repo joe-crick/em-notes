@@ -278,6 +278,7 @@
               {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]
+                    [:dispatch [::get-all-tasks]]
                     [:dispatch [::commit-person new-person]]]})))
 
 (re-frame/reg-event-fx

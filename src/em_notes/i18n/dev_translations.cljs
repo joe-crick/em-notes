@@ -47,6 +47,7 @@
      :due-date "Due Date"
      :completed "Completed"
      :name "Name"
+     :person "Person"
      :create-task "Create Task"}
     :task {:title "Task"
            :name "Name"

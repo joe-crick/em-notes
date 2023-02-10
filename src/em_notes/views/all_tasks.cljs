@@ -34,6 +34,7 @@
             [:table {:class (table-style)}
              [:thead
               [:tr
+               [:th (grab :tasks/person)]
                [:th (grab :tasks/title)]
                [:th (grab :tasks/details)]
                [:th (grab :tasks/completed)]
@@ -45,6 +46,7 @@
                           person-id (:person-id task)
                           person (get-person-by-id @people person-id)]]
                 ^{:key (random-uuid)} [:tr {:id task-id}
+                                       [:td.person (:full-name person)]
                                        [:td.name
                                         [:button {:class (bulma-cls :button :is-ghost)
                                                   :on-click #(rf/dispatch [::events/edit-task [person task task/task]])} (:name task)]]

@@ -8,11 +8,11 @@
 		"tasks": {
 			"a288c467-0198-47dd-aaa3-bce76365d9bb": {
 				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9bb",
-				"name": "test 2",
-				"details": "test 2",
-				"due-date": "",
+				"name": "test 2345",
+				"details": "test 2345",
+				"due-date": "2023-02-06",
 				"completed": false,
-				"person_id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			},
 			"a288c467-0198-47dd-aaa3-bce76365d9b7": {
 				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9b7",
@@ -20,7 +20,7 @@
 				"details": "test",
 				"due-date": "",
 				"completed": true,
-				"person_id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			}
 		}
 	}

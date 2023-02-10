@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
       const data = fs.readFileSync(fullPath, 'utf-8');
       const person = JSON.parse(data);
       for (const task of Object.values(person.data.tasks)) {
-        tasks.push({...task, person_id: person["person-id"]});
+        tasks.push({...task, ["person-id"]: person["person-id"]});
       }    
     }
 

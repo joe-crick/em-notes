@@ -2,4 +2,4 @@
 
 (defn get-person-by-id [people id]
   (let [people-list (vals people)]
-    (first (filter #(= (:person_id %) id) people-list))))
+    (first (filter #(= (:person-id %) id) people-list))))
