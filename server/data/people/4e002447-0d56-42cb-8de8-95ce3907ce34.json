@@ -1,83 +1,27 @@
 {
 	"first-name": "Rodman",
 	"last-name": "Goatler",
-	"team": "Cheese Patrol",
 	"full-name": "Rodman Goatler",
+	"team": "Cheese Patrol",
 	"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
-	"profile": {
-		"feedback": {
-			"feedback-medium": "feeeee"
-		}
-	},
 	"data": {
 		"tasks": {
+			"a288c467-0198-47dd-aaa3-bce76365d9bb": {
+				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9bb",
+				"name": "test 2",
+				"details": "test 2",
+				"due-date": "",
+				"completed": false,
+				"person_id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+			},
 			"a288c467-0198-47dd-aaa3-bce76365d9b7": {
 				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9b7",
 				"name": "test",
 				"details": "test",
 				"due-date": "",
-				"completed": false
-			},
-			"026668c0-e851-47cc-aec6-805eb985ce48": {
-				"task-id": "026668c0-e851-47cc-aec6-805eb985ce48",
-				"name": "Bank Notes",
-				"details": "asdf",
-				"due-date": "",
-				"completed": false
-			}
-		},
-		"growth-metrics": {
-			"06a70e9e-863a-4f2d-808f-3745a58cc7b8": {
-				"metric-id": "06a70e9e-863a-4f2d-808f-3745a58cc7b8",
-				"name": "Test Metric",
-				"details": "details",
-				"progress": "In progress",
-				"comments": "asdfs"
-			},
-			"827ff0aa-c6a3-4f6b-8373-514a9f687a3a": {
-				"metric-id": "827ff0aa-c6a3-4f6b-8373-514a9f687a3a",
-				"name": "Another Metric",
-				"details": "test",
-				"progress": "In progress",
-				"comments": "test"
-			}
-		},
-		"perfs": {
-			"62e8de7f-866b-49ce-bb1b-5ade021b6380": {
-				"perf-id": "62e8de7f-866b-49ce-bb1b-5ade021b6380",
-				"week": "2023-02-06",
-				"velocity": "124",
-				"prs": "12",
-				"collaboration": "12",
-				"avg-est-accuracy": "12",
-				"notes": "12",
-				"progress": ":en missing text"
-			}
-		},
-		"one-on-ones": {
-			"b76da635-8089-46d4-a390-416dd79d758c": {
-				"perf-improvement": "",
-				"perf": "Stuff",
-				"week-of": "2023-02-06",
-				"alignment": "asdf",
-				"development": "asdf",
-				"one-on-one-id": "b76da635-8089-46d4-a390-416dd79d758c",
-				"notes": "asdf",
-				"progress": ":en missing text",
-				"next-steps": "asdf"
-			},
-			"9dca2d0c-91cf-4a66-a0be-0034551559b8": {
-				"perf-improvement": "",
-				"perf": "qwerqwe",
-				"week-of": "2023-02-09",
-				"alignment": "asdfasd",
-				"development": "zxcvzxcv",
-				"one-on-one-id": "9dca2d0c-91cf-4a66-a0be-0034551559b8",
-				"notes": "",
-				"progress": ":en missing text",
-				"next-steps": ""
+				"completed": true,
+				"person_id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			}
 		}
-	},
-	"attachment-style": "Anxious"
+	}
 }

@@ -10,6 +10,7 @@
             [em-notes.lib.person.get-sub-person :refer [get-sub-person]]
             [em-notes.lib.person.person-full-name :refer [person-full-name]]
             [em-notes.networking.api :as api :refer [del-person]]
+            [em-notes.lib.filter-map-on-prop :refer [replace-map-by-prop, filter-not-on-prop]]
             [re-frame.core :as re-frame]))
 
 ;; NAVIGATION
@@ -233,6 +234,20 @@
 ;; TASK
 
 (re-frame/reg-event-fx
+ ::get-all-tasks
+ (fn [_ _]
+   (api/get-tasks (fn [tasks]
+                    (re-frame/dispatch [::set-all-tasks tasks])))
+   {}))
+
+
+(re-frame/reg-event-db
+ ::set-all-tasks
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ tasks]]
+            (assoc db :tasks tasks)))
+ 
+(re-frame/reg-event-fx
  ::edit-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
@@ -275,6 +290,33 @@
                   new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)]
               {:db (assoc db :active-person new-person)
                :fx [[:dispatch [::commit-person new-person]]]})))
+
+(re-frame/reg-event-fx
+ ::toggle-task-all-status
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task] data
+                  task-id (get-unid :task-id task)
+                  updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
+                  tasks (:tasks db)]
+              (api/get-person (:person-id person) (fn [p]
+                                                    (let [new-person (assoc-in p [:data :tasks (keyword task-id)] updated-task)]
+                                                      (re-frame/dispatch [::commit-person new-person]))))
+              {:db (assoc db :tasks (replace-map-by-prop tasks :task-id updated-task))
+               :fx []})))
+
+(re-frame/reg-event-fx
+ ::delete-task-all
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [{:keys [db]} [_ data]]
+            (let [[person task] data
+                  task-id (:task-id task) 
+                  tasks (filter-not-on-prop (:tasks db) [:task-id] task-id)]
+              (api/get-person (:person-id person) (fn [p]
+                                                    (let [new-person (dissoc-in p [:data :tasks] (keyword task-id))]
+                                                      (re-frame/dispatch [::commit-person new-person]))))
+              {:db (assoc db :tasks tasks)
+               :fx []})))
 
 
 ;; GROWTH METRIC

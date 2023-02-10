@@ -39,6 +39,14 @@
 (defn del-person [person]
   (http/delete (str api-url "person") {:json-params person}))
 
+;; TASKS
+
+(defn _get-tasks []
+  (go (<! (http/get (str api-url "tasks")))))
+
+(defn get-tasks [callback]
+  (read-response (_get-tasks) callback))
+
 
 
 

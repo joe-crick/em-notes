@@ -38,6 +38,11 @@
    (:active-task db)))
 
 (re-frame/reg-sub
+ ::tasks
+ (fn [db _]
+   (:tasks db)))
+
+(re-frame/reg-sub
  ::active-one-on-one
  (fn [db _]
    (:active-one-on-one db)))
