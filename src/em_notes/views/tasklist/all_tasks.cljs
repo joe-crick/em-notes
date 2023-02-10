@@ -32,7 +32,7 @@
           [:div
            [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
             [:div {:class "container mb-1"}
-             ;; TODO Fix issue with buttons not taking the correct class
+             [:div.is-hidden @tab]
              [:div
               (for [[name label] tab-navs]
                 ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
