@@ -133,4 +133,4 @@
    :toasts []
    :modal {}
    :init-queue []
-   :active-home-view nil})
+   :active-context :people})

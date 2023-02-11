@@ -15,7 +15,7 @@
         action-buttons (:action-buttons views-config)
         save-tab-view (if (or (nil? is-home?) (= is-home? false))
                         (fn [])
-                        (fn [name] (rf/dispatch [::events/set-active-home-view name])))]
+                        (fn [name] (rf/dispatch [::events/set-active-context name])))]
     (fn []
       [:section
 

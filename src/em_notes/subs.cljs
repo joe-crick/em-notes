@@ -33,14 +33,28 @@
    (:active-person db)))
 
 (re-frame/reg-sub
+ ::active-entity
+ (fn [db context]
+   (if (= context "team") 
+     (:active-team db) 
+     (:active-person db))))
+
+(re-frame/reg-sub
+ ::active-context
+ (fn [db _]
+   (:active-context db)))
+
+(re-frame/reg-sub
  ::active-task
  (fn [db _]
    (:active-task db)))
 
 (re-frame/reg-sub
- ::person-tasks
- (fn [db [_ completed?]]
-   (filter-on-prop (vals (get-in (:active-person db) [:data :tasks])) [:completed] (not completed?))))
+ ::entity-tasks
+ (fn [db [_ [completed? entity]]] 
+   (prn entity)
+   (prn (get-in (entity db) [:data :tasks]))
+   (filter-on-prop (vals (get-in (entity db) [:data :tasks])) [:completed] (not completed?))))
 
 (re-frame/reg-sub
  ::tasks
@@ -63,9 +77,9 @@
    (:active-perf db)))
 
 (re-frame/reg-sub
- ::active-home-view
+ ::active-context
  (fn [db _]
-   (:active-home-view db)))
+   (:active-context db)))
 
 (re-frame/reg-sub
  ::active-capacity

@@ -8,7 +8,7 @@
             [re-frame.core :as re-frame]))
 
 (defn home []
-  (let [active-view (re-frame/subscribe [::subs/active-home-view])
+  (let [active-view (re-frame/subscribe [::subs/active-context])
         view (if (nil? @active-view) :people @active-view)]
     (fn []
       [:div

@@ -487,16 +487,16 @@
 ;; ACTIVE HOME VIEW
 
 (re-frame/reg-event-db
- ::set-active-home-view
+ ::set-active-context
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ active-view]]
-            (assoc db :active-home-view active-view)))
+            (assoc db :active-context active-view)))
 
 (re-frame/reg-event-fx
- ::reset-active-home-view
+ ::reset-active-context
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [db [_ _]]
-            (assoc db :active-home-view "")))
+            (assoc db :active-context "")))
 
 ;; DB
 

@@ -16,14 +16,16 @@
             [re-frame.core :as rf]))
 
 (defn task-list [completed?]
-  (let [active-person (rf/subscribe [::subs/active-person])
-        tasks (rf/subscribe [::subs/person-tasks completed?])
+  (let [active-context (rf/subscribe [::subs/active-context])
+        context (if (= @active-context :people) "person" "team")
+        active-entity (rf/subscribe [::subs/active-entity @active-context])
+        tasks (rf/subscribe [::subs/entity-tasks [completed? (keyword (str "active-" context))]])
         [filter revise!] (local-state {:filter ""})]
     (fn []
       [:div.container
        [:h1 {:class (css-cls :subtitle)}
         (grab :tasks/title)]
-       [:div.is-hidden (:full-name @active-person)]
+       [:div.is-hidden (:full-name @active-entity)]
        [table-filter filter revise!]
        [:table {:class (table-style)}
         [:thead
@@ -39,15 +41,15 @@
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
-                                             :on-click #(rf/dispatch [::events/edit-task [@active-person task task/task]])} (:name task)]]
+                                             :on-click #(rf/dispatch [::events/edit-task [@active-entity task task/task]])} (:name task)]]
                                   [:td {:class (css-cls ::pt-4)} (:details task)]
                                   [:td {:class (css-cls ::pt-4)} (str (:completed task))]
                                   [:td
                                    [:div {:class (css-cls :buttons :are-small :is-grouped)}
                                     [:button {:class (css-cls :button :is-info :is-fixed-100)
-                                              :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                              :on-click  #(rf/dispatch [::events/toggle-task-status [@active-entity task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class (css-cls :button :is-danger :is-fixed-50)
-                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-person task :tasks :task-id]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-entity task :tasks :task-id]])} (grab :form/delete)]]]])]]])))
 
 (defn open-tasks []
   [task-list true])
