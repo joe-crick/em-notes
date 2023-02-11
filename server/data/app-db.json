@@ -61,6 +61,13 @@
 						"due-date": "",
 						"completed": true,
 						"owner-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b"
+					},
+					"b0dcac87-f323-41a5-aacd-1a574827d1dd": {
+						"task-id": "b0dcac87-f323-41a5-aacd-1a574827d1dd",
+						"name": "Test Team Taska",
+						"details": "sdf",
+						"due-date": "",
+						"completed": false
 					}
 				}
 			},

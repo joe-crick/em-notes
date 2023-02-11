@@ -14,30 +14,34 @@
             [reagent.core :as r]))
 
 (defn revise-person [atom _ evt]
-  (let [person-id (.. evt -target -value)]
-    (rf/dispatch [::events/get-active-person person-id])
-    (swap! atom assoc :person-id person-id)))
+  (let [owner-id (.. evt -target -value)]
+    (rf/dispatch [::events/get-active-person owner-id])
+    (swap! atom assoc :owner-id owner-id)))
 
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
-        active-person (rf/subscribe [::subs/active-person])
+        active-context (rf/subscribe [::subs/active-context])
+        active-entity (rf/subscribe [::subs/active-entity @active-context])
         [task revise!] (local-state @active-task)
         text-input (set-text-input task revise!)
         date-input (set-date-input task revise!)
         text-area (set-text-area task revise!)
         raw-people (rf/subscribe [::subs/people])
-        person (r/atom {:person-id (:person-id @active-person)})
-        revise-p! (partial revise-person person)
-        select (set-select person revise-p!)
+        context (if (= @active-context :people) "person" "team")
+        entity (r/atom {:owner-id ((keyword (str context "-id")) @active-entity)})
+        revise-entity! (partial revise-person entity)
+        select (set-select entity revise-entity!)
         select-options (map (fn [p]
                               [(:person-id p) (:full-name p)]) (vals @raw-people))]
     (fn []
       [:div.container
-       [:div.is-hidden (:last-name @active-person)]
+       [:div.is-hidden (:last-name @active-entity)]
        [:form
-        [select {:label (grab :task/person)
-                 :property [:person-id]
+        (if-not (= @active-context :teams)
+          [select {:label (grab :task/person)
+                 :property [:owner-id]
                  :values select-options}]
+          [:div.is-hidden])
         [text-input {:label (grab :task/name)
                      :property [:name]}]
         [text-area {:label (grab :task/details)
@@ -52,4 +56,4 @@
          text-to-bool]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-task [@active-person @task]])), #(rf/dispatch [::events/cancel-task])]]])))
+                       (rf/dispatch [::events/save-task [@active-entity @task context]])), #(rf/dispatch [::events/cancel-task])]]])))

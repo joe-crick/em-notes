@@ -271,15 +271,21 @@
  ::save-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person task] data
+            (let [[entity task context] data
                   task-id (get-unid :task-id task)
                   updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))
-                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)]
-              {:db (assoc db :active-person new-person)
+                  new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
+                  update (if (= context "person")
+                           [:dispatch [::commit-person new-entity]]
+                           [:dispatch [::save-team new-entity]])]
+              (prn "entity" entity)
+              (prn "task" task)
+              (prn "context" context)
+              {:db (assoc db (keyword (str "active-" context)) new-entity)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]
                     [:dispatch [::get-all-tasks]]
-                    [:dispatch [::commit-person new-person]]]})))
+                    update]})))
 
 (re-frame/reg-event-fx
  ::toggle-task-status
@@ -484,7 +490,7 @@
               {:db update
                :fx [events]})))
 
-;; ACTIVE HOME VIEW
+;; ACTIVE CONTEXT
 
 (re-frame/reg-event-db
  ::set-active-context

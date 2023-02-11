@@ -34,8 +34,8 @@
 
 (re-frame/reg-sub
  ::active-entity
- (fn [db context]
-   (if (= context "team") 
+ (fn [db [_ context]]
+   (if (= context :teams) 
      (:active-team db) 
      (:active-person db))))
 
@@ -52,8 +52,6 @@
 (re-frame/reg-sub
  ::entity-tasks
  (fn [db [_ [completed? entity]]] 
-   (prn entity)
-   (prn (get-in (entity db) [:data :tasks]))
    (filter-on-prop (vals (get-in (entity db) [:data :tasks])) [:completed] (not completed?))))
 
 (re-frame/reg-sub
