@@ -4,21 +4,21 @@
 			"first-name": "Rodman",
 			"last-name": "Goatler",
 			"full-name": "Rodman Goatler",
-			"team": "Cheese Patrol",
+			"team": "07a95996-8fb9-4efc-b90f-065f10e2d723",
 			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 		},
 		"82fe54f7-4552-45a1-9477-4c1068b076fc": {
 			"first-name": "Tiffany",
 			"last-name": "Fishjuggler",
-			"team": "Pisces",
 			"full-name": "Tiffany Fishjuggler",
+			"team": "07a95996-8fb9-4efc-b90f-065f10e2d723",
 			"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc"
 		},
 		"3aacdee4-b0be-4952-b89f-ea18e1d6c99b": {
 			"first-name": "Marty",
 			"last-name": "Slinkschrieber",
 			"full-name": "Marty Slinkschrieber",
-			"team": "Potato Heads",
+			"team": "07a95996-8fb9-4efc-b90f-065f10e2d723",
 			"person-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
 		}
 	},
@@ -73,10 +73,6 @@
 			},
 			"people": [
 				{
-					"value": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
-					"label": "Marty Slinkschrieber"
-				},
-				{
 					"value": "4e002447-0d56-42cb-8de8-95ce3907ce34",
 					"label": "Rodman Goatler"
 				}
@@ -86,63 +82,17 @@
 			"name": "Another Group",
 			"charter": "Stuff",
 			"values": "Things",
-			"team-id": "07a95996-8fb9-4efc-b90f-065f10e2d723"
-		},
-		"0715c7a2-0fce-4c54-b47f-ffcc7e0ea5be": {
-			"first-name": "Rodman",
-			"last-name": "Goatler",
-			"full-name": "Rodman Goatler",
-			"team": "Cheese Patrol",
-			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
-			"data": {
-				"tasks": {
-					"a288c467-0198-47dd-aaa3-bce76365d9bb": {
-						"task-id": "a288c467-0198-47dd-aaa3-bce76365d9bb",
-						"name": "test 2345",
-						"details": "test 2345",
-						"due-date": "2023-02-06",
-						"completed": true,
-						"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
-					},
-					"a288c467-0198-47dd-aaa3-bce76365d9b7": {
-						"task-id": "a288c467-0198-47dd-aaa3-bce76365d9b7",
-						"name": "test",
-						"details": "test",
-						"due-date": "",
-						"completed": true,
-						"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
-					},
-					"e3bb69ff-20e0-4e8f-8318-751686bb339c": {
-						"task-id": "e3bb69ff-20e0-4e8f-8318-751686bb339c",
-						"name": "Number two",
-						"details": "Test",
-						"due-date": "",
-						"completed": false
-					},
-					"c2df52ce-4324-4f77-bf7d-bad1747be0b6": {
-						"task-id": "c2df52ce-4324-4f77-bf7d-bad1747be0b6",
-						"name": "Rodman's Thirds",
-						"details": "Blah",
-						"due-date": "",
-						"completed": false,
-						"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
-						"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
-					}
+			"team-id": "07a95996-8fb9-4efc-b90f-065f10e2d723",
+			"people": [
+				{
+					"value": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+					"label": "Rodman Goatler"
 				},
-				"perfs": {
-					"79024e11-f748-45d2-b211-0ad1a4861fbd": {
-						"perf-id": "79024e11-f748-45d2-b211-0ad1a4861fbd",
-						"week": "2023-02-06",
-						"velocity": "22",
-						"prs": "10",
-						"collaboration": "High",
-						"avg-est-accuracy": "75",
-						"notes": "",
-						"progress": ":en missing text"
-					}
+				{
+					"value": "82fe54f7-4552-45a1-9477-4c1068b076fc",
+					"label": "Tiffany Fishjuggler"
 				}
-			},
-			"team-id": "0715c7a2-0fce-4c54-b47f-ffcc7e0ea5be"
+			]
 		}
 	}
 }

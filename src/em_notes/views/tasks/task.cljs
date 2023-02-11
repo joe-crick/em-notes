@@ -33,8 +33,6 @@
         select (set-select entity revise-entity!)
         select-options (map (fn [p]
                               [(:person-id p) (:full-name p)]) (vals @raw-people))]
-    (prn "active-context" @active-context)
-    (prn "active-entity" @active-entity)
     (fn []
       [:div.container
        [:div.is-hidden (:last-name @active-entity)]

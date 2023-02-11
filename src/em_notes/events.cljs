@@ -10,7 +10,8 @@
             [em-notes.lib.person.get-sub-person :refer [get-sub-person]]
             [em-notes.lib.person.person-full-name :refer [person-full-name]]
             [em-notes.networking.api :as api :refer [del-person]]
-            [em-notes.lib.filter-map-on-prop :refer [replace-map-by-prop, filter-not-on-prop]]
+            [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
+            [em-notes.lib.filter-map-on-prop :refer [replace-map-by-prop, filter-not-on-prop, update-map-in-vector]]
             [re-frame.core :as re-frame]))
 
 ;; NAVIGATION
@@ -126,11 +127,13 @@
  (fn-traced [{:keys [db]} [_ person]]
             (let [person-id (get-unid :person-id person)
                   full-name (person-full-name person)
-                  new-person (assoc person :full-name full-name :person-id person-id)]
+                  new-person (assoc person :full-name full-name :person-id person-id)
+                  team (get-team-by-id (:teams db) (:team person))
+                  new-team (assoc team :people (update-map-in-vector (:people team) {:value person-id :label full-name} :value))]
               {:db (assoc-in db [:people (keyword person-id)] (get-sub-person new-person))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
-                    [:dispatch [::commit-db]]
                     [:dispatch [::commit-person new-person]]
+                    [:dispatch [::save-team new-team]]
                     [:dispatch [::set-active-person new-person]]]})))
 
 (re-frame/reg-event-fx
