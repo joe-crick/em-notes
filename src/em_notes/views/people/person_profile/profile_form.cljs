@@ -3,7 +3,7 @@
    [em-notes.components.form-footer :refer [form-footer]]
    [em-notes.events :as events]
    [em-notes.i18n.tr :refer [grab]]
-   [em-notes.lib.bulma-cls :refer [bulma-cls]]
+   [em-notes.lib.css-cls :refer [css-cls]]
    [em-notes.subs :as subs]
    [em-notes.views.people.person-profile.person-details :refer [person-details]]
    [em-notes.views.people.person-profile.person-feedback :refer [person-feedback]]
@@ -17,7 +17,7 @@
   (let [active-person (rf/subscribe [::subs/active-person])]
     (fn []
       [:div.container
-       [:h1 {:class (bulma-cls :subtitle)}
+       [:h1 {:class (css-cls :subtitle)}
         (grab :person/profile)]
        [:div
         [:form

@@ -2,7 +2,7 @@
   (:require [em-notes.components.table-filter :refer [table-filter]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.filter-map-on-prop :refer [filter-map-on-prop]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.table-style :refer [table-style]]
@@ -18,8 +18,8 @@
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:div
-       [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
-        [:div>button {:class (bulma-cls :button :is-link) :on-click #(re-frame/dispatch [::events/create-person])}
+       [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
+        [:div>button {:class (css-cls :button :is-link) :on-click #(re-frame/dispatch [::events/create-person])}
          (grab :home/create-person)]]
        [:div.container {:style {:margin-top "15px"}}
         [table-filter filter revise!]
@@ -34,7 +34,7 @@
                       person-name (:full-name person)]]
             ^{:key (random-uuid)} [:tr {:id person-id}
                                    [:td.name
-                                    [:button {:class (bulma-cls :button :is-ghost)
+                                    [:button {:class (css-cls :button :is-ghost)
                                               :on-click #(re-frame/dispatch [::events/show-person person-id])} person-name]]
-                                   [:td {:class (bulma-cls :team :pt-4)} (:team person)]])]]]])))
+                                   [:td {:class (css-cls :team :pt-4)} (:team person)]])]]]])))
 

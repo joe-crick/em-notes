@@ -1,5 +1,5 @@
 (ns em-notes.components.fields.switch-select
-  (:require [em-notes.lib.bulma-cls :refer [bulma-cls]]
+  (:require [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.remove-from-right :refer [remove-from-right]]))
 
 (defn get-option-map [list val]
@@ -10,8 +10,8 @@
 
 (defn switch-select [value-atom prop left-options left-label right-label]
 
-    [:div {:class (bulma-cls :columns)}
-     [:div {:class (bulma-cls :column :is-one-fifth)}
+    [:div {:class (css-cls :columns)}
+     [:div {:class (css-cls :column :is-one-fifth)}
       [:div.field
        [:label left-label]
        [:div.control
@@ -22,7 +22,7 @@
                        (swap! value-atom assoc-in prop (conj (get-in @value-atom prop) (get-option-map left-options (.. evt -target -value)))))}
          (for [{:keys [value label]} (remove-from-right left-options (get-in @value-atom prop))]
            ^{:key (random-uuid)} [:option {:value value} label])]]]]
-     [:div {:class (bulma-cls :column :is-one-fifth)}
+     [:div {:class (css-cls :column :is-one-fifth)}
       [:div.field
        [:label right-label]
        [:div.control

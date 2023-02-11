@@ -3,7 +3,7 @@
             [em-notes.components.table-filter :refer [table-filter]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.filter-map-on-prop :refer [filter-map-on-prop]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
@@ -20,7 +20,7 @@
     (fn []
       [:div.container
        [:div.is-hidden (:full-name @active-person)]
-       [left-right (fn [] [:h1 {:class (bulma-cls :subtitle)}
+       [left-right (fn [] [:h1 {:class (css-cls :subtitle)}
                            (grab :growth-metrics/title)])
         (fn [] [:button {:class "button is-primary"
                          :on-click #(show-modal (grab :growth-metric/title) metric)} (grab :growth-metrics/create-metric)])]

@@ -3,7 +3,7 @@
             [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.show-modal :refer [show-modal]]
@@ -28,7 +28,7 @@
                       [:closed (grab :tasks/closed)]]]
         (fn []
           [:div
-           [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
+           [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
             [:div {:class "container mb-1"}
              [:div.is-hidden @tab]]]
            [left-right (fn []
@@ -38,7 +38,7 @@
                                                             :data-name name
                                                             :on-click (fn []
                                                                         (change-tab! name))} label])])
-            (fn [] [:div>button {:class (bulma-cls :button :is-link) :on-click #(show-modal (grab :task/title) task/task)}
+            (fn [] [:div>button {:class (css-cls :button :is-link) :on-click #(show-modal (grab :task/title) task/task)}
                     (grab :tasks/create-task)])]
            [card
             (fn [] [:div

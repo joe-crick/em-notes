@@ -4,7 +4,7 @@
             [em-notes.components.form-footer :refer [form-footer]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.person.get-person-option :refer [get-person-option]]
             [em-notes.subs :as subs]
@@ -21,7 +21,7 @@
         text-input (set-text-input team revise!)]
     (fn []
       [:div.container
-       [:h1 {:class (bulma-cls :subtitle)}
+       [:h1 {:class (css-cls :subtitle)}
         (grab :team/profile)]
        [:div
         [:form

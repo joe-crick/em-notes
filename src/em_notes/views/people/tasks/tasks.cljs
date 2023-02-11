@@ -4,7 +4,7 @@
             [em-notes.components.table-filter :refer [table-filter]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
-            [em-notes.lib.bulma-cls :refer [bulma-cls]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
             [em-notes.lib.local-state :refer [local-state]]
@@ -21,7 +21,7 @@
         [filter revise!] (local-state {:filter ""})]
     (fn []
       [:div.container
-       [:h1 {:class (bulma-cls :subtitle)}
+       [:h1 {:class (css-cls :subtitle)}
         (grab :tasks/title)]
        [:div.is-hidden (:full-name @active-person)]
        [table-filter filter revise!]
@@ -62,7 +62,7 @@
                   [:closed (grab :tasks/closed)]]]
     (fn []
       [:div
-       [:div {:class (bulma-cls :container :is-flex :is-justify-content-flex-end)}
+       [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
         [:div {:class "container mb-1"}
          [:div.is-hidden @tab]
          [left-right (fn []
