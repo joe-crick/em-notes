@@ -54,7 +54,6 @@
  (fn-traced [{:keys [db]} [_ team]]
             (let [new-team? (is-blank? :team-id team)
                   team-id (if new-team? (str (random-uuid)) (:team-id team))]
-              (prn team)
               {:db (assoc-in db [:teams (keyword team-id)] (assoc team :team-id team-id))
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::set-active-team (:team-id team)]]
@@ -273,14 +272,11 @@
  (fn-traced [{:keys [db]} [_ data]]
             (let [[entity task context] data
                   task-id (get-unid :task-id task)
-                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)))
+                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)) :owner-id ((keyword (str context "-id")) entity))
                   new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
                   update (if (= context "person")
                            [:dispatch [::commit-person new-entity]]
                            [:dispatch [::save-team new-entity]])]
-              (prn "entity" entity)
-              (prn "task" task)
-              (prn "context" context)
               {:db (assoc db (keyword (str "active-" context)) new-entity)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]
@@ -291,12 +287,15 @@
  ::toggle-task-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person task] data
+            (let [[entity task context] data
                   task-id (get-unid :task-id task)
                   updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
-                  new-person (assoc-in person [:data :tasks (keyword task-id)] updated-task)]
-              {:db (assoc db :active-person new-person)
-               :fx [[:dispatch [::commit-person new-person]]]})))
+                  new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
+                  update (if (= context "person")
+                           [:dispatch [::commit-person new-entity]]
+                           [:dispatch [::save-team new-entity]])]
+              {:db (assoc db (keyword (str "active-" context)) new-entity)
+               :fx [update]})))
 
 (re-frame/reg-event-fx
  ::toggle-task-all-status

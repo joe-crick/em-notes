@@ -31,10 +31,12 @@
 			},
 			"c2df52ce-4324-4f77-bf7d-bad1747be0b6": {
 				"task-id": "c2df52ce-4324-4f77-bf7d-bad1747be0b6",
-				"name": "Rodman's Third",
+				"name": "Rodman's Thirds",
 				"details": "Blah",
 				"due-date": "",
-				"completed": false
+				"completed": false,
+				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			}
 		},
 		"perfs": {

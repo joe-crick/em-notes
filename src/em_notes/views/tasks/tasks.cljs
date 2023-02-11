@@ -17,7 +17,7 @@
 
 (defn task-list [completed?]
   (let [active-context (rf/subscribe [::subs/active-context])
-        context (if (= @active-context :people) "person" "team")
+        context (if (= @active-context :teams) "team" "person")
         active-entity (rf/subscribe [::subs/active-entity @active-context])
         tasks (rf/subscribe [::subs/entity-tasks [completed? (keyword (str "active-" context))]])
         [filter revise!] (local-state {:filter ""})]
@@ -47,7 +47,7 @@
                                   [:td
                                    [:div {:class (css-cls :buttons :are-small :is-grouped)}
                                     [:button {:class (css-cls :button :is-info :is-fixed-100)
-                                              :on-click  #(rf/dispatch [::events/toggle-task-status [@active-entity task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                              :on-click  #(rf/dispatch [::events/toggle-task-status [@active-entity task context]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-entity task :tasks :task-id]])} (grab :form/delete)]]]])]]])))
 

@@ -27,12 +27,14 @@
         date-input (set-date-input task revise!)
         text-area (set-text-area task revise!)
         raw-people (rf/subscribe [::subs/people])
-        context (if (= @active-context :people) "person" "team")
+        context (if (= @active-context :teams) "team" "person")
         entity (r/atom {:owner-id ((keyword (str context "-id")) @active-entity)})
         revise-entity! (partial revise-person entity)
         select (set-select entity revise-entity!)
         select-options (map (fn [p]
                               [(:person-id p) (:full-name p)]) (vals @raw-people))]
+    (prn "active-context" @active-context)
+    (prn "active-entity" @active-entity)
     (fn []
       [:div.container
        [:div.is-hidden (:last-name @active-entity)]
