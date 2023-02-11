@@ -1,1 +1,3 @@
 * Team Performance and Tasks (or remove them)
+* All Tasks and Perfs separated out into individual files
+* Tasks and Perfs updated to have owner-id prop (Tasks have person-id right now, replace with owner-id)

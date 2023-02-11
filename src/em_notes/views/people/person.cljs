@@ -12,7 +12,7 @@
             [em-notes.views.people.growth.metrics :refer [metrics]]
             [em-notes.views.people.one-on-ones.one-on-ones :refer [one-on-ones]]
             [em-notes.views.people.person-profile.profile-form :refer [profile]]
-            [em-notes.views.performance.perfs :refer [perfs]]
+            [em-notes.views.people.performance.perfs :refer [perfs]]
             [em-notes.views.tasks.tasks :refer [tasks]]
             [re-frame.core :as rf]))
 

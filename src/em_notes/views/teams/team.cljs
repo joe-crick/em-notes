@@ -6,7 +6,6 @@
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
-            [em-notes.views.performance.perfs :refer [perfs]]
             [em-notes.views.tasks.tasks :refer [tasks]]
             [em-notes.views.teams.capacity.capacities :refer [capacities]]
             [em-notes.views.teams.profile.team-profile :refer [team-profile]]
@@ -22,10 +21,8 @@
 
        [tabbed-view {:tab-navs [[:profile (grab :team/profile)]
                                 [:capacity (grab :team/capacity)]
-                                [:performance (grab :team/performance)]
                                 [:tasks (grab :team/tasks)]]
-                     :views {:profile team-profile
-                             :performance perfs
+                     :views {:profile team-profile 
                              :capacity capacities
                              :tasks tasks}
                      :action-buttons [[#(show-confirm (grab :team/confirm-delete) [::events/delete-team @active-team])

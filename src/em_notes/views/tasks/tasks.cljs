@@ -1,4 +1,4 @@
-(ns em-notes.views.people.tasks.tasks
+(ns em-notes.views.tasks.tasks
   (:require [em-notes.components.card :refer [card]]
             [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.components.table-filter :refer [table-filter]]

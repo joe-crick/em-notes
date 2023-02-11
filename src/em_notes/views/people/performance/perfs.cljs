@@ -10,7 +10,7 @@
             [em-notes.lib.show-modal :refer [show-modal]]
             [em-notes.lib.table-style :refer [table-style]]
             [em-notes.subs :as subs]
-            [em-notes.views.performance.perf :as perf]
+            [em-notes.views.people.performance.perf :as perf]
             [re-frame.core :as rf]))
 
 (defn perfs []
