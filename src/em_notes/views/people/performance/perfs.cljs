@@ -1,4 +1,4 @@
-(ns em-notes.views.performance.perfs
+(ns em-notes.views.people.performance.perfs
   (:require [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.components.table-filter :refer [table-filter]]
             [em-notes.events :as events]

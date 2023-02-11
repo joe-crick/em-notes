@@ -1,4 +1,4 @@
-(ns em-notes.views.performance.perf
+(ns em-notes.views.people.performance.perf
   (:require [em-notes.components.fields.date-input :refer [set-date-input]]
             [em-notes.components.fields.text-input :refer [set-text-input]]
             [em-notes.components.fields.textarea :refer [set-text-area]]

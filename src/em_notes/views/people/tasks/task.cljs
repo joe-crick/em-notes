@@ -1,4 +1,4 @@
-(ns em-notes.views.tasks.task 
+(ns em-notes.views.people.tasks.task 
   (:require [em-notes.components.fields.date-input :refer [set-date-input]]
             [em-notes.components.fields.radio-group :refer [radio-group]]
             [em-notes.components.fields.select :refer [set-select]]
