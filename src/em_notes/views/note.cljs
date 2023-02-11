@@ -1,11 +1,12 @@
 (ns em-notes.views.note 
-  (:require [em-notes.components.form-footer :refer [form-footer]]))
+  (:require [em-notes.components.form-footer :refer [form-footer]]
+            [em-notes.lib.css-cls :refer [css-cls]]))
 
 (defn create-note []
   [:section
    [:div.container
     [:div
-     [:h1 {:class "title mt-5"}
+     [:h1 {:class (css-cls :title :mt-5)}
       "Note"]
 
      [:form
@@ -20,7 +21,7 @@
        [:div.control
         [:textarea.textarea {:placeholder "Textarea"}]]]]
      [:div
-      {:class "select is-multiple"}
+      {:class (css-cls :select :is-multiple)}
       [:select
        {:multiple "", :size "5"}
        [:option {:value "Argentina"} "Argentina"]

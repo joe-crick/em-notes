@@ -2,6 +2,7 @@
   (:require [em-notes.components.card :refer [card]]
             [em-notes.components.left-right-cols :refer [left-right]]
             [em-notes.events :as events]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.local-state :refer [local-state]]
             [re-frame.core :as rf]))
@@ -22,7 +23,7 @@
        [:div.is-hidden (str @tab)]
 
      ;; Tabs
-       [:div {:class "container mb-1"}
+       [:div {:class (css-cls :container :mb-1)}
         [left-right (fn []) (fn []
                               [:div
                                (for [[name label] tab-navs]
@@ -37,12 +38,12 @@
          (fn []
            [:div.container
             (for [[on-click label btn-type] action-buttons]
-              ^{:key (random-uuid)} [:button {:class (str "button mt-5 mb-3 " btn-type) :on-click on-click} label])])]]
+              ^{:key (random-uuid)} [:button {:class (str "button :mt-5 mb-3 " btn-type) :on-click on-click} label])])]]
 
      ;; Body
        [card
         (fn [] [:div
-                [:h1 {:class "title"} (:title views-config)]
+                [:h1 {:class (css-cls :title)} (:title views-config)]
                 [(get-in views-config [:views @tab] (fn [] [:div.container "Not Found"]))]])]])))
 
 

@@ -3,6 +3,7 @@
             [em-notes.components.fields.text-input :refer [set-text-input]]
             [em-notes.components.section-toggle :refer [section-toggle]]
             [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.revise :refer [get-revise!]]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]))
@@ -22,20 +23,20 @@
                          [nil (grab :person/avoidant)]
                          [nil (grab :person/disorganised)]]}]
        [:div
-        {:class "columns"}
-        [:div {:class "column"}
+        {:class (css-cls :columns)}
+        [:div {:class (css-cls :column)}
          [text-input {:label (grab :person/openness)
                       :property [:profile :openness]}]]
-        [:div {:class "column"}
+        [:div {:class (css-cls :column)}
          [text-input {:label (grab :person/conscientiousness)
                       :property [:profile :conscientiousness]}]]
-        [:div {:class "column"}
+        [:div {:class (css-cls :column)}
          [text-input {:label (grab :person/attachment-style)
                       :property [:profile :extroversion]}]]
-        [:div {:class "column"}
+        [:div {:class (css-cls :column)}
          [text-input {:label (grab :person/agreableness)
                       :property [:profile :agreableness]}]]
-        [:div {:class "column"}
+        [:div {:class (css-cls :column)}
          [text-input {:label (grab :person/neuroticism)
                       :property [:profile :neuroticism]}]]]])))
 

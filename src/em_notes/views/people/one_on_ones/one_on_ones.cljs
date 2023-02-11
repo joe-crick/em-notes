@@ -21,7 +21,7 @@
       [:div.container
        [left-right (fn [] [:h1 {:class (css-cls :subtitle)}
                            (grab :one-on-ones/title)])
-        (fn [] [:button {:class "button is-primary"
+        (fn [] [:button {:class (css-cls :button :is-primary)
                          :on-click #(show-modal (grab :one-on-one/title) one_on_one)} (grab :one-on-ones/create-one-on-one)])]
        [table-filter filter revise!]
        [:table {:class (table-style)}
@@ -39,14 +39,14 @@
                :let [one-on-one-id (:one-on-one-id one-on-one)]]
            ^{:key (random-uuid)} [:tr {:id one-on-one-id}
                                   [:td.name
-                                   [:button {:class "button is-ghost"
+                                   [:button {:class (css-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-one-on-one [@active-person one-on-one one-on-one-view]])} (:week-of one-on-one)]]
-                                  [:td {:class "pt-4"} (:perf one-on-one)]
-                                  [:td {:class "pt-4"} (:alignment one-on-one)]
-                                  [:td {:class "pt-4"} (:development one-on-one)]
-                                  [:td {:class "pt-4"} (:next-steps one-on-one)]
-                                  [:td {:class "pt-4"} (:notes one-on-one)]
+                                  [:td {:class (css-cls :pt-4)} (:perf one-on-one)]
+                                  [:td {:class (css-cls :pt-4)} (:alignment one-on-one)]
+                                  [:td {:class (css-cls :pt-4)} (:development one-on-one)]
+                                  [:td {:class (css-cls :pt-4)} (:next-steps one-on-one)]
+                                  [:td {:class (css-cls :pt-4)} (:notes one-on-one)]
                                   [:td
-                                   [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-danger is-fixed-50"
+                                   [:div {:class (css-cls :buttons :are-small :is-grouped)}
+                                    [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :one-on-ones/confirm-delete) [::events/delete-item [@active-person one-on-one :one-on-ones :one-on-one-id]])} (grab :form/delete)]]]])]]])))

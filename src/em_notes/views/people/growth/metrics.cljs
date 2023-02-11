@@ -22,7 +22,7 @@
        [:div.is-hidden (:full-name @active-person)]
        [left-right (fn [] [:h1 {:class (css-cls :subtitle)}
                            (grab :growth-metrics/title)])
-        (fn [] [:button {:class "button is-primary"
+        (fn [] [:button {:class (css-cls :button :is-primary)
                          :on-click #(show-modal (grab :growth-metric/title) metric)} (grab :growth-metrics/create-metric)])]
        [table-filter filter revise!]
        [:table {:class (table-style)}
@@ -37,11 +37,11 @@
                :let [metric-id (:metric-id metric)]]
            ^{:key (random-uuid)} [:tr {:id metric-id}
                                   [:td.name {:data-progress (:progress metric)}
-                                   [:button {:class "button is-ghost"
+                                   [:button {:class (css-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-metric [@active-person metric metric-view]])} (:name metric)]]
-                                  [:td {:class "pt-4"} (:details metric)]
-                                  [:td {:class "pt-4"} (str (:progress metric))]
+                                  [:td {:class (css-cls :pt-4)} (:details metric)]
+                                  [:td {:class (css-cls :pt-4)} (str (:progress metric))]
                                   [:td
-                                   [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-danger is-fixed-50"
+                                   [:div {:class (css-cls :buttons :are-small :is-grouped)}
+                                    [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :growth-metrics/confirm-delete) [::events/delete-item [@active-person metric :growth-metrics :metric-id]])} (grab :form/delete)]]]])]]])))

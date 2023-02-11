@@ -9,7 +9,7 @@
     [:div.field
      [:div {:class (css-cls :control :has-icons :has-icons-right)}
       [:input {:type "search"
-               :class "input"
+               :class (css-cls :input)
                :placeholder (grab :table/search)
                :on-change #(revise! :filter %)
                :value (:filter @atom)}]

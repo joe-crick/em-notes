@@ -20,7 +20,7 @@
       [:div.container
        [left-right (fn [] [:h1 {:class (css-cls :subtitle)}
                            (grab :perf/title)])
-        (fn [] [:button {:class "button is-primary"
+        (fn [] [:button {:class (css-cls :button :is-primary)
                          :on-click #(show-modal (grab :perf/title) perf/perf)} (grab :perfs/create-perf)])]
        [table-filter filter revise!]
        [:table {:class (table-style)}
@@ -38,14 +38,14 @@
                :let [perf-id (:perf-id perf)]]
            ^{:key (random-uuid)} [:tr {:id perf-id}
                                   [:td.name
-                                   [:button {:class "button is-ghost"
+                                   [:button {:class (css-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-perf [@active-person perf perf/perf]])} (:week perf)]]
-                                  [:td {:class "pt-4"} (:velocity perf)]
-                                  [:td {:class "pt-4"} (str (:prs perf))]
-                                  [:td {:class "pt-4"} (str (:collaboration perf))]
-                                  [:td {:class "pt-4"} (str (:avg-est-accuracy perf))]
-                                  [:td {:class "pt-4"} (str (:notes perf))]
+                                  [:td {:class (css-cls :pt-4)} (:velocity perf)]
+                                  [:td {:class (css-cls :pt-4)} (str (:prs perf))]
+                                  [:td {:class (css-cls :pt-4)} (str (:collaboration perf))]
+                                  [:td {:class (css-cls :pt-4)} (str (:avg-est-accuracy perf))]
+                                  [:td {:class (css-cls :pt-4)} (str (:notes perf))]
                                   [:td
-                                   [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-danger is-fixed-50"
+                                   [:div {:class (css-cls :buttons :are-small :is-grouped)}
+                                    [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :perf/confirm-delete) [::events/delete-item [@active-person perf :perfs :perf-id]])} (grab :form/delete)]]]])]]])))

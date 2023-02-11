@@ -1,8 +1,9 @@
-(ns em-notes.components.left-right-cols)
+(ns em-notes.components.left-right-cols 
+  (:require [em-notes.lib.css-cls :refer [css-cls]]))
 
 (defn left-right [left right]
-  [:nav {:class "level"}
-   [:div {:class "level-left"}
+  [:nav {:class (css-cls :level)}
+   [:div {:class (css-cls :level-left)}
     [left]]
-   [:div {:class "level-right"}
+   [:div {:class (css-cls :level-right)}
     [right]]])

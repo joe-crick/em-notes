@@ -1,6 +1,7 @@
 (ns em-notes.views.teams.teams
     (:require [em-notes.components.table-filter :refer [table-filter]]
               [em-notes.i18n.tr :refer [grab]]
+              [em-notes.lib.css-cls :refer [css-cls]]
               [em-notes.lib.filter-map-on-prop :refer [filter-map-on-prop]]
               [em-notes.lib.local-state :refer [local-state]]
               [em-notes.lib.table-style :refer [table-style]]
@@ -15,10 +16,10 @@
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:div
-       [:div {:class "container is-flex is-justify-content-flex-end"}
-        [:div>button {:class "button is-link" :on-click #(nav/go :team)}
+       [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
+        [:div>button {:class (css-cls :button :is-link) :on-click #(nav/go :team)}
          (grab :home/create-team)]]
-       [:div {:class "container" :style {:margin-top "15px"}}
+       [:div {:class (css-cls :container) :style {:margin-top "15px"}}
         [table-filter filter revise!]
         [:table {:class (table-style)}
          [:thead
@@ -29,7 +30,7 @@
                 :let [team-name (:name team)
                       team-id (:team-id team)]]
             ^{:key (random-uuid)} [:tr {:id team-id}
-                                   [:td {:class "name"}
-                                    [:button {:class "button is-ghost"
+                                   [:td {:class (css-cls :name)}
+                                    [:button {:class (css-cls :button :is-ghost)
                                               :on-click #(nav/go :team (str "id=" team-id))} team-name]]])]]]])))
 

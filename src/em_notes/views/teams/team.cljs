@@ -2,6 +2,7 @@
   (:require [em-notes.components.tabbed-view :refer [tabbed-view]]
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
+            [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
@@ -16,8 +17,8 @@
   (let [active-team (rf/subscribe [::subs/active-team])]
     (fn []
       [:section {:style {:margin-top "-40px"}}
-       [:div {:class "container"}
-        [:button {:class "button is-ghost mt-5" :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
+       [:div {:class (css-cls :container)}
+        [:button {:class (css-cls :button :is-ghost :mt-5) :on-click #(nav/go :home)} (str "< " (grab :home/home))]]
 
        [tabbed-view {:tab-navs [[:profile (grab :team/profile)]
                                 [:capacity (grab :team/capacity)]

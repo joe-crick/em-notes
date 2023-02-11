@@ -29,7 +29,7 @@
         (fn []
           [:div
            [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
-            [:div {:class "container mb-1"}
+            [:div {:class (css-cls :container :mb-1)}
              [:div.is-hidden @tab]]]
            [left-right (fn []
                          [:div

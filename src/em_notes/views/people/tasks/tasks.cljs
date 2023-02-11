@@ -38,15 +38,15 @@
                      completed? (:completed task)]]
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
-                                   [:button {:class "button is-ghost"
+                                   [:button {:class (css-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-task [@active-person task task/task]])} (:name task)]]
-                                  [:td {:class "pt-4"} (:details task)]
-                                  [:td {:class "pt-4"} (str (:completed task))]
+                                  [:td {:class (css-cls ::pt-4)} (:details task)]
+                                  [:td {:class (css-cls ::pt-4)} (str (:completed task))]
                                   [:td
-                                   [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-info is-fixed-100"
+                                   [:div {:class (css-cls :buttons :are-small :is-grouped)}
+                                    [:button {:class (css-cls :button :is-info :is-fixed-100)
                                               :on-click  #(rf/dispatch [::events/toggle-task-status [@active-person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
-                                    [:button {:class "button is-danger is-fixed-50"
+                                    [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-item [@active-person task :tasks :task-id]])} (grab :form/delete)]]]])]]])))
 
 (defn open-tasks []
@@ -63,7 +63,7 @@
     (fn []
       [:div
        [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
-        [:div {:class "container mb-1"}
+        [:div {:class (css-cls :container :mb-1)}
          [:div.is-hidden @tab]
          [left-right (fn []
                        [:div
@@ -72,7 +72,7 @@
                                                           :data-name name
                                                           :on-click (fn []
                                                                       (change-tab! name))} label])])
-          (fn [] [:button {:class "button is-primary"
+          (fn [] [:button {:class (css-cls :button :is-primary)
                            :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]]]
        [card
         (fn [] [:div

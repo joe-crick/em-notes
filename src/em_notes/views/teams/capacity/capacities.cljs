@@ -38,9 +38,9 @@
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
                                              :on-click #(rf/dispatch [::events/edit-capacity [@active-team capacity capacity-view]])} (:week-of capacity)]]
-                                  [:td {:class "pt-4"} (:percent-capacity capacity)]
-                                  [:td {:class "pt-4"} (:notes capacity)]
+                                  [:td {:class (css-cls :pt-4)} (:percent-capacity capacity)]
+                                  [:td {:class (css-cls :pt-4)} (:notes capacity)]
                                   [:td
-                                   [:div {:class "buttons are-small is-grouped"}
-                                    [:button {:class "button is-danger is-fixed-50"
+                                   [:div {:class (css-cls :buttons :are-small :is-grouped)}
+                                    [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :capacities/confirm-delete) [::events/delete-capacity [@active-team capacity]])} (grab :form/delete)]]]])]]])))

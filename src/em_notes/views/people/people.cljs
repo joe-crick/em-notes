@@ -18,7 +18,7 @@
     ;; required when local state is used, because we need to return a render function
     (fn []
       [:div
-       [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
+       [:div {:class (css-cls :container ::is-flex :is-justify-content-flex-end)}
         [:div>button {:class (css-cls :button :is-link) :on-click #(re-frame/dispatch [::events/create-person])}
          (grab :home/create-person)]]
        [:div.container {:style {:margin-top "15px"}}
@@ -34,7 +34,7 @@
                       person-name (:full-name person)]]
             ^{:key (random-uuid)} [:tr {:id person-id}
                                    [:td.name
-                                    [:button {:class (css-cls :button :is-ghost)
+                                    [:button {:class (css-cls :button ::is-ghost)
                                               :on-click #(re-frame/dispatch [::events/show-person person-id])} person-name]]
                                    [:td {:class (css-cls :team :pt-4)} (:team person)]])]]]])))
 
