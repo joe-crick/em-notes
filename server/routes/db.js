@@ -2,17 +2,25 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const jsonFormat = require ('json-format');
-const file = './server/data/app-db.json'
-const peoplePath = './server/data/people/'
+const file = './server/data/app-db.json';
+const getPeopleForTeam = require("../lib/get_people_team");
 
 
 router.get('/', function(req, res, next) {
+
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
-    res.send(data);
+    const db = JSON.parse(data);
+    const newTeams = Object.entries(db.teams).reduce((acc, [key, value]) => {
+      const people = getPeopleForTeam(key);
+      value.people = people;
+      return {...acc, [key]: value}
+    }, {})
+    db.teams = newTeams;
+    res.send(JSON.stringify(db));
   });
  
 });
