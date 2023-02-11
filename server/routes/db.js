@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const jsonFormat = require ('json-format');
 const file = './server/data/app-db.json'
+const peoplePath = './server/data/people/'
 
 
 router.get('/', function(req, res, next) {
