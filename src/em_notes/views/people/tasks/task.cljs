@@ -52,5 +52,4 @@
          text-to-bool]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-task [@active-person @task]])), #(rf/dispatch [::events/cancel-task])]]]))
-  )
+                       (rf/dispatch [::events/save-task [@active-person @task]])), #(rf/dispatch [::events/cancel-task])]]])))

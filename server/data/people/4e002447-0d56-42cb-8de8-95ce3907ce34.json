@@ -29,6 +29,18 @@
 				"due-date": "",
 				"completed": false
 			}
+		},
+		"perfs": {
+			"79024e11-f748-45d2-b211-0ad1a4861fbd": {
+				"perf-id": "79024e11-f748-45d2-b211-0ad1a4861fbd",
+				"week": "2023-02-06",
+				"velocity": "22",
+				"prs": "10",
+				"collaboration": "High",
+				"avg-est-accuracy": "75",
+				"notes": "",
+				"progress": ":en missing text"
+			}
 		}
 	}
 }
