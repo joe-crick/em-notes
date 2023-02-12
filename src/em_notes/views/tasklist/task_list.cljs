@@ -5,14 +5,18 @@
             [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
             [em-notes.lib.person.get-person-by-id :refer [get-person-by-id]]
+            [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.table-style :refer [table-style]]
+            [em-notes.routing.nav :as nav]
             [em-notes.views.tasks.task :as task]
             [em-notes.subs :as subs]
             [re-frame.core :as rf]))
 
-(defn task-list [people filter revise! completed?]
-  (let [task-list (rf/subscribe [::subs/tasks completed?])]
+(defn task-list [filter revise! completed?]
+  (let [task-list (rf/subscribe [::subs/tasks completed?])
+        people (rf/subscribe [::subs/people])
+        teams (rf/subscribe [::subs/teams])]
     (fn []
       [:div {:class (css-cls :container) :style {:margin-top (css-cls :15px)}}
        [table-filter filter revise!]
@@ -28,26 +32,32 @@
          (for [task (filter-on-prop-str (or @task-list []) [:name] (:filter @filter))
                :let [task-id (:task-id task)
                      completed? (:completed task)
-                     person-id (:person-id task)
-                     person (get-person-by-id @people person-id)]]
+                     owner-id (:owner-id task)
+                     team? (:is-team task)
+                     entity (if team?
+                              (get-team-by-id @teams owner-id)
+                              (get-person-by-id @people owner-id))
+                     entity-key (if team? :name :full-name)]]
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
-                                             :on-click #(rf/dispatch [::events/show-person person-id])} (:full-name person)]]
+                                             :on-click (if team? 
+                                                         #(nav/go :team (str "id=" owner-id))
+                                                         #(rf/dispatch [::events/show-person owner-id]))} (entity-key entity)]]
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
-                                             :on-click #(rf/dispatch [::events/edit-task [person task task/task]])} (:name task)]]
+                                             :on-click #(rf/dispatch [::events/edit-task [entity task task/task]])} (:name task)]]
                                   [:td {:class (css-cls :pt-4)} (:details task)]
                                   [:td {:class (css-cls :pt-4)} (str (:completed task))]
                                   [:td
                                    [:div {:class (css-cls :buttons :are-small :is-grouped)}
                                     [:button {:class (css-cls :button :is-info :is-fixed-100)
-                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [person task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [entity task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class (css-cls :button :is-danger :is-fixed-50)
-                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task-all [person task]])} (grab :form/delete)]]]])]]])))
+                                              :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task-all [entity task]])} (grab :form/delete)]]]])]]])))
 
-(defn open-tasks [people filter revise!]
-  [task-list people filter revise! true])
+(defn open-tasks [filter revise!]
+  [task-list filter revise! true])
 
-(defn closed-tasks [people filter revise!]
-  [task-list people filter revise! false])
+(defn closed-tasks [filter revise!]
+  [task-list filter revise! false])

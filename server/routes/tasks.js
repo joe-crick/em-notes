@@ -4,6 +4,7 @@ const fs = require("fs");
 const jsonFormat = require("json-format");
 const filePath = "./server/data/people/";
 const getPeople = require("../lib/get_people");
+const getTeams = require("../lib/get_teams");
 
 function getFilePath(personId) {
   return `${filePath}${personId}.json`;
@@ -12,11 +13,22 @@ function getFilePath(personId) {
 router.get("/", function (req, res, next) {
   const tasks = [];
   const people = getPeople();
+  const teams = getTeams();
 
   try {
     for (const person of people) {
-      for (const task of Object.values(person.data.tasks)) {
-        tasks.push({ ...task, ["person-id"]: person["person-id"] });
+      if (person?.data?.tasks) {
+        for (const task of Object.values(person.data.tasks)) {
+          tasks.push({ ...task, ["owner-id"]: person["person-id"], ["is-team"]: false });
+        }
+      }
+    }
+
+    for (const team of teams) {
+      if (team?.data?.tasks) {   
+        for (const task of Object.values(team.data.tasks)) {
+         tasks.push({ ...task, ["owner-id"]: team["team-id"], ["is-team"]: true });
+        }
       }
     }
 

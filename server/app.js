@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var dbRouter = require('./routes/db');
 var personRouter = require('./routes/person');
 var taskRouter = require('./routes/tasks');
-var teamsRouter = require('./routes/teams');
 
 var app = express();
 
@@ -26,6 +25,5 @@ app.use('/', indexRouter);
 app.use('/db', dbRouter);
 app.use('/person', personRouter);
 app.use('/tasks', taskRouter);
-app.use('/teams', teamsRouter);
 
 module.exports = app;

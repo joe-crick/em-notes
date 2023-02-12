@@ -7,7 +7,6 @@
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.show-modal :refer [show-modal]]
-            [em-notes.subs :as subs]
             [em-notes.views.tasks.task :as task]
             [em-notes.views.tasklist.task-list :refer [closed-tasks open-tasks]]
             [re-frame.core :as rf]
@@ -20,7 +19,7 @@
       (rf/dispatch [::events/get-all-tasks]))
     :reagent-render
     (fn []
-      (let [people (rf/subscribe [::subs/people])
+      (let [
             [filter revise!] (local-state {:filter ""})
             [tab change-tab!] (local-state :open)
             views {:open open-tasks :closed closed-tasks}
@@ -42,6 +41,6 @@
                     (grab :tasks/create-task)])]
            [card
             (fn [] [:div
-                    [(get views (keyword @tab) (fn [] [:div.container "Not Found"])) people filter revise!]])]])))}))
+                    [(get views (keyword @tab) (fn [] [:div.container "Not Found"])) filter revise!]])]])))}))
 
 

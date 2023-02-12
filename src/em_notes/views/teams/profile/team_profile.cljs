@@ -32,6 +32,6 @@
            [:label (grab :team/people)]
            [:ul.bullet-list
             (for [person (:people @active-team)]
-              [:li (:label person)])]]]
+              ^{:key (random-uuid)} [:li (:label person)])]]]
          [form-footer #(rf/dispatch [::events/save-team @team]),
           #(rf/dispatch-sync [::events/reset-active-team])]]]])))
