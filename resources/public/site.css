@@ -16,3 +16,8 @@ fieldset {
  .button.is-fixed-50 {
     min-width: 50px;
  }
+
+ .bullet-list {
+    list-style: disc;
+    margin-left: 20px;
+ }

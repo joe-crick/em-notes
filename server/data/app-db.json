@@ -4,7 +4,7 @@
 			"first-name": "Rodman",
 			"last-name": "Goatler",
 			"full-name": "Rodman Goatler",
-			"team": "07a95996-8fb9-4efc-b90f-065f10e2d723",
+			"team": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
 			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 		},
 		"82fe54f7-4552-45a1-9477-4c1068b076fc": {
@@ -75,6 +75,10 @@
 				{
 					"value": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
 					"label": "Marty Slinkschrieber"
+				},
+				{
+					"value": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+					"label": "Rodman Goatler"
 				}
 			]
 		},
@@ -84,10 +88,6 @@
 			"values": "Things",
 			"team-id": "07a95996-8fb9-4efc-b90f-065f10e2d723",
 			"people": [
-				{
-					"value": "4e002447-0d56-42cb-8de8-95ce3907ce34",
-					"label": "Rodman Goatler"
-				},
 				{
 					"value": "82fe54f7-4552-45a1-9477-4c1068b076fc",
 					"label": "Tiffany Fishjuggler"
