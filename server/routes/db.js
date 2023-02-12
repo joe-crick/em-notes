@@ -16,7 +16,12 @@ router.get('/', function(req, res, next) {
     const db = JSON.parse(data);
     const newTeams = Object.entries(db.teams).reduce((acc, [key, value]) => {
       const people = getPeopleForTeam(key);
-      value.people = people;
+      value.people = people.map((person) => {
+        return {
+          value: person["person-id"],
+          label: person["full-name"]
+        }
+      });
       return {...acc, [key]: value}
     }, {})
     db.teams = newTeams;

@@ -25,7 +25,7 @@
       [:div.container
        [:h1 {:class (css-cls :subtitle)}
         (grab :tasks/title)]
-       [:div.is-hidden (:full-name @active-entity)]
+       [:div.is-hidden ((keyword (str context "-id")) @active-entity)]
        [table-filter filter revise!]
        [:table {:class (table-style)}
         [:thead
