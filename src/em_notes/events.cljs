@@ -302,29 +302,30 @@
  ::toggle-task-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[entity task context] data
+            (let [[entity task task-type] data
                   task-id (get-unid :task-id task)
                   updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
                   new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
-                  update (if (= context "person")
+                  update (if (= task-type "person")
                            [:dispatch [::commit-person new-entity]]
                            [:dispatch [::save-team new-entity]])]
-              {:db (assoc db (keyword (str "active-" context)) new-entity)
+              {:db (assoc db (keyword (str "active-" task-type)) new-entity)
                :fx [update]})))
 
 (re-frame/reg-event-fx
  ::toggle-task-all-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person task] data
+            (let [[entity task task-type] data
                   task-id (get-unid :task-id task)
                   updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
-                  tasks (:tasks db)]
-              (api/get-person (:person-id person) (fn [p]
-                                                    (let [new-person (assoc-in p [:data :tasks (keyword task-id)] updated-task)]
-                                                      (re-frame/dispatch [::commit-person new-person]))))
+                  new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
+                  tasks (:tasks db)
+                  update (if (= task-type "person")
+                           [:dispatch [::commit-person new-entity]]
+                           [:dispatch [::save-team new-entity]])]
               {:db (assoc db :tasks (replace-map-by-prop tasks :task-id updated-task))
-               :fx []})))
+               :fx [update]})))
 
 (re-frame/reg-event-fx
  ::delete-task-all

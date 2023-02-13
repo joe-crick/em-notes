@@ -46,7 +46,8 @@
 				"details": "Go get 'em, Marty!!",
 				"due-date": "2023-02-20",
 				"completed": false,
-				"owner-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
+				"owner-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
+				"is-team": false
 			}
 		},
 		"growth-metrics": {

@@ -1,2 +1,2 @@
-* Fix issue with updating a Team Task in the Tasks list.
+* Fix issue with toggling task status in the All Tasks view
 * Fix default value on React Select (still not setting)

@@ -4,10 +4,11 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
-            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
             [em-notes.lib.person.get-person-by-id :refer [get-person-by-id]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.table-style :refer [table-style]]
+            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
+            [em-notes.lib.task.get-task-type :refer [get-task-type]]
             [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
             [em-notes.routing.nav :as nav]
             [em-notes.subs :as subs]
@@ -54,7 +55,7 @@
                                   [:td
                                    [:div {:class (css-cls :buttons :are-small :is-grouped)}
                                     [:button {:class (css-cls :button :is-info :is-fixed-100)
-                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [entity task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [entity task (get-task-type task)]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task-all [entity task]])} (grab :form/delete)]]]])]]])))
 

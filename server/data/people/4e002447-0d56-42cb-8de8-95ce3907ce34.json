@@ -20,8 +20,9 @@
 				"name": "test",
 				"details": "test",
 				"due-date": "",
-				"completed": true,
-				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+				"completed": false,
+				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+				"is-team": false
 			},
 			"e3bb69ff-20e0-4e8f-8318-751686bb339c": {
 				"task-id": "e3bb69ff-20e0-4e8f-8318-751686bb339c",
