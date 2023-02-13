@@ -8,12 +8,12 @@
 		"tasks": {
 			"a288c467-0198-47dd-aaa3-bce76365d9bb": {
 				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9bb",
-				"name": "test 2345",
-				"details": "test 2345",
+				"name": "test 23456",
+				"details": "test 23456",
 				"due-date": "2023-02-06",
 				"completed": false,
-				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
-				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+				"is-team": false
 			},
 			"a288c467-0198-47dd-aaa3-bce76365d9b7": {
 				"task-id": "a288c467-0198-47dd-aaa3-bce76365d9b7",
@@ -21,7 +21,6 @@
 				"details": "test",
 				"due-date": "",
 				"completed": true,
-				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
 				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			},
 			"e3bb69ff-20e0-4e8f-8318-751686bb339c": {
@@ -30,7 +29,8 @@
 				"details": "Test",
 				"due-date": "",
 				"completed": false,
-				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
+				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
+				"is-team": false
 			},
 			"c2df52ce-4324-4f77-bf7d-bad1747be0b6": {
 				"task-id": "c2df52ce-4324-4f77-bf7d-bad1747be0b6",
@@ -38,7 +38,6 @@
 				"details": "Blah",
 				"due-date": "",
 				"completed": false,
-				"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34",
 				"owner-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 			}
 		},

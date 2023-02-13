@@ -48,11 +48,12 @@
 				"tasks": {
 					"a288c467-0198-47dd-aaa3-bce76365d9bb": {
 						"task-id": "a288c467-0198-47dd-aaa3-bce76365d9bb",
-						"name": "Team Task 4726",
+						"name": "Team Task 4723",
 						"details": "test 2345",
 						"due-date": "2023-02-06",
 						"completed": false,
-						"owner-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b"
+						"owner-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
+						"is-team": true
 					},
 					"a288c467-0198-47dd-aaa3-bce76365d9b7": {
 						"task-id": "a288c467-0198-47dd-aaa3-bce76365d9b7",

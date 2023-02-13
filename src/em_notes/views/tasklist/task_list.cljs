@@ -4,13 +4,14 @@
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
+            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
             [em-notes.lib.person.get-person-by-id :refer [get-person-by-id]]
-            [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.table-style :refer [table-style]]
+            [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
             [em-notes.routing.nav :as nav]
-            [em-notes.views.tasks.task :as task]
             [em-notes.subs :as subs]
+            [em-notes.views.tasks.task :as task]
             [re-frame.core :as rf]))
 
 (defn task-list [filter revise! completed?]
@@ -33,6 +34,7 @@
                :let [task-id (:task-id task)
                      completed? (:completed task)
                      owner-id (:owner-id task)
+                     ;; is-team is a property that only exists on a task returned from the all-tasks api
                      team? (:is-team task)
                      entity (if team?
                               (get-team-by-id @teams owner-id)
@@ -46,7 +48,7 @@
                                                          #(rf/dispatch [::events/show-person owner-id]))} (entity-key entity)]]
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
-                                             :on-click #(rf/dispatch [::events/edit-task [entity task task/task]])} (:name task)]]
+                                             :on-click #(rf/dispatch [::events/edit-task [(get-task-entity-id entity) task task/task]])} (:name task)]]
                                   [:td {:class (css-cls :pt-4)} (:details task)]
                                   [:td {:class (css-cls :pt-4)} (str (:completed task))]
                                   [:td

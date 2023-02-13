@@ -11,6 +11,8 @@
             [em-notes.lib.person.person-full-name :refer [person-full-name]]
             [em-notes.networking.api :as api :refer [del-person]]
             [em-notes.lib.team.get-team-by-id :refer [get-team-by-id]]
+            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
+            [em-notes.lib.task.get-task-type :refer [get-task-type]]
             [em-notes.lib.filter-map-on-prop :refer [replace-map-by-prop, filter-not-on-prop, update-map-in-vector]]
             [re-frame.core :as re-frame]))
 
@@ -120,7 +122,8 @@
 
 ;; END person navigation
 
-
+; Save Person calls Save Team, which updates the database on the server
+; This is how the subset of people are saved to the app-dp server-side.
 (re-frame/reg-event-fx
  ::save-person
  #_{:clj-kondo/ignore [:unresolved-symbol]}
@@ -253,10 +256,11 @@
  ::edit-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[person task task-view] data
-                  person-id (get-person-id person)]
+            (let [[entity-id task task-view] data
+                  person? (= "person" (get-task-type task db))
+                  get-active (if person? [:dispatch [::get-active-person entity-id]] [:dispatch [::set-active-team entity-id]])]
               {:db (assoc db :active-task task)
-               :fx [[:dispatch [::get-active-person person-id]]
+               :fx [get-active
                     [:dispatch [::set-modal {:title (grab :task/title)
                                              :content task-view
                                              :display "is-block"}]]
@@ -273,17 +277,18 @@
  ::save-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[entity task context] data
+            (let [[entity task task-type] data
                   task-id (get-unid :task-id task)
-                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)) :owner-id ((keyword (str context "-id")) entity))
+                  updated-task (assoc task :task-id task-id :completed (boolean (:completed task)) :owner-id (get-task-entity-id entity))
                   new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
-                  update (if (= context "person")
+                  update (if (= task-type "person")
                            [:dispatch [::commit-person new-entity]]
                            [:dispatch [::save-team new-entity]])]
-              {:db (assoc db (keyword (str "active-" context)) new-entity)
+              {:db (assoc db (keyword (str "active-" task-type)) new-entity)
                :fx [[:dispatch [::show-toasts [(grab :form/saved) (:is-success notify)]]]
                     [:dispatch [::reset-modal]]
-                    [:dispatch [::get-all-tasks]]
+                    ;; Not a perfect solution, but... :)
+                    [:dispatch-later [{:ms 500 :dispatch [::get-all-tasks]}]]
                     update]})))
 
 (re-frame/reg-event-fx

@@ -1,3 +1,2 @@
-* Update Tasks view to have two sections: People and Team
+* Fix issue with updating a Team Task in the Tasks list.
 * Fix default value on React Select (still not setting)
-* How to save people to a team from the team form... 

@@ -9,9 +9,6 @@
   (filter #(not= to-remove %) vec))
 
 (defn switch-select [value-atom prop left-options left-label right-label]
-  (prn @value-atom)
-  (prn prop)
-  (prn (get-in @value-atom prop))
   [:div {:class (css-cls :columns)}
    [:div {:class (css-cls :column :is-one-fifth)}
     [:div.field

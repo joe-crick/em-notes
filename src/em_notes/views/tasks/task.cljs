@@ -8,8 +8,9 @@
             [em-notes.events :as events]
             [em-notes.i18n.tr :refer [grab]]
             [em-notes.lib.local-state :refer [local-state]]
+            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
             [em-notes.lib.text-to-bool :refer [text-to-bool]]
-            [em-notes.subs :as subs] 
+            [em-notes.subs :as subs]
             [re-frame.core :as rf]
             [reagent.core :as r]))
 
@@ -20,27 +21,26 @@
 
 (defn task []
   (let [active-task (rf/subscribe [::subs/active-task])
-        active-context (rf/subscribe [::subs/active-context])
-        active-entity (rf/subscribe [::subs/active-entity @active-context])
+        task-type (rf/subscribe [::subs/task-type @active-task])
+        active-entity (rf/subscribe [::subs/active-entity @task-type])
         [task revise!] (local-state @active-task)
         text-input (set-text-input task revise!)
         date-input (set-date-input task revise!)
         text-area (set-text-area task revise!)
-        raw-people (rf/subscribe [::subs/people])
-        context (if (= @active-context :teams) "team" "person")
-        entity (r/atom {:owner-id ((keyword (str context "-id")) @active-entity)})
+        raw-people (rf/subscribe [::subs/people]) 
+        entity (r/atom {:owner-id (get-task-entity-id @active-entity)})
         revise-entity! (partial revise-person entity)
         select (set-select entity revise-entity!)
         select-options (map (fn [p]
                               [(:person-id p) (:full-name p)]) (vals @raw-people))]
     (fn []
       [:div.container
-       [:div.is-hidden (:last-name @active-entity)]
+       [:div.is-hidden (get-task-entity-id @active-entity)] 
        [:form
-        (if-not (= @active-context :teams)
+        (if-not (nil? (:person-id @active-entity))
           [select {:label (grab :task/person)
-                 :property [:owner-id]
-                 :values select-options}]
+                   :property [:owner-id]
+                   :values select-options}]
           [:div.is-hidden])
         [text-input {:label (grab :task/name)
                      :property [:name]}]
@@ -56,4 +56,4 @@
          text-to-bool]
 
         [form-footer (fn []
-                       (rf/dispatch [::events/save-task [@active-entity @task context]])), #(rf/dispatch [::events/cancel-task])]]])))
+                       (rf/dispatch [::events/save-task [@active-entity @task @task-type]])), #(rf/dispatch [::events/cancel-task])]]])))

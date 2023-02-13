@@ -7,6 +7,7 @@
             [em-notes.lib.css-cls :refer [css-cls]]
             [em-notes.lib.current-tab :refer [current-tab?]]
             [em-notes.lib.filter-map-on-prop :refer [filter-on-prop-str]]
+            [em-notes.lib.task.get-task-entity-id :refer [get-task-entity-id]]
             [em-notes.lib.local-state :refer [local-state]]
             [em-notes.lib.show-confirm :refer [show-confirm]]
             [em-notes.lib.show-modal :refer [show-modal]]
@@ -18,7 +19,7 @@
 (defn task-list [completed?]
   (let [active-context (rf/subscribe [::subs/active-context])
         context (if (= @active-context :teams) "team" "person")
-        active-entity (rf/subscribe [::subs/active-entity @active-context])
+        active-entity (rf/subscribe [::subs/active-entity context])
         tasks (rf/subscribe [::subs/entity-tasks [completed? (keyword (str "active-" context))]])
         [filter revise!] (local-state {:filter ""})]
     (fn []
@@ -41,7 +42,7 @@
            ^{:key (random-uuid)} [:tr {:id task-id}
                                   [:td.name
                                    [:button {:class (css-cls :button :is-ghost)
-                                             :on-click #(rf/dispatch [::events/edit-task [@active-entity task task/task]])} (:name task)]]
+                                             :on-click #(rf/dispatch [::events/edit-task [(get-task-entity-id @active-entity) task task/task]])} (:name task)]]
                                   [:td {:class (css-cls ::pt-4)} (:details task)]
                                   [:td {:class (css-cls ::pt-4)} (str (:completed task))]
                                   [:td

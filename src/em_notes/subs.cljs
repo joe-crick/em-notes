@@ -1,5 +1,6 @@
 (ns em-notes.subs
   (:require [em-notes.lib.filter-map-on-prop :refer [filter-on-prop]]
+            [em-notes.lib.task.get-task-type :refer [get-task-type]]
             [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
@@ -34,15 +35,18 @@
 
 (re-frame/reg-sub
  ::active-entity
- (fn [db [_ context]]
-   (if (= context :teams) 
-     (:active-team db) 
-     (:active-person db))))
+ (fn [db [_ type]]
+   ((keyword (str "active-" type)) db)))
 
 (re-frame/reg-sub
  ::active-context
  (fn [db _]
    (:active-context db)))
+
+(re-frame/reg-sub
+ ::task-type
+ (fn [db [_ task]]
+   (get-task-type task db)))
 
 (re-frame/reg-sub
  ::active-task
