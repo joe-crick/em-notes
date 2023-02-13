@@ -13,10 +13,14 @@
 (defn metric []
   (let [active-growth-metric (rf/subscribe [::subs/active-growth-metric])
         active-person (rf/subscribe [::subs/active-person])
-        [metric revise!] (local-state (if (nil? (:progress @active-growth-metric)) (assoc @active-growth-metric :progress (grab :growth-metric/begin)) @active-growth-metric))
+        current-metric @active-growth-metric
+        new? (or (nil? (:progress current-metric)) (= (:progress current-metric) ""))
+        begin (grab :growth-metric/begin)
+        [metric revise!] (local-state (if new? (assoc current-metric :progress begin) current-metric))
         text-input (set-text-input metric revise!) 
         text-area (set-text-area metric revise!)
         select (set-select metric nil)]
+    (prn current-metric)
     (fn []
       [:div.container
        [:div.is-hidden (:last-name @active-person)]

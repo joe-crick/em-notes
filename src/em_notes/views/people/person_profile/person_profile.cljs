@@ -18,7 +18,8 @@
        [:legend (grab :person/details)]
        [select {:label (grab :person/attachment-style)
                 :property [:attachment-style]
-                :values [[nil (grab :person/secure)]
+                :values [[nil "--- Select ---"]
+                         [nil (grab :person/secure)]
                          [nil (grab :person/anxious)]
                          [nil (grab :person/avoidant)]
                          [nil (grab :person/disorganised)]]}]
