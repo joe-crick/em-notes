@@ -30,15 +30,14 @@
            [:div {:class (css-cls :container :is-flex :is-justify-content-flex-end)}
             [:div {:class (css-cls :container :mb-1)}
              [:div.is-hidden @tab]]]
-           [left-right (fn []
-                         [:div
-                          (for [[name label] tab-navs]
-                            ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
-                                                            :data-name name
-                                                            :on-click (fn []
-                                                                        (change-tab! name))} label])])
-            (fn [] [:div>button {:class (css-cls :button :is-link) :on-click #(show-modal (grab :task/title) task/task)}
-                    (grab :tasks/create-task)])]
+
+           [:div
+            (for [[name label] tab-navs]
+              ^{:key (random-uuid)} [:button {:class (str "button " (current-tab? @tab name))
+                                              :data-name name
+                                              :on-click (fn []
+                                                          (change-tab! name))} label])]
+           
            [card
             (fn [] [:div
                     [(get views (keyword @tab) (fn [] [:div.container "Not Found"])) filter revise!]])]])))}))

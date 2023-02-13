@@ -50,7 +50,9 @@
      :person "Person"
      :open "Open"
      :closed "Closed"
-     :create-task "Create Task"}
+     :create-task "Create Task"
+     :create-task-person "Create Person Task"
+     :create-task-team "Create Team Task"}
     :task {:title "Task"
            :name "Name"
            :details "Details"
