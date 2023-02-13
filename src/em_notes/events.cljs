@@ -261,10 +261,9 @@
                   get-active (if person? [:dispatch [::get-active-person entity-id]] [:dispatch [::set-active-team entity-id]])]
               {:db (assoc db :active-task task)
                :fx [get-active
-                    [:dispatch [::set-modal {:title (grab :task/title)
-                                             :content task-view
-                                             :display "is-block"}]]
-                    [:dispatch [::commit-db]]]})))
+                    [:dispatch-later [{:ms 300 :dispatch [::set-modal {:title (grab :task/title)
+                                                                       :content task-view
+                                                                       :display "is-block"}]}]]]})))
 
 (re-frame/reg-event-db
  ::prep-new-task
