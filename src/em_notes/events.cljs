@@ -266,6 +266,14 @@
                                              :display "is-block"}]]
                     [:dispatch [::commit-db]]]})))
 
+(re-frame/reg-event-db
+ ::prep-new-task
+ #_{:clj-kondo/ignore [:unresolved-symbol]}
+ (fn-traced [db [_ entity]]
+            (let [default-task (:default-task db)
+                  blank-task (assoc default-task :owner-id (get-task-entity-id entity))]
+              (assoc db :active-task blank-task))))
+
 (re-frame/reg-event-fx
  ::cancel-task
  #_{:clj-kondo/ignore [:unresolved-symbol]}

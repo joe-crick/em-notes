@@ -26,7 +26,7 @@
       [:div.container
        [:h1 {:class (css-cls :subtitle)}
         (grab :tasks/title)]
-       [:div.is-hidden ((keyword (str context "-id")) @active-entity)]
+       [:div.is-hidden (get-task-entity-id @active-entity)]
        [table-filter filter revise!]
        [:table {:class (table-style)}
         [:thead
@@ -61,6 +61,9 @@
 (defn tasks []
   (let [[tab change-tab!] (local-state :open)
         views {:open open-tasks :closed closed-tasks}
+        active-context (rf/subscribe [::subs/active-context])
+        context (if (= @active-context :teams) "team" "person")
+        active-entity (rf/subscribe [::subs/active-entity context])
         tab-navs [[:open (grab :tasks/open)]
                   [:closed (grab :tasks/closed)]]]
     (fn []
@@ -76,7 +79,9 @@
                                                           :on-click (fn []
                                                                       (change-tab! name))} label])])
           (fn [] [:button {:class (css-cls :button :is-primary)
-                           :on-click #(show-modal (grab :task/title) task/task)} (grab :tasks/create-task)])]]]
+                           :on-click (fn[]
+                                       (rf/dispatch [::events/prep-new-task @active-entity])
+                                       (show-modal (grab :task/title) task/task))} (grab :tasks/create-task)])]]]
        [card
         (fn [] [:div
                 [(get views (keyword @tab) (fn [] [:div.container "Not Found"]))]])]]))

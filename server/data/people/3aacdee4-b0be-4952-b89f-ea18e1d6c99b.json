@@ -33,10 +33,25 @@
 		"openness": ""
 	},
 	"data": {
-		"perfs": [],
-		"one-on-ones": [],
-		"tasks": [],
-		"growth-metrics": []
+		"perfs": {
+			
+		},
+		"one-on-ones": {
+			
+		},
+		"tasks": {
+			"50551e28-3dec-44be-bed6-46406cd21be6": {
+				"task-id": "50551e28-3dec-44be-bed6-46406cd21be6",
+				"name": "Marty's Task",
+				"details": "Go get 'em, Marty!!",
+				"due-date": "2023-02-20",
+				"completed": false,
+				"owner-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
+			}
+		},
+		"growth-metrics": {
+			
+		}
 	},
 	"full-name": "Marty Slinkschrieber",
 	"person-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
