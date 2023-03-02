@@ -55,7 +55,7 @@
                                   [:td
                                    [:div {:class (css-cls :buttons :are-small :is-grouped)}
                                     [:button {:class (css-cls :button :is-info :is-fixed-100)
-                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [entity task (get-task-type task)]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
+                                              :on-click  #(rf/dispatch [::events/toggle-task-all-status [entity task]])} (if completed? (grab :task/mark-incomplete) (grab :task/mark-complete))]
                                     [:button {:class (css-cls :button :is-danger :is-fixed-50)
                                               :on-click  #(show-confirm (grab :task/confirm-delete) [::events/delete-task-all [entity task]])} (grab :form/delete)]]]])]]])))
 

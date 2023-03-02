@@ -1,44 +1,10 @@
 {
 	"first-name": "Marty",
 	"last-name": "Slinkschrieber",
+	"full-name": "Marty Slinkschrieber",
 	"team": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
-	"profile": {
-		"feedback": {
-			"feedback-medium": "",
-			"when-receive-feedback": "",
-			"how-receive-recognition": "",
-			"what-rewards-wanted": ""
-		},
-		"support": {
-			"manager": "",
-			"team": "",
-			"peers-outside": ""
-		},
-		"agreableness": "",
-		"attachment-style": "",
-		"conscientiousness": "",
-		"mood": {
-			"what-makes-grumpy": "",
-			"how-to-know-grumpy": "",
-			"how-to-help-grumpy": ""
-		},
-		"three-hardest-things": "",
-		"extroversion": "",
-		"growth": {
-			"current-goals": "",
-			"what-doing-now": "",
-			"what-need-to-do": ""
-		},
-		"neuroticism": "",
-		"openness": ""
-	},
+	"person-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
 	"data": {
-		"perfs": {
-			
-		},
-		"one-on-ones": {
-			
-		},
 		"tasks": {
 			"50551e28-3dec-44be-bed6-46406cd21be6": {
 				"task-id": "50551e28-3dec-44be-bed6-46406cd21be6",
@@ -49,11 +15,6 @@
 				"owner-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
 				"is-team": false
 			}
-		},
-		"growth-metrics": {
-			
 		}
-	},
-	"full-name": "Marty Slinkschrieber",
-	"person-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
+	}
 }

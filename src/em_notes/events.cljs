@@ -316,7 +316,8 @@
  ::toggle-task-all-status
  #_{:clj-kondo/ignore [:unresolved-symbol]}
  (fn-traced [{:keys [db]} [_ data]]
-            (let [[entity task task-type] data
+            (let [[entity task] data
+                  task-type (get-task-type task db)
                   task-id (get-unid :task-id task)
                   updated-task (assoc task :task-id task-id :completed (not (boolean (:completed task))))
                   new-entity (assoc-in entity [:data :tasks (keyword task-id)] updated-task)
