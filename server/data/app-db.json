@@ -7,24 +7,24 @@
 			"team": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
 			"person-id": "4e002447-0d56-42cb-8de8-95ce3907ce34"
 		},
-		"82fe54f7-4552-45a1-9477-4c1068b076fc": {
-			"first-name": "Tiffany",
-			"last-name": "Fishjuggler",
-			"full-name": "Tiffany Fishjuggler",
-			"team": "07a95996-8fb9-4efc-b90f-065f10e2d723",
-			"person-id": "82fe54f7-4552-45a1-9477-4c1068b076fc"
-		},
-		"3aacdee4-b0be-4952-b89f-ea18e1d6c99b": {
-			"first-name": "Marty",
-			"last-name": "Slinkschrieber",
-			"full-name": "Marty Slinkschrieber",
+		"9321cfcc-035d-43f0-8d62-82f141207b3b": {
+			"first-name": "New",
+			"last-name": "Personsss",
+			"full-name": "New Personsss",
 			"team": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
-			"person-id": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b"
+			"person-id": "9321cfcc-035d-43f0-8d62-82f141207b3b"
+		},
+		"46915da5-89a9-4c7f-b736-3ee819b1cfb3": {
+			"first-name": "Test",
+			"last-name": "Person",
+			"full-name": "Test Person",
+			"team": "",
+			"person-id": "46915da5-89a9-4c7f-b736-3ee819b1cfb3"
 		}
 	},
 	"teams": {
 		"6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b": {
-			"name": "Test Team",
+			"name": "Onyx",
 			"charter": "Cheese, Grommets, and Weasels",
 			"values": "Fishing, Basketball, and World Hegemony",
 			"team-id": "6c5ecd25-2c86-4fa8-9131-357b7f4f0b0b",
@@ -77,24 +77,16 @@
 			},
 			"people": [
 				{
-					"value": "3aacdee4-b0be-4952-b89f-ea18e1d6c99b",
-					"label": "Marty Slinkschrieber"
+					"value": "9321cfcc-035d-43f0-8d62-82f141207b3b",
+					"label": "New Personsss"
+				},
+				{
+					"value": "9321cfcc-035d-43f0-8d62-82f141207b3b",
+					"label": "New Personssss"
 				},
 				{
 					"value": "4e002447-0d56-42cb-8de8-95ce3907ce34",
 					"label": "Rodman Goatler"
-				}
-			]
-		},
-		"07a95996-8fb9-4efc-b90f-065f10e2d723": {
-			"name": "Another Group",
-			"charter": "Stuff",
-			"values": "Things",
-			"team-id": "07a95996-8fb9-4efc-b90f-065f10e2d723",
-			"people": [
-				{
-					"value": "82fe54f7-4552-45a1-9477-4c1068b076fc",
-					"label": "Tiffany Fishjuggler"
 				}
 			]
 		}

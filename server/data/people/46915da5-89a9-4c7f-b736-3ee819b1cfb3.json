@@ -1,0 +1,43 @@
+{
+	"first-name": "Test",
+	"last-name": "Person",
+	"team": "",
+	"profile": {
+		"feedback": {
+			"feedback-medium": "",
+			"when-receive-feedback": "",
+			"how-receive-recognition": "",
+			"what-rewards-wanted": ""
+		},
+		"support": {
+			"manager": "",
+			"team": "",
+			"peers-outside": ""
+		},
+		"agreableness": "",
+		"attachment-style": "",
+		"conscientiousness": "",
+		"mood": {
+			"what-makes-grumpy": "",
+			"how-to-know-grumpy": "",
+			"how-to-help-grumpy": ""
+		},
+		"three-hardest-things": "",
+		"extroversion": "",
+		"growth": {
+			"current-goals": "",
+			"what-doing-now": "",
+			"what-need-to-do": ""
+		},
+		"neuroticism": "",
+		"openness": ""
+	},
+	"data": {
+		"perfs": [],
+		"one-on-ones": [],
+		"tasks": [],
+		"growth-metrics": []
+	},
+	"full-name": "Test Person",
+	"person-id": "46915da5-89a9-4c7f-b736-3ee819b1cfb3"
+}
