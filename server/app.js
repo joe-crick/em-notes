@@ -12,7 +12,8 @@ var taskRouter = require('./routes/tasks');
 var app = express();
 
 app.use(cors({
-  origin: "http://localhost:8280"
+  origin: "http://localhost:8280",
+  credentials: true
 }));
 
 app.use(logger('dev'));

@@ -1,16 +1,29 @@
 (ns em-notes.networking.api
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs-http.client :as http]
-            [cljs.core.async :refer [<!]]))
+            [cljs.core.async :refer [<!]]
+            [clojure.string :as str]))
 
 (defn json-parse [json]
-  (let [js-obj (.parse js/JSON json)]
-    (js->clj js-obj :keywordize-keys true)))
+  (when-not (str/blank? json)
+    (let [js-obj (.parse js/JSON json)]
+      (js->clj js-obj :keywordize-keys true))))
 
 
 (defn read-response [response-chan callback]
-  (go (let [resp (<! response-chan)]  
-        (callback (json-parse (:body resp))))))
+  (go (let [{:keys [body success status] :as resp} (<! response-chan)]
+        (cond
+          (not success)
+          (.error js/console "API request failed" (clj->js (select-keys resp [:status :error-code :error-text :body])))
+
+          (str/blank? body)
+          (.error js/console "API response had no JSON body" (clj->js {:status status}))
+
+          :else
+          (try
+            (callback (json-parse body))
+            (catch js/Error e
+              (.error js/console "API response was not valid JSON" e body)))))))
 
 (def api-url "http://localhost:3000/")
 
@@ -46,7 +59,6 @@
 
 (defn get-tasks [callback]
   (read-response (_get-tasks) callback))
-
 
 
 
