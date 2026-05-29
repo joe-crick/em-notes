@@ -1,5 +1,9 @@
 import { writable } from "svelte/store";
 import * as authApi from "../api/auth-api.js";
+import { resetPeople } from "./people.js";
+import { resetActions } from "./actions.js";
+import { resetNotes } from "./notes.js";
+import { resetSettings } from "./settings.js";
 
 // status: "loading" until the first /auth/status resolves, then "ready".
 export const session = writable({ status: "loading", configured: false, authenticated: false });
@@ -24,5 +28,10 @@ export async function login(password) {
 
 export async function logout() {
   await authApi.logout();
+  // Drop in-memory domain data so nothing sensitive lingers after sign-out.
+  resetPeople();
+  resetActions();
+  resetNotes();
+  resetSettings();
   await refreshSession();
 }

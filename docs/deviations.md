@@ -216,3 +216,33 @@ Ported faithfully from `app.jsx` with these notes:
   ambiguous first "New 1:1 note…" item (which silently picked `TEAM[0]`) is dropped in favour of
   the explicit per-person entries. Arrow/Enter are handled inside the palette input; Escape is
   handled by the global handler.
+
+## 17. Post-Phase-7 code-review hardening
+
+A review surfaced correctness/data-integrity holes; fixes (all with regression tests):
+
+1. **Note create no longer 500s on a minimal body.** `CreateNoteInput` allows `type`/`date` to be
+   absent but the `notes` columns are NOT NULL. `notes-service.createNote` now defaults
+   `type → "1:1"` and `date → today` (human format) before persisting.
+2. **Note create is transactional.** The note insert + its embedded action inserts run inside one
+   `db.transaction(...)`, so a failed action can't leave a half-written note.
+3. **Action FK refs are validated in the service.** `createAction`/`updateAction` check that any
+   `personId`/`noteId` exists and return a structured `400 invalid_reference` instead of letting
+   SQLite's foreign-key constraint throw a 500. Both functions now return a discriminated result
+   (`{ ok, data } | { ok:false, error } | { ok:false, notFound }`); the routes map it.
+4. **Notes store stale-response guard.** `loadNotes` stamps each call with an incrementing token
+   and only commits the response if it's still the latest, fixing the A→B navigation race.
+5. **`apiFetch` normalizes failures.** Transport errors and non-JSON/empty bodies return a
+   structured envelope (`network_error` / `bad_response`) instead of throwing into callers.
+6. **Login throttling.** Consecutive failed logins incur an escalating in-memory delay
+   (250 ms × attempts, capped at 2 s), reset on success. Local single-user app, so in-memory is
+   sufficient; the server binds to 127.0.0.1 by default.
+7. **Settings merge is safe + validated.** A single-field PATCH no longer wipes the other field
+   (the conform-fills-undefined keys are stripped before merge), and the *merged* result is
+   validated against `UserSettings` before saving.
+8. **Domain stores cleared on logout.** `logout()` resets the `people`/`actions`/`notes`/
+   `settings` stores so no local data lingers in memory after sign-out.
+9. **Destructive deletes (deferred, not yet a fix).** `DELETE /api/people/:id` hard-deletes and
+   cascades. There is currently **no delete UI path**, so no accidental loss is reachable from the
+   app. Before any delete affordance is added, gate it behind a confirm and consider soft-delete
+   or an export/backup. Tracked as a known follow-up.

@@ -16,14 +16,35 @@ function withActions(db, note) {
   return assoc(note, { actions: actionsRepo.listActionsByNote(db, note.id) });
 }
 
-// Create: assign an id, persist the note + any embedded actions (each linked to the note and
-// person), return the composed read shape.
+// Create: apply defaults, assign an id, persist the note + any embedded actions (each linked to
+// the note and person) in one transaction, return the composed read shape. The contract makes
+// `type`/`date` optional but the table requires them, so we default here (plan §1.1 keeps the API
+// forgiving rather than 500-ing on a minimal body).
 export function createNote(db, input) {
-  return atf(input, addNoteId, (note) => {
-    notesRepo.insertNote(db, note);
-    persistEmbeddedActions(db, note);
+  return atf(input, addNoteDefaults, addNoteId, (note) => {
+    // All-or-nothing: a failing embedded action must not leave a half-written note.
+    db.transaction(() => {
+      notesRepo.insertNote(db, note);
+      persistEmbeddedActions(db, note);
+    })();
     return getNote(db, note.id);
   });
+}
+
+function addNoteDefaults(input) {
+  return assoc(input, {
+    type: input.type ?? "1:1",
+    date: input.date ?? todayLabel(),
+  });
+}
+
+// Human date matching the seed convention ("May 29, 2026").
+function todayLabel() {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date());
 }
 
 function addNoteId(input) {

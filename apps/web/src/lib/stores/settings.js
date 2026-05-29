@@ -20,6 +20,10 @@ export async function loadSettings() {
   return res;
 }
 
+export function resetSettings() {
+  settings.set({ theme: "light", density: "comfortable" });
+}
+
 export async function updateSettings(patch) {
   const res = await settingsApi.updateSettings(patch);
   if (res.ok) {

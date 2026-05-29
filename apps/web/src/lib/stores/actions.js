@@ -32,3 +32,7 @@ export async function addAction(action) {
   if (res.ok) actions.update((list) => [res.data, ...list]);
   return res;
 }
+
+export function resetActions() {
+  actions.set([]);
+}

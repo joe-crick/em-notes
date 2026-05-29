@@ -10,6 +10,8 @@ export function registerSettingsRoutes(app) {
   app.patch("/api/settings", async (request, reply) => {
     const validated = validateBody(UserSettings, request.body);
     if (!validated.ok) return reply.code(400).send(validated);
-    return { ok: true, data: settings.updateSettings(db, validated.value) };
+    const result = settings.updateSettings(db, validated.value);
+    if (!result.ok) return reply.code(400).send({ ok: false, error: result.error });
+    return { ok: true, data: result.data };
   });
 }

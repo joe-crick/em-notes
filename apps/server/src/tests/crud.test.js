@@ -104,6 +104,19 @@ describe("notes routes", () => {
     expect(res.json().error.code).toBe("invalid_request");
   });
 
+  // Regression: a minimal body (only summary) must not 500 on the NOT NULL type/date columns;
+  // the service defaults type to "1:1" and date to today's label.
+  it("defaults type and date when a note is created with only a summary", async () => {
+    const res = await send("POST", "/api/people/alex/notes", {
+      summary: "Quick sync, nothing else specified.",
+    });
+    expect(res.statusCode).toBe(200);
+    const created = res.json().data;
+    expect(created.type).toBe("1:1");
+    expect(created.date).toBeTruthy();
+    expect(created.date.length).toBeGreaterThan(0);
+  });
+
   it("deletes a note", async () => {
     expect((await send("DELETE", "/api/notes/n1")).statusCode).toBe(200);
     expect((await get("/api/notes/n1")).statusCode).toBe(404);
@@ -131,6 +144,31 @@ describe("actions routes", () => {
     const bad = await send("POST", "/api/actions", { text: "" });
     expect(bad.statusCode).toBe(400);
   });
+
+  // Regression: a bad FK must surface as a structured 400, not a constraint-violation 500.
+  it("rejects creating an action with an unknown personId (400 invalid_reference)", async () => {
+    const res = await send("POST", "/api/actions", { text: "x", personId: "does-not-exist" });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error.code).toBe("invalid_reference");
+  });
+
+  it("rejects creating an action with an unknown noteId (400 invalid_reference)", async () => {
+    const res = await send("POST", "/api/actions", { text: "x", noteId: "nope" });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error.code).toBe("invalid_reference");
+  });
+
+  it("rejects patching an action with an unknown personId (400 invalid_reference)", async () => {
+    const res = await send("PATCH", "/api/actions/a1", { personId: "does-not-exist" });
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error.code).toBe("invalid_reference");
+  });
+
+  it("creates an action with a valid personId (200)", async () => {
+    const res = await send("POST", "/api/actions", { text: "Real owner", personId: "alex" });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().data.personId).toBe("alex");
+  });
 });
 
 describe("settings routes", () => {
@@ -143,6 +181,21 @@ describe("settings routes", () => {
 
   it("rejects an invalid setting value", async () => {
     expect((await send("PATCH", "/api/settings", { theme: "chartreuse" })).statusCode).toBe(400);
+  });
+
+  // Regression (conform-fills-undefined): a single-field patch must not wipe the other field.
+  it("preserves an unrelated field when patching one setting", async () => {
+    await send("PATCH", "/api/settings", { density: "compact" });
+    await send("PATCH", "/api/settings", { theme: "dark" });
+    const data = (await get("/api/settings")).json().data;
+    expect(data.theme).toBe("dark");
+    expect(data.density).toBe("compact");
+  });
+
+  // Regression: the merged result is validated, so an invalid enum is rejected with 400.
+  it("rejects an invalid enum value (400)", async () => {
+    const res = await send("PATCH", "/api/settings", { theme: "rainbow" });
+    expect(res.statusCode).toBe(400);
   });
 });
 

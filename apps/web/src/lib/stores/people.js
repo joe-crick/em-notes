@@ -14,3 +14,7 @@ export async function createPerson(input) {
   if (res.ok) await loadPeople();
   return res;
 }
+
+export function resetPeople() {
+  people.set([]);
+}

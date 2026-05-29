@@ -13,15 +13,18 @@ export function registerActionsRoutes(app) {
   app.post("/api/actions", async (request, reply) => {
     const validated = validateBody(CreateActionInput, request.body);
     if (!validated.ok) return reply.code(400).send(validated);
-    return { ok: true, data: await actions.createAction(db, validated.value) };
+    const result = await actions.createAction(db, validated.value);
+    if (!result.ok) return reply.code(400).send({ ok: false, error: result.error });
+    return { ok: true, data: result.data };
   });
 
   app.patch("/api/actions/:id", async (request, reply) => {
     const validated = validateBody(UpdateActionInput, request.body);
     if (!validated.ok) return reply.code(400).send(validated);
-    const updated = actions.updateAction(db, request.params.id, validated.value);
-    if (!updated) return notFound(reply);
-    return { ok: true, data: updated };
+    const result = actions.updateAction(db, request.params.id, validated.value);
+    if (result.notFound) return notFound(reply);
+    if (!result.ok) return reply.code(400).send({ ok: false, error: result.error });
+    return { ok: true, data: result.data };
   });
 
   app.delete("/api/actions/:id", async (request, reply) => {

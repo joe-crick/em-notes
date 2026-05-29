@@ -9,11 +9,23 @@ export async function apiFetch(path, options = {}) {
     headers["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(`/api${path}`, {
-    credentials: "include",
-    ...options,
-    headers,
-  });
+  let response;
+  try {
+    response = await fetch(`/api${path}`, { credentials: "include", ...options, headers });
+  } catch {
+    // Transport failure (server down, proxy error). Surface a structured envelope so callers can
+    // branch on `res.ok` instead of catching exceptions everywhere.
+    return {
+      ok: false,
+      error: { code: "network_error", message: "Could not reach the local server." },
+    };
+  }
 
-  return await response.json();
+  // The API always replies with a JSON envelope (even for 4xx/5xx). Anything else (HTML error
+  // page, empty body) is normalized to a structured error rather than throwing.
+  const payload = await response.json().catch(() => null);
+  if (payload == null) {
+    return { ok: false, error: { code: "bad_response", message: "Unexpected server response." } };
+  }
+  return payload;
 }
