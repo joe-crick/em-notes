@@ -1,6 +1,7 @@
 <script>
   import { people } from "../lib/stores/people.js";
   import { actions, toggleAction } from "../lib/stores/actions.js";
+  import { agenda as calendarAgenda } from "../lib/stores/calendar.js";
   import { goTo } from "../lib/stores/route.js";
   import { openNewNote } from "../lib/stores/ui.js";
   import { ME, greeting } from "../lib/manager.js";
@@ -16,9 +17,19 @@
   const flagged = $derived($people.filter((p) => p.flags?.length));
   const onPto = $derived($people.filter((p) => p.pto));
 
-  // Upcoming 1:1s are derived from each report's scheduled next 1:1 (real data — there is no
-  // calendar integration in this local build, so this stands in for the prototype's agenda).
-  const agenda = $derived($people.filter((p) => p.nextOneOnOne));
+  // Prefer real upcoming events from synced calendar feeds; fall back to each report's scheduled
+  // next 1:1 when no feed is connected.
+  const hasCalendar = $derived($calendarAgenda.length > 0);
+  const derivedAgenda = $derived($people.filter((p) => p.nextOneOnOne));
+
+  function fmtWhen(iso) {
+    return new Intl.DateTimeFormat("en-US", {
+      weekday: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+    }).format(new Date(iso));
+  }
 
   const today = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
@@ -43,30 +54,60 @@
   <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:24px;">
     <!-- LEFT: upcoming 1:1s + open actions -->
     <div class="stack">
-      <SectionHeader icon="calendar" title="Upcoming 1:1s" />
+      <SectionHeader icon="calendar" title={hasCalendar ? "Upcoming" : "Upcoming 1:1s"} />
       <div class="card">
-        {#each agenda as p (p.id)}
-          <div
-            class="list-row"
-            style="grid-template-columns:90px 1fr auto;"
-            onclick={() => goTo("person", p.id)}
-            onkeydown={(e) => e.key === "Enter" && goTo("person", p.id)}
-            role="button"
-            tabindex="0"
-          >
-            <div class="mono" style="font-size:13px; color:var(--fg-3);">{p.nextOneOnOne}</div>
-            <div class="row" style="gap:12px;">
-              <Avatar person={p} size="md" />
-              <div>
-                <div style="font-weight:500; color:var(--fg-1);">1:1 — {p.name}</div>
-                <div class="meta">{p.role}</div>
+        {#if hasCalendar}
+          {#each $calendarAgenda as e (e.id)}
+            {@const person = e.personId ? byId[e.personId] : null}
+            <div
+              class="list-row"
+              style="grid-template-columns:110px 1fr auto;"
+              onclick={() => person && goTo("person", person.id)}
+              onkeydown={(ev) => ev.key === "Enter" && person && goTo("person", person.id)}
+              role="button"
+              tabindex="0"
+            >
+              <div class="mono" style="font-size:13px; color:var(--fg-3);">{fmtWhen(e.startsAt)}</div>
+              <div class="row" style="gap:12px;">
+                {#if person}
+                  <Avatar {person} size="md" />
+                {:else}
+                  <span class="avatar avatar-md" style="background:var(--bg-surface-2); color:var(--fg-3);">
+                    <Icon name="calendar" size={14} />
+                  </span>
+                {/if}
+                <div>
+                  <div style="font-weight:500; color:var(--fg-1);">{e.summary || "Untitled event"}</div>
+                  <div class="meta">{person ? person.name : e.location || "Calendar"}</div>
+                </div>
               </div>
+              {#if person}<Icon name="chevright" size={16} color="var(--fg-4)" />{/if}
             </div>
-            <Icon name="chevright" size={16} color="var(--fg-4)" />
-          </div>
-        {/each}
-        {#if agenda.length === 0}
-          <div class="card-pad meta">No 1:1s scheduled.</div>
+          {/each}
+        {:else}
+          {#each derivedAgenda as p (p.id)}
+            <div
+              class="list-row"
+              style="grid-template-columns:90px 1fr auto;"
+              onclick={() => goTo("person", p.id)}
+              onkeydown={(e) => e.key === "Enter" && goTo("person", p.id)}
+              role="button"
+              tabindex="0"
+            >
+              <div class="mono" style="font-size:13px; color:var(--fg-3);">{p.nextOneOnOne}</div>
+              <div class="row" style="gap:12px;">
+                <Avatar person={p} size="md" />
+                <div>
+                  <div style="font-weight:500; color:var(--fg-1);">1:1 — {p.name}</div>
+                  <div class="meta">{p.role}</div>
+                </div>
+              </div>
+              <Icon name="chevright" size={16} color="var(--fg-4)" />
+            </div>
+          {/each}
+          {#if derivedAgenda.length === 0}
+            <div class="card-pad meta">No 1:1s scheduled. Connect a calendar in Settings.</div>
+          {/if}
         {/if}
       </div>
 

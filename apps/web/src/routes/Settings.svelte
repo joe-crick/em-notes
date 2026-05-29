@@ -1,9 +1,42 @@
 <script>
   import { settings, updateSettings } from "../lib/stores/settings.js";
+  import { feeds, addFeed, removeFeed, syncFeeds } from "../lib/stores/calendar.js";
   import { ME } from "../lib/manager.js";
   import Avatar from "../components/atoms/Avatar.svelte";
   import Icon from "../components/atoms/Icon.svelte";
   import Kbd from "../components/atoms/Kbd.svelte";
+
+  // Calendar feeds
+  let feedUrl = $state("");
+  let feedLabel = $state("");
+  let feedBusy = $state(false);
+  let feedError = $state("");
+
+  async function submitFeed() {
+    if (!feedUrl.trim() || feedBusy) return;
+    feedBusy = true;
+    feedError = "";
+    const res = await addFeed(feedUrl.trim(), feedLabel.trim());
+    feedBusy = false;
+    if (res.ok) {
+      feedUrl = "";
+      feedLabel = "";
+    } else {
+      feedError = res.error?.message ?? "Could not add feed.";
+    }
+  }
+
+  let syncing = $state(false);
+  async function refreshFeeds() {
+    syncing = true;
+    await syncFeeds();
+    syncing = false;
+  }
+
+  function syncedLabel(iso) {
+    if (!iso) return "never synced";
+    return `synced ${new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(iso))}`;
+  }
 
   const themes = [
     ["light", "Light", "sun"],
@@ -13,6 +46,22 @@
     ["comfortable", "Comfortable"],
     ["compact", "Compact"],
   ];
+
+  // Team name is editable + persisted; commit on blur/Enter, ignoring a blank value (the
+  // contract requires non-empty) and no-op edits.
+  let teamDraft = $state($settings.teamName);
+  $effect(() => {
+    teamDraft = $settings.teamName;
+  });
+
+  function commitTeamName() {
+    const name = teamDraft.trim();
+    if (!name || name === $settings.teamName) {
+      teamDraft = $settings.teamName;
+      return;
+    }
+    updateSettings({ teamName: name });
+  }
 
   const shortcuts = [
     ["⌘ K", "Command palette"],
@@ -39,9 +88,26 @@
           <Avatar person={{ initials: ME.initials, color: ME.color }} size="lg" />
           <div style="flex:1;">
             <div style="font-weight:600; font-size:15px;">{ME.name}</div>
-            <div class="meta">{ME.role} · {ME.team}</div>
+            <div class="meta">{ME.role} · {$settings.teamName}</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section>
+      <div class="display" style="font-size:22px; margin-bottom:4px;">Team</div>
+      <div class="meta" style="margin-bottom:14px;">The workspace name shown on the Team page.</div>
+      <div class="card card-pad">
+        <label class="eyebrow" for="team-name" style="display:block; margin-bottom:6px;">Team name</label>
+        <input
+          id="team-name"
+          class="input"
+          bind:value={teamDraft}
+          onblur={commitTeamName}
+          onkeydown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+          placeholder="e.g. Payments Platform"
+        />
       </div>
     </section>
 
@@ -86,6 +152,67 @@
       </div>
     </section>
 
+    <!-- Calendar feeds -->
+    <section>
+      <div class="between" style="margin-bottom:4px;">
+        <div class="display" style="font-size:22px;">Calendar</div>
+        <button class="btn btn-outline btn-sm" onclick={refreshFeeds} disabled={syncing || $feeds.length === 0}>
+          <Icon name="trend_up" size={14} /> {syncing ? "Refreshing…" : "Refresh"}
+        </button>
+      </div>
+      <div class="meta" style="margin-bottom:14px;">
+        Subscribe to a read-only .ics feed (the "secret iCal address" from Google/Outlook/Apple).
+        Events appear on Home, match to reports by attendee email, and seed prep notes.
+      </div>
+
+      <div class="card card-pad stack" style="--stack:14px;">
+        {#if $feeds.length > 0}
+          <div class="stack" style="--stack:8px;">
+            {#each $feeds as f (f.id)}
+              <div class="between">
+                <div class="row" style="gap:10px;">
+                  <Icon name="calendar" size={16} color="var(--fg-3)" />
+                  <div>
+                    <div style="font-weight:500; font-size:14px;">{f.label}</div>
+                    <div class="meta" style="font-size:12px;">
+                      {#if f.lastError}
+                        <span style="color:var(--status-err);">sync error: {f.lastError}</span>
+                      {:else}
+                        {syncedLabel(f.lastSyncedAt)}
+                      {/if}
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-icon" title="Remove feed" onclick={() => removeFeed(f.id)}>
+                  <Icon name="archive" size={16} />
+                </button>
+              </div>
+            {/each}
+          </div>
+          <div class="divider"></div>
+        {/if}
+
+        <div class="stack" style="--stack:8px;">
+          <label class="eyebrow" for="feed-url" style="display:block;">Add a calendar feed</label>
+          <input
+            id="feed-url"
+            class="input"
+            bind:value={feedUrl}
+            placeholder="https://calendar.google.com/.../basic.ics"
+          />
+          <div class="row" style="gap:8px;">
+            <input class="input" bind:value={feedLabel} placeholder="Label (optional)" style="flex:1;" />
+            <button class="btn btn-accent btn-sm" onclick={submitFeed} disabled={!feedUrl.trim() || feedBusy}>
+              <Icon name="plus" size={14} /> {feedBusy ? "Adding…" : "Add feed"}
+            </button>
+          </div>
+          {#if feedError}
+            <div class="meta" style="color:var(--status-err);">{feedError}</div>
+          {/if}
+        </div>
+      </div>
+    </section>
+
     <!-- Keyboard shortcuts -->
     <section>
       <div class="display" style="font-size:22px; margin-bottom:4px;">Keyboard shortcuts</div>
@@ -110,8 +237,8 @@
         <div class="row" style="gap:12px;">
           <Icon name="sparkles" size={18} color="var(--fg-3)" />
           <div class="meta" style="flex:1;">
-            Calendar sync, AI summaries, sentiment analysis, and notifications aren't implemented in
-            the local MVP. Your notes stay entirely on this machine.
+            AI summaries, sentiment analysis, and notifications aren't implemented in the local MVP.
+            Your notes stay entirely on this machine.
           </div>
         </div>
       </div>

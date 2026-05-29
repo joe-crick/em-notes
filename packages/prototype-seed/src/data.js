@@ -7,6 +7,7 @@ export const TEAM = [
   {
     id: "alex",
     name: "Alex Park",
+    email: "alex.park@example.com",
     role: "Senior Backend Engineer",
     level: "L5",
     tenure: "2y 4mo",
@@ -28,6 +29,7 @@ export const TEAM = [
   {
     id: "sam",
     name: "Samira Khoury",
+    email: "samira.khoury@example.com",
     role: "Staff Engineer",
     level: "L6",
     tenure: "4y 1mo",
@@ -49,6 +51,7 @@ export const TEAM = [
   {
     id: "marco",
     name: "Marco Rivera",
+    email: "marco.rivera@example.com",
     role: "Engineer II",
     level: "L4",
     tenure: "1y 2mo",
@@ -70,6 +73,7 @@ export const TEAM = [
   {
     id: "jess",
     name: "Jess Tanaka",
+    email: "jess.tanaka@example.com",
     role: "Engineer I",
     level: "L3",
     tenure: "6mo",
@@ -91,6 +95,7 @@ export const TEAM = [
   {
     id: "deepa",
     name: "Deepa Iyer",
+    email: "deepa.iyer@example.com",
     role: "Senior Engineer",
     level: "L5",
     tenure: "3y",
@@ -112,6 +117,7 @@ export const TEAM = [
   {
     id: "leo",
     name: "Leo Halvorsen",
+    email: "leo.halvorsen@example.com",
     role: "Engineer II",
     level: "L4",
     tenure: "1y 8mo",

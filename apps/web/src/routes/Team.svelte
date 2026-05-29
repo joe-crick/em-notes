@@ -8,7 +8,7 @@
   import Bar from "../components/atoms/Bar.svelte";
   import Flag from "../components/atoms/Flag.svelte";
   import Kbd from "../components/atoms/Kbd.svelte";
-  import { ME } from "../lib/manager.js";
+  import { settings } from "../lib/stores/settings.js";
 
   let query = $state("");
   let filter = $state("all");
@@ -43,7 +43,7 @@
     <div>
       <div class="eyebrow">Team</div>
       <h1 class="display" style="font-size:36px; margin:4px 0;">
-        {ME.team} · {$people.length} people
+        {$settings.teamName} · {$people.length} people
       </h1>
     </div>
     <div class="row" style="gap:8px;">

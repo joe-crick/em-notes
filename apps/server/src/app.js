@@ -7,6 +7,7 @@ import { registerPeopleRoutes } from "./routes/people-routes.js";
 import { registerNotesRoutes } from "./routes/notes-routes.js";
 import { registerActionsRoutes } from "./routes/actions-routes.js";
 import { registerSettingsRoutes } from "./routes/settings-routes.js";
+import { registerCalendarRoutes } from "./routes/calendar-routes.js";
 
 // Fastify app factory (plan §14). `db` and `config` are decorated onto the instance so
 // route plugins can reach them. CRUD routes are registered in later phases (and are
@@ -25,6 +26,7 @@ export function createApp({ db, config, logger = true }) {
   registerNotesRoutes(app);
   registerActionsRoutes(app);
   registerSettingsRoutes(app);
+  registerCalendarRoutes(app);
 
   return app;
 }

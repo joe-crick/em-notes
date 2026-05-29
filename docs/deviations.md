@@ -242,7 +242,44 @@ A review surfaced correctness/data-integrity holes; fixes (all with regression t
    validated against `UserSettings` before saving.
 8. **Domain stores cleared on logout.** `logout()` resets the `people`/`actions`/`notes`/
    `settings` stores so no local data lingers in memory after sign-out.
-9. **Destructive deletes (deferred, not yet a fix).** `DELETE /api/people/:id` hard-deletes and
-   cascades. There is currently **no delete UI path**, so no accidental loss is reachable from the
-   app. Before any delete affordance is added, gate it behind a confirm and consider soft-delete
-   or an export/backup. Tracked as a known follow-up.
+9. **Destructive deletes — resolved.** A delete affordance now exists (Person view → Delete) and
+   is gated behind an explicit two-step confirm modal warning about the cascade
+   (`DeletePersonModal`). Hard-delete is retained (no soft-delete) for the local MVP; the
+   confirm + the warning copy are the safeguard.
+
+## 18. Team rename + member edit/delete (post-MVP UX)
+
+- **Team name** is now editable (Settings → Team), stored as `teamName` on `UserSettings`
+  (non-empty optional) — no schema change since settings are a JSON blob. Defaults to `ME.team`.
+- **Edit member** (`EditPersonModal`, opened from the Person header) PATCHes `/api/people/:id`.
+- **Delete member** (`DeletePersonModal`, Person header, confirm-gated) DELETEs `/api/people/:id`.
+
+## 19. Calendar sync (extends the MVP boundary)
+
+The plan (§13) marked calendar sync out-of-scope and Settings showed it as "not implemented".
+At the user's request it's now a real feature, **read-only feed-URL subscription** (the chosen
+mechanism — no OAuth, no stored credentials):
+
+- **Migration 002** adds `people.email`, `calendar_feeds`, and `calendar_events`. `email` flows
+  through the Person contracts + Add/Edit forms + seed, and is the primary key for matching.
+- **`apps/server/src/calendar/ics.js`** is a dependency-free iCalendar reader (chosen over an npm
+  ICS lib partly to avoid the external-install friction seen with ljspeed). Scope: VEVENT
+  SUMMARY/LOCATION/UID/DTSTART/DTEND/ATTENDEE/RRULE; recurrence expansion for
+  FREQ=DAILY|WEEKLY|MONTHLY with INTERVAL/COUNT/UNTIL and (WEEKLY) BYDAY. **Times are wall-clock**:
+  `Z` is true UTC; floating/`TZID` values keep their wall-clock time but are not zone-converted
+  (a documented simplification — fine for surfacing an agenda; full VTIMEZONE handling is a
+  follow-up).
+- **`calendar-service`** fetches each feed (Node `fetch`, 10 s timeout, http/https only), expands a
+  −1d…+30d window, matches attendees → reports (**email, then attendee CN, then person-name in the
+  summary**), caches event instances per feed, and **auto-creates a prep note** for each matched
+  event in the next 24 h (dedup by person + date). The fetch is separated from the
+  parse→match→cache→prep core (`applyFeedEvents(db, feed, icsText, nowMs)`) so the pipeline is
+  testable without network.
+- **Routes** (`/api/calendar/feeds` CRUD, `/sync`, `/agenda`) sit behind the auth guard. `main.js`
+  syncs on boot and every 15 min (`setInterval`, unref'd).
+- **Frontend**: Settings → Calendar manages feeds (add/list/remove/refresh, last-synced/error);
+  Home's agenda shows real upcoming events when any feed is connected, falling back to the derived
+  `nextOneOnOne` list otherwise.
+- **Security note**: the local server makes outbound requests to user-supplied feed URLs. That's
+  inherent to the feature and acceptable for a single-user local app (the user controls the URLs);
+  it is scoped to http/https. The server still binds to 127.0.0.1 by default.

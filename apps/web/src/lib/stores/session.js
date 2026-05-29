@@ -4,6 +4,7 @@ import { resetPeople } from "./people.js";
 import { resetActions } from "./actions.js";
 import { resetNotes } from "./notes.js";
 import { resetSettings } from "./settings.js";
+import { resetCalendar } from "./calendar.js";
 
 // status: "loading" until the first /auth/status resolves, then "ready".
 export const session = writable({ status: "loading", configured: false, authenticated: false });
@@ -33,5 +34,6 @@ export async function logout() {
   resetActions();
   resetNotes();
   resetSettings();
+  resetCalendar();
   await refreshSession();
 }

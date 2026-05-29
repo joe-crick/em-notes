@@ -15,6 +15,18 @@ export async function createPerson(input) {
   return res;
 }
 
+export async function updatePerson(id, patch) {
+  const res = await peopleApi.updatePerson(id, patch);
+  if (res.ok) await loadPeople();
+  return res;
+}
+
+export async function deletePerson(id) {
+  const res = await peopleApi.deletePerson(id);
+  if (res.ok) await loadPeople();
+  return res;
+}
+
 export function resetPeople() {
   people.set([]);
 }

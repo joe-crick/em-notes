@@ -6,6 +6,7 @@ const n = (v) => v ?? null;
 const SCALAR_COLUMNS = {
   name: "name",
   role: "role",
+  email: "email",
   level: "level",
   tenure: "tenure",
   pronouns: "pronouns",
@@ -27,6 +28,7 @@ function mapPersonRow(row) {
     id: row.id,
     name: row.name,
     role: row.role,
+    email: row.email,
     level: row.level,
     tenure: row.tenure,
     pronouns: row.pronouns,
@@ -48,11 +50,11 @@ export function insertPerson(db, person) {
   return db
     .prepare(
       `INSERT OR IGNORE INTO people
-         (id, name, role, level, tenure, pronouns, timezone, initials, color,
+         (id, name, role, email, level, tenure, pronouns, timezone, initials, color,
           next_one_on_one, last_note_at, sentiment_label, pto, growth_focus,
           growth_progress, tags_json, flags_json)
        VALUES
-         (@id, @name, @role, @level, @tenure, @pronouns, @timezone, @initials, @color,
+         (@id, @name, @role, @email, @level, @tenure, @pronouns, @timezone, @initials, @color,
           @next_one_on_one, @last_note_at, @sentiment_label, @pto, @growth_focus,
           @growth_progress, @tags_json, @flags_json)`
     )
@@ -60,6 +62,7 @@ export function insertPerson(db, person) {
       id: person.id,
       name: person.name,
       role: person.role,
+      email: n(person.email),
       level: n(person.level),
       tenure: n(person.tenure),
       pronouns: n(person.pronouns),

@@ -12,6 +12,10 @@ import {
   closeNewNote,
   addReportOpen,
   closeAddReport,
+  editPerson,
+  closeEditPerson,
+  deletePersonTarget,
+  closeDeletePerson,
 } from "../stores/ui.js";
 
 // Global keyboard shortcuts (plan §12.4). A single handler is attached to the window by App.
@@ -56,11 +60,22 @@ export function handleKeydown(e) {
     if (get(paletteOpen)) closePalette();
     else if (get(newNotePerson)) closeNewNote();
     else if (get(addReportOpen)) closeAddReport();
+    else if (get(editPerson)) closeEditPerson();
+    else if (get(deletePersonTarget)) closeDeletePerson();
     return;
   }
 
   // Everything below is disabled while typing or when a modal owns the focus.
-  if (isEditing(e.target) || get(newNotePerson) || get(addReportOpen) || get(paletteOpen)) return;
+  if (
+    isEditing(e.target) ||
+    get(newNotePerson) ||
+    get(addReportOpen) ||
+    get(editPerson) ||
+    get(deletePersonTarget) ||
+    get(paletteOpen)
+  ) {
+    return;
+  }
 
   if (e.key === "/") {
     e.preventDefault();

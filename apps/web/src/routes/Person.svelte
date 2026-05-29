@@ -2,7 +2,7 @@
   import { people } from "../lib/stores/people.js";
   import { actions, toggleAction } from "../lib/stores/actions.js";
   import { route, goTo } from "../lib/stores/route.js";
-  import { openNewNote } from "../lib/stores/ui.js";
+  import { openNewNote, openEditPerson, openDeletePerson } from "../lib/stores/ui.js";
   import { notes as notesStore, loadNotes } from "../lib/stores/notes.js";
   import Icon from "../components/atoms/Icon.svelte";
   import Avatar from "../components/atoms/Avatar.svelte";
@@ -87,7 +87,16 @@
         </div>
       </div>
       <div class="row" style="gap:8px;">
-        <button class="btn btn-outline btn-sm"><Icon name="calendar" size={14} /> Schedule</button>
+        <button class="btn btn-outline btn-sm" onclick={() => openEditPerson(person)}>
+          <Icon name="edit" size={14} /> Edit
+        </button>
+        <button
+          class="btn btn-outline btn-sm"
+          style="color:var(--status-err);"
+          onclick={() => openDeletePerson(person)}
+        >
+          <Icon name="archive" size={14} /> Delete
+        </button>
         <button class="btn btn-accent btn-sm" onclick={() => openNewNote(person)}>
           <Icon name="plus" size={14} /> New 1:1 note <Kbd>N</Kbd>
         </button>

@@ -5,7 +5,15 @@
   import { loadPeople } from "./lib/stores/people.js";
   import { loadActions } from "./lib/stores/actions.js";
   import { loadSettings } from "./lib/stores/settings.js";
-  import { newNotePerson, addReportOpen, paletteOpen, openPalette } from "./lib/stores/ui.js";
+  import { loadFeeds, loadAgenda } from "./lib/stores/calendar.js";
+  import {
+    newNotePerson,
+    addReportOpen,
+    editPerson,
+    deletePersonTarget,
+    paletteOpen,
+    openPalette,
+  } from "./lib/stores/ui.js";
   import { handleKeydown } from "./lib/keyboard/shortcuts.js";
   import Login from "./routes/Login.svelte";
   import Topbar from "./components/layout/Topbar.svelte";
@@ -17,6 +25,8 @@
   import Settings from "./routes/Settings.svelte";
   import NewNoteModal from "./components/notes/NewNoteModal.svelte";
   import AddReportModal from "./components/team/AddReportModal.svelte";
+  import EditPersonModal from "./components/team/EditPersonModal.svelte";
+  import DeletePersonModal from "./components/team/DeletePersonModal.svelte";
   import CommandPalette from "./components/layout/CommandPalette.svelte";
 
   let booted = $state(false);
@@ -32,6 +42,8 @@
       loadPeople();
       loadActions();
       loadSettings();
+      loadFeeds();
+      loadAgenda();
     }
   });
 
@@ -59,6 +71,12 @@
   {/if}
   {#if $addReportOpen}
     <AddReportModal />
+  {/if}
+  {#if $editPerson}
+    <EditPersonModal person={$editPerson} />
+  {/if}
+  {#if $deletePersonTarget}
+    <DeletePersonModal person={$deletePersonTarget} />
   {/if}
   {#if $paletteOpen}
     <CommandPalette />

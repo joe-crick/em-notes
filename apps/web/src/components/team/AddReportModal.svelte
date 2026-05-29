@@ -14,6 +14,7 @@
   let draft = $state({
     name: "",
     role: "",
+    email: "",
     level: "L4",
     timezone: "PST",
     startDate: "",
@@ -41,6 +42,7 @@
     const res = await createPerson({
       name: draft.name,
       role: draft.role,
+      email: draft.email.trim() || null,
       level: draft.level,
       timezone: draft.timezone,
       tags,
@@ -52,7 +54,7 @@
   }
 
   function reset() {
-    draft = { ...draft, name: "", role: "", tags: "" };
+    draft = { ...draft, name: "", role: "", email: "", tags: "" };
     step = "source";
   }
 </script>
@@ -129,6 +131,12 @@
               bind:value={draft.name}
               placeholder="First Last"
             />
+          </div>
+
+          <div>
+            <label class="eyebrow" for="ar-email" style="display:block; margin-bottom:6px;">Work email</label>
+            <input id="ar-email" class="input" type="email" bind:value={draft.email} placeholder="name@company.com" />
+            <div class="meta" style="margin-top:4px; font-size:12px;">Used to match calendar invites.</div>
           </div>
 
           <div class="row" style="gap:12px; align-items:stretch;">

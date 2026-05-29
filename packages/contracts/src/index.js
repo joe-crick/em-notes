@@ -9,6 +9,7 @@ export { ActionItem, CreateActionInput, UpdateActionInput } from "./actions.spec
 export { NoteType, Note, CreateNoteInput, UpdateNoteInput } from "./notes.spec.js";
 export { LoginInput, SetupPasswordInput, Session } from "./auth.spec.js";
 export { UserSettings } from "./settings.spec.js";
+export { CalendarFeed, CreateCalendarFeedInput, CalendarEvent } from "./calendar.spec.js";
 export { ApiError, ApiOk, ApiErr, ApiResult } from "./api.spec.js";
 
 // Re-export the ljspec primitives callers need so app code imports from one place.
