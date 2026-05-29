@@ -196,3 +196,23 @@ The full checklist lives in `docs/prototype-parity.md`; the headline deviations:
   uses `--fg-1` as its background, which is light in dark themes, so its `--fg-on-dark` label
   vanished. Added `[data-theme="dark"] .btn-primary { color: var(--bg-page) }`. Studio/light
   remains the parity target; dark is the companion palette.
+
+## 16. Phase 7 command palette + keyboard shortcuts
+
+Ported faithfully from `app.jsx` with these notes:
+
+- **Keyboard handling lives in `apps/web/src/lib/keyboard/shortcuts.js`** (a single
+  `handleKeydown` attached via `<svelte:window>` in App), replacing Phase 5/6's inline
+  Escape-only handler. It reads stores with `get()` to avoid stale closures (the prototype used
+  refs for the same reason). Shortcuts: Cmd/Ctrl+K toggle palette (works even in inputs); `/`
+  open palette; `n` new note (for the routed person, else opens the palette to pick one); `g`
+  leader → `h`/`t`/`a`/`s` and `1–9` (jump to the Nth direct report); Escape closes the topmost
+  overlay. A guard disables non-Cmd+K shortcuts while typing in input/textarea/select/
+  contenteditable or while a modal/palette owns focus.
+- **Added `g a` → Actions** (not in the prototype's `g h/t/s`) for symmetry with the four nav
+  routes; `g 1–9` instead of the prototype's hard-capped `g 1–6` (works for any roster size).
+- **`CommandPalette.svelte`** reads the live `people` store (no `window.EM`); commands cover the
+  four routes, jump-to-person, "New 1:1 note → {person}", and Sign out. The prototype's
+  ambiguous first "New 1:1 note…" item (which silently picked `TEAM[0]`) is dropped in favour of
+  the explicit per-person entries. Arrow/Enter are handled inside the palette input; Escape is
+  handled by the global handler.

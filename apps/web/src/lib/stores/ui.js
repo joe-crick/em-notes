@@ -10,3 +10,6 @@ export const openNewNote = (person) => newNotePerson.set(person);
 export const closeNewNote = () => newNotePerson.set(null);
 export const openAddReport = () => addReportOpen.set(true);
 export const closeAddReport = () => addReportOpen.set(false);
+export const openPalette = () => paletteOpen.set(true);
+export const closePalette = () => paletteOpen.set(false);
+export const togglePalette = () => paletteOpen.update((v) => !v);

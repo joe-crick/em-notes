@@ -5,12 +5,8 @@
   import { loadPeople } from "./lib/stores/people.js";
   import { loadActions } from "./lib/stores/actions.js";
   import { loadSettings } from "./lib/stores/settings.js";
-  import {
-    newNotePerson,
-    addReportOpen,
-    closeNewNote,
-    closeAddReport,
-  } from "./lib/stores/ui.js";
+  import { newNotePerson, addReportOpen, paletteOpen, openPalette } from "./lib/stores/ui.js";
+  import { handleKeydown } from "./lib/keyboard/shortcuts.js";
   import Login from "./routes/Login.svelte";
   import Topbar from "./components/layout/Topbar.svelte";
   import Sidebar from "./components/layout/Sidebar.svelte";
@@ -21,6 +17,7 @@
   import Settings from "./routes/Settings.svelte";
   import NewNoteModal from "./components/notes/NewNoteModal.svelte";
   import AddReportModal from "./components/team/AddReportModal.svelte";
+  import CommandPalette from "./components/layout/CommandPalette.svelte";
 
   let booted = $state(false);
 
@@ -38,18 +35,11 @@
     }
   });
 
-  // Escape closes whichever overlay is open.
-  function onKeydown(e) {
-    if (e.key !== "Escape") return;
-    if ($newNotePerson) closeNewNote();
-    else if ($addReportOpen) closeAddReport();
-  }
-
   const screens = { home: Home, team: Team, person: Person, actions: Actions, settings: Settings };
   const Screen = $derived(screens[$route.name] ?? Home);
 </script>
 
-<svelte:window onkeydown={onKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 {#if !booted || $session.status === "loading"}
   <div style="height:100vh; display:grid; place-items:center; color:var(--fg-3);">Loading…</div>
@@ -57,7 +47,7 @@
   <Login />
 {:else}
   <div class="app">
-    <Topbar />
+    <Topbar onOpenPalette={openPalette} />
     <Sidebar />
     <main class="app-main">
       <Screen />
@@ -69,5 +59,8 @@
   {/if}
   {#if $addReportOpen}
     <AddReportModal />
+  {/if}
+  {#if $paletteOpen}
+    <CommandPalette />
   {/if}
 {/if}

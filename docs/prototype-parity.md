@@ -39,7 +39,7 @@ Status key: `[x]` done · `[~]` adapted (honest deviation, see notes) · `[ ]` n
 [x] Logo            [x] Wordmark       [x] Icon          [x] Avatar
 [x] Sparkline       [x] Bar            [x] SentimentDot  [x] Flag
 [x] Kbd             [~] AICard (disabled placeholder only — no real local AI, per §13.3)
-[x] Topbar          [x] Sidebar        [ ] CommandPalette (Phase 7)
+[x] Topbar          [x] Sidebar        [x] CommandPalette (Phase 7)
 [x] NewNoteModal    [x] AddReportModal
 ```
 
