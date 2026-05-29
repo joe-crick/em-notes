@@ -30,10 +30,31 @@ docs/                     implementation plan + architecture notes
 
 ## Getting started
 
+The quickest path on a fresh Linux/macOS box (needs **Node ≥ 20**; `pnpm` is auto-provisioned
+via corepack if missing):
+
+```bash
+make install   # prerequisites + dependencies + migrated & seeded database
+make run       # start the API + web app in dev mode, then open the printed URL
+```
+
+On first launch you set a password (local single-user auth). `make help` lists every target:
+
+| Target                  | Does                                                              |
+| ----------------------- | ----------------------------------------------------------------- |
+| `make install`          | check prerequisites, `pnpm install`, migrate + seed the SQLite DB |
+| `make run` (`make dev`) | run the Fastify API and Vite web app together                     |
+| `make build`            | production build of the web app                                   |
+| `make test`             | run the full test suite                                           |
+| `make reset-password`   | clear the local password (next launch re-runs setup)              |
+| `make clean`            | remove dependencies, build output, and the local database         |
+
+Equivalent manual commands:
+
 ```bash
 pnpm install
-pnpm test
-pnpm format
+pnpm db:migrate && pnpm db:seed
+pnpm dev
 ```
 
 See `docs/implementation-plan.md` for the full build plan and `docs/deviations.md` for any
