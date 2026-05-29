@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Native modules / build tools allowed to run install scripts (pnpm 10 blocks by default).
+onlyBuiltDependencies:
+  - argon2
+  - better-sqlite3
+  - esbuild
+  - ljspeed

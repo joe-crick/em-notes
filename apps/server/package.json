@@ -1,0 +1,30 @@
+{
+  "name": "@em-notes/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "node --watch src/main.js",
+    "start": "node src/main.js",
+    "test": "vitest run --passWithNoTests",
+    "build": "echo \"@em-notes/server: nothing to build\"",
+    "db:migrate": "node src/migrate.js",
+    "db:seed": "node src/seed.js",
+    "auth:reset": "node src/auth/reset-password.js",
+    "macro:check": "node src/macros/check.js"
+  },
+  "dependencies": {
+    "@em-notes/contracts": "workspace:*",
+    "@em-notes/core": "workspace:*",
+    "@em-notes/prototype-seed": "workspace:*",
+    "@fastify/cookie": "^11.0.2",
+    "argon2": "^0.44.0",
+    "better-sqlite3": "^12.10.0",
+    "fastify": "^5.8.5",
+    "nanoid": "^5.1.11"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.7"
+  }
+}

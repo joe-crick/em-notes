@@ -1,0 +1,517 @@
+/* ============================================================
+   EM Notes — base styles + two design directions
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-page);
+  color: var(--fg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   DIRECTION A — STUDIO (alpine — deep forest ink, sky accent)
+   Inspired by mountain peaks against open sky.
+   ============================================================ */
+[data-direction="studio"] {
+  --bg-page:        #F1EDE2;     /* warm cliff-stone cream */
+  --bg-surface:     #FFFFFF;
+  --bg-surface-2:   #E5DECE;     /* deeper sand */
+  --bg-dark:        #1B3A2A;     /* deep peak-shadow forest */
+  --bg-dark-2:      #2A4A38;
+  --bg-mint:        #8AAE7C;     /* sunlit mossy ridge */
+  --bg-mint-soft:   #D3E2C8;     /* pale lichen */
+
+  --fg-1:           #1B3A2A;     /* mountain ink */
+  --fg-2:           #3C5044;
+  --fg-3:           #6E7E72;
+  --fg-4:           #A0AC9F;
+  --fg-on-dark:     #F1EDE2;
+  --fg-on-accent:   #FFFFFF;
+
+  --accent:         #4882C2;     /* alpine sky */
+  --accent-hover:   #366FB0;
+  --accent-soft:    #DCE8F4;
+
+  --line:           rgba(27, 58, 42, 0.10);
+  --line-strong:    rgba(27, 58, 42, 0.20);
+  --scrim:          rgba(27, 58, 42, 0.40);
+
+  --status-draft:   #8A8676;
+  --status-ok:      #4F7A5B;     /* moss */
+  --status-warn:    #B8902F;     /* ridge ochre */
+  --status-err:     #B4533A;     /* clay */
+
+  --font-display:   'Fraunces', Georgia, serif;
+  --font-ui:        'Inter', system-ui, sans-serif;
+  --font-mono:      'IBM Plex Mono', ui-monospace, monospace;
+
+  --display-weight: 400;
+  --display-track:  -0.01em;
+  --display-italic: 0;
+
+  --radius-card:    12px;
+  --radius-input:   8px;
+  --radius-pill:    999px;
+
+  --shadow-rest:    0 1px 2px rgba(27, 58, 42, 0.05);
+  --shadow-hover:   0 6px 18px rgba(27, 58, 42, 0.08);
+  --shadow-modal:   0 24px 56px rgba(27, 58, 42, 0.22);
+
+  --ease:           cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Dark mode for Studio — pre-dawn alpine */
+[data-direction="studio"][data-theme="dark"] {
+  --bg-page:        #131D18;
+  --bg-surface:     #1B2A22;
+  --bg-surface-2:   #25372C;
+  --bg-dark:        #0C1612;
+  --bg-mint:        #2F4A3A;
+  --bg-mint-soft:   #28392F;
+
+  --fg-1:           #EBE6D6;
+  --fg-2:           #CFC9B6;
+  --fg-3:           #9C9A89;
+  --fg-4:           #6F7065;
+  --fg-on-dark:     #EBE6D6;
+
+  --accent:         #7AABDF;     /* lighter sky for dark */
+  --accent-soft:    #1E3450;
+
+  --line:           rgba(235, 230, 214, 0.10);
+  --line-strong:    rgba(235, 230, 214, 0.20);
+}
+
+/* ============================================================
+   DIRECTION B — CONDUCTOR (manager toolkit, structured)
+   New palette: deep slate ink, amber/ochre accent, warm cream
+   ============================================================ */
+[data-direction="conductor"] {
+  --bg-page:        #F2EDE3;
+  --bg-surface:     #FFFFFF;
+  --bg-surface-2:   #E9E2D2;
+  --bg-dark:        #1B2330;
+  --bg-dark-2:      #2A3344;
+  --bg-mint:        #DDD2BE;        /* sand */
+  --bg-mint-soft:   #EEE6D6;
+
+  --fg-1:           #1B2330;        /* deep slate ink */
+  --fg-2:           #34404F;
+  --fg-3:           #647183;
+  --fg-4:           #97A0B0;
+  --fg-on-dark:     #F2EDE3;
+  --fg-on-accent:   #FFFFFF;
+
+  --accent:         #C2542C;        /* terracotta */
+  --accent-hover:   #A8431F;
+  --accent-soft:    #F2D9CD;
+
+  --line:           rgba(27, 35, 48, 0.12);
+  --line-strong:    rgba(27, 35, 48, 0.22);
+  --scrim:          rgba(27, 35, 48, 0.42);
+
+  --status-draft:   #647183;
+  --status-ok:      #3F7A5A;
+  --status-warn:    #B0792B;
+  --status-err:     #B83F30;
+
+  --font-display:   'Fraunces', Georgia, serif;
+  --font-ui:        'Inter', system-ui, sans-serif;
+  --font-mono:      'IBM Plex Mono', ui-monospace, monospace;
+
+  --display-weight: 500;
+  --display-track:  -0.02em;
+  --display-italic: 0;
+
+  --radius-card:    6px;
+  --radius-input:   4px;
+  --radius-pill:    4px;            /* squared buttons in Conductor */
+
+  --shadow-rest:    0 1px 0 rgba(27, 35, 48, 0.04);
+  --shadow-hover:   0 2px 0 rgba(27, 35, 48, 0.06), 0 8px 24px rgba(27, 35, 48, 0.06);
+  --shadow-modal:   0 24px 56px rgba(27, 35, 48, 0.28);
+
+  --ease:           cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-direction="conductor"][data-theme="dark"] {
+  --bg-page:        #14171F;
+  --bg-surface:     #1C2030;
+  --bg-surface-2:   #262B3D;
+  --bg-dark:        #0B0D14;
+  --bg-mint:        #3A3527;
+
+  --fg-1:           #ECE4D0;
+  --fg-2:           #C9C1AE;
+  --fg-3:           #8B8676;
+  --fg-4:           #6B6757;
+  --fg-on-dark:     #ECE4D0;
+
+  --accent:         #D9663C;
+  --accent-soft:    #3D2418;
+
+  --line:           rgba(236, 228, 208, 0.10);
+  --line-strong:    rgba(236, 228, 208, 0.20);
+}
+
+/* ============================================================
+   Density
+   ============================================================ */
+[data-density="comfortable"] {
+  --row-pad-y: 14px;
+  --row-pad-x: 16px;
+  --card-pad:  20px;
+  --stack:     16px;
+}
+[data-density="compact"] {
+  --row-pad-y: 8px;
+  --row-pad-x: 12px;
+  --card-pad:  14px;
+  --stack:     10px;
+}
+
+/* ============================================================
+   Type primitives
+   ============================================================ */
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-track);
+  line-height: 1.05;
+  color: var(--fg-1);
+}
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+[data-direction="conductor"] .eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.meta { font-size: 13px; color: var(--fg-3); }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  font: 600 14px/1 var(--font-ui);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 120ms var(--ease);
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:focus-visible { outline: 2px solid var(--fg-1); outline-offset: 2px; }
+
+.btn-primary { background: var(--fg-1); color: var(--fg-on-dark); }
+.btn-primary:hover { background: var(--bg-dark-2); }
+
+.btn-accent { background: var(--accent); color: var(--fg-on-accent); }
+.btn-accent:hover { background: var(--accent-hover); }
+
+.btn-ghost { background: transparent; color: var(--fg-1); }
+.btn-ghost:hover { background: var(--bg-surface-2); }
+
+.btn-outline { background: transparent; color: var(--fg-1); border-color: var(--line-strong); }
+.btn-outline:hover { background: var(--bg-surface-2); }
+
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+.btn-icon {
+  width: 32px; height: 32px; padding: 0; justify-content: center;
+  border-radius: var(--radius-pill);
+  background: transparent; color: var(--fg-2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 120ms var(--ease);
+}
+.btn-icon:hover { background: var(--bg-surface-2); color: var(--fg-1); }
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-rest);
+  transition: box-shadow 180ms var(--ease), border-color 180ms var(--ease);
+}
+.card.hover:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-hover);
+}
+.card-pad { padding: var(--card-pad); }
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+.input, .textarea {
+  font: 400 15px/1.5 var(--font-ui);
+  color: var(--fg-1);
+  background: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-input);
+  padding: 10px 12px;
+  transition: border-color 120ms var(--ease), box-shadow 120ms var(--ease);
+  width: 100%;
+}
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--fg-1);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.textarea { resize: vertical; min-height: 100px; }
+
+/* ============================================================
+   Chips / pills
+   ============================================================ */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font: 500 12px/1 var(--font-ui);
+  background: var(--bg-surface-2);
+  color: var(--fg-2);
+  border: 1px solid transparent;
+  letter-spacing: 0.01em;
+}
+[data-direction="conductor"] .chip { border-radius: 3px; }
+.chip-ok    { background: color-mix(in srgb, var(--status-ok) 14%, transparent); color: var(--status-ok); }
+.chip-warn  { background: color-mix(in srgb, var(--status-warn) 18%, transparent); color: var(--status-warn); }
+.chip-err   { background: color-mix(in srgb, var(--status-err) 14%, transparent); color: var(--status-err); }
+.chip-draft { background: var(--bg-surface-2); color: var(--fg-3); }
+.chip-accent{ background: var(--accent-soft); color: var(--accent); }
+
+/* ============================================================
+   Avatar
+   ============================================================ */
+.avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  background: var(--bg-mint);
+  color: var(--fg-1);
+  font: 600 13px/1 var(--font-ui);
+  flex-shrink: 0;
+}
+[data-direction="conductor"] .avatar { border-radius: 4px; }
+.avatar-sm { width: 24px; height: 24px; font-size: 10px; }
+.avatar-md { width: 36px; height: 36px; font-size: 13px; }
+.avatar-lg { width: 56px; height: 56px; font-size: 18px; }
+.avatar-xl { width: 88px; height: 88px; font-size: 28px; }
+
+/* ============================================================
+   App shell
+   ============================================================ */
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 56px 1fr;
+  height: 100vh;
+  min-height: 600px;
+}
+.app-topbar {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 20px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--line);
+  z-index: 10;
+}
+.app-sidebar {
+  background: var(--bg-page);
+  border-right: 1px solid var(--line);
+  padding: 16px 12px;
+  overflow-y: auto;
+}
+[data-direction="conductor"] .app-sidebar { background: var(--bg-surface-2); }
+.app-main {
+  overflow-y: auto;
+  background: var(--bg-page);
+}
+
+/* Sidebar items */
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font: 500 14px/1 var(--font-ui);
+  color: var(--fg-2);
+  cursor: pointer;
+  border: none; background: transparent;
+  width: 100%; text-align: left;
+  transition: all 120ms var(--ease);
+}
+[data-direction="conductor"] .nav-item { border-radius: 4px; }
+.nav-item:hover { background: var(--bg-surface-2); color: var(--fg-1); }
+.nav-item.active { background: var(--bg-dark); color: var(--fg-on-dark); }
+[data-direction="conductor"] .nav-item.active { background: var(--fg-1); }
+
+.nav-section {
+  font: 600 10px/1 var(--font-ui);
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--fg-4);
+  padding: 16px 12px 6px;
+}
+[data-direction="conductor"] .nav-section { font-family: var(--font-mono); font-weight: 500; }
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.page { padding: 32px 40px 80px; max-width: 1280px; }
+.page-narrow { padding: 32px 40px 80px; max-width: 880px; }
+.row { display: flex; align-items: center; gap: 12px; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stack > * + * { margin-top: var(--stack, 16px); }
+.divider { height: 1px; background: var(--line); margin: 0; border: 0; }
+
+/* ============================================================
+   Lists / tables
+   ============================================================ */
+.list-row {
+  display: grid;
+  align-items: center;
+  padding: var(--row-pad-y, 12px) var(--row-pad-x, 16px);
+  border-bottom: 1px solid var(--line);
+  transition: background 120ms var(--ease);
+  cursor: pointer;
+}
+.list-row:hover { background: var(--bg-surface-2); }
+.list-row:last-child { border-bottom: 0; }
+
+/* ============================================================
+   Tabs
+   ============================================================ */
+.tabs {
+  display: flex; gap: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font: 500 14px/1 var(--font-ui);
+  color: var(--fg-3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 120ms var(--ease);
+}
+.tab:hover { color: var(--fg-1); }
+.tab.active { color: var(--fg-1); border-bottom-color: var(--accent); }
+[data-direction="conductor"] .tab { font-family: var(--font-mono); font-size: 13px; font-weight: 500; }
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+.app-main::-webkit-scrollbar, .app-sidebar::-webkit-scrollbar { width: 10px; }
+.app-main::-webkit-scrollbar-thumb, .app-sidebar::-webkit-scrollbar-thumb {
+  background: var(--line-strong); border-radius: 999px;
+}
+
+/* ============================================================
+   Keyboard hint
+   ============================================================ */
+.kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--line);
+  font: 500 11px/1 var(--font-mono);
+  color: var(--fg-3);
+}
+
+/* ============================================================
+   Modal
+   ============================================================ */
+.modal-scrim {
+  position: fixed; inset: 0;
+  background: var(--scrim);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  animation: fadeIn 180ms var(--ease);
+}
+.modal {
+  background: var(--bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-modal);
+  width: 500px; max-width: 90vw;
+  animation: rise 240ms var(--ease);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ============================================================
+   Sentiment sparkline (svg)
+   ============================================================ */
+.sparkline path { transition: d 240ms var(--ease); }
+
+/* ============================================================
+   Markdown-ish note rendering
+   ============================================================ */
+.prose {
+  font: 400 16px/1.65 var(--font-ui);
+  color: var(--fg-2);
+}
+.prose h2 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 22px;
+  color: var(--fg-1);
+  margin: 24px 0 8px;
+}
+.prose ul { padding-left: 20px; margin: 8px 0; }
+.prose li { margin: 4px 0; }
+.prose blockquote {
+  margin: 12px 0;
+  padding: 8px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-surface-2);
+  color: var(--fg-2);
+  font-style: italic;
+}
+
+/* ============================================================
+   Misc
+   ============================================================ */
+.dot {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 999px; background: var(--fg-4);
+}
+.dot.ok    { background: var(--status-ok); }
+.dot.warn  { background: var(--status-warn); }
+.dot.draft { background: var(--status-draft); }
+.dot.err   { background: var(--status-err); }
+
+/* AI accent strip in Conductor */
+[data-direction="conductor"] .ai-card {
+  border-left: 3px solid var(--accent);
+  background: var(--bg-surface);
+}
+[data-direction="studio"] .ai-card {
+  background: var(--bg-mint-soft);
+  border: 1px solid color-mix(in srgb, var(--bg-mint) 80%, transparent);
+}
+
+/* Conductor adds rule lines on cards */
+[data-direction="conductor"] .ruled {
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: 100px 100%;
+}

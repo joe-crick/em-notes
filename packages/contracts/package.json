@@ -1,0 +1,21 @@
+{
+  "name": "@em-notes/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "vitest run --passWithNoTests",
+    "build": "echo \"@em-notes/contracts: nothing to build\""
+  },
+  "dependencies": {
+    "@em-notes/core": "workspace:*",
+    "ljspec": "github:joe-crick/ljspec"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.7"
+  }
+}

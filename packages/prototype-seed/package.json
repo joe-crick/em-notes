@@ -1,0 +1,23 @@
+{
+  "name": "@em-notes/prototype-seed",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/seed.js",
+  "exports": {
+    ".": "./src/seed.js",
+    "./data": "./src/data.js",
+    "./transform": "./src/transform.js"
+  },
+  "scripts": {
+    "test": "vitest run --passWithNoTests",
+    "build": "echo \"@em-notes/prototype-seed: nothing to build\""
+  },
+  "dependencies": {
+    "@em-notes/contracts": "workspace:*",
+    "@em-notes/core": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.7"
+  }
+}

@@ -1,23 +1,21 @@
 {
-	"name": "em-notes",
-	"scripts": {
-		"ancient": "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -m antq.core",
-		"watch": "npx shadow-cljs watch app browser-test karma-test",
-		"release": "npx shadow-cljs release app",
-		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
-		"start": "run-p server jack-in",
-		"jack-in": "npx shadow-cljs -d cider/cider-nrepl:0.28.5 watch :app",
-		"server": "node ./server/bin/www"
-	},
-	"dependencies": {
-		"bulma-toast": "^2.4.2",
-		"highlight.js": "11.5.1",
-		"react": "17.0.2",
-		"react-dom": "17.0.2"
-	},
-	"devDependencies": {
-		"npm-run-all": "^4.1.5",
-		"shadow-cljs": "2.20.5",
-		"source-map-support": "^0.5.21"
-	}
+  "name": "em-notes-local",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @em-notes/server dev\" \"pnpm --filter @em-notes/web dev\"",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "format": "prettier --write .",
+    "db:migrate": "pnpm --filter @em-notes/server db:migrate",
+    "db:seed": "pnpm --filter @em-notes/server db:seed",
+    "macro:check": "pnpm --filter @em-notes/server macro:check"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.0",
+    "ljspeed": "github:joe-crick/ljspeed",
+    "prettier": "^3.8.3",
+    "vitest": "^4.1.7"
+  }
 }

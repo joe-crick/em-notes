@@ -1,20 +1,34 @@
-/out/
-/resources/public/js/compiled/
-/target/
-/*-init.clj
-/*.log
-/.clj-kondo/
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+**/dist/
+
+# ljspeed compiler output (sibling files + source maps)
+*.out.js
+*.out.js.map
+
+# Local SQLite database + data dir
+apps/server/data/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editor / tooling
 /.calva/
+/.lsp/
 /.history/
-/server/node_modules
-/.lsp
-
-# Leiningen
-/.lein-*
-/.nrepl-port
-
-# Node.js dependencies
-/node_modules/
-
-# shadow-cljs cache, port files
-/.shadow-cljs/
+/.idea/
+.DS_Store
