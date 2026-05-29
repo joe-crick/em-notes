@@ -1,0 +1,13 @@
+# Don't reformat the imported prototype — it must stay byte-faithful as a reference.
+reference/
+
+# Build output, deps, generated files
+node_modules/
+**/dist/
+**/*.out.js
+**/*.out.js.map
+pnpm-lock.yaml
+**/data/*.sqlite
+
+# Docs are prose; leave as-authored
+docs/

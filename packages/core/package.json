@@ -1,0 +1,23 @@
+{
+  "name": "@em-notes/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./atf": "./src/atf.js",
+    "./ids": "./src/ids.js"
+  },
+  "scripts": {
+    "test": "vitest run --passWithNoTests",
+    "build": "echo \"@em-notes/core: nothing to build\""
+  },
+  "dependencies": {
+    "ljsp-core": "github:joe-crick/ljsp-core",
+    "nanoid": "^5.1.11"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.7"
+  }
+}

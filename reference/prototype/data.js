@@ -1,0 +1,461 @@
+// ============================================================
+// EM Notes — mock data
+// ============================================================
+
+const TEAM = [
+  {
+    id: "alex",
+    name: "Alex Park",
+    role: "Senior Backend Engineer",
+    level: "L5",
+    tenure: "2y 4mo",
+    pronouns: "she/her",
+    timezone: "PST",
+    initials: "AP",
+    color: "#F08E77",
+    nextOneOnOne: "Tue 10:00",
+    lastNote: "2d ago",
+    sentiment: [3, 3, 4, 4, 4, 3, 4, 4, 5, 4, 4, 5],
+    sentimentLabel: "steady",
+    flags: [],
+    pto: null,
+    growthFocus: "Tech lead readiness",
+    growthProgress: 0.7,
+    openActions: 2,
+    tags: ["payments", "tech-lead-track"],
+  },
+  {
+    id: "sam",
+    name: "Samira Khoury",
+    role: "Staff Engineer",
+    level: "L6",
+    tenure: "4y 1mo",
+    pronouns: "she/her",
+    timezone: "GMT",
+    initials: "SK",
+    color: "#BDDCC1",
+    nextOneOnOne: "Wed 09:00",
+    lastNote: "5d ago",
+    sentiment: [4, 4, 4, 5, 4, 4, 4, 3, 3, 3, 3, 3],
+    sentimentLabel: "declining",
+    flags: ["sentiment-drop"],
+    pto: null,
+    growthFocus: "Cross-org influence",
+    growthProgress: 0.55,
+    openActions: 4,
+    tags: ["infra", "mentor"],
+  },
+  {
+    id: "marco",
+    name: "Marco Rivera",
+    role: "Engineer II",
+    level: "L4",
+    tenure: "1y 2mo",
+    pronouns: "he/him",
+    timezone: "EST",
+    initials: "MR",
+    color: "#C2542C",
+    nextOneOnOne: "Thu 14:00",
+    lastNote: "1d ago",
+    sentiment: [3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 4, 5],
+    sentimentLabel: "thriving",
+    flags: ["promotion-ready"],
+    pto: null,
+    growthFocus: "Promotion to L5",
+    growthProgress: 0.85,
+    openActions: 1,
+    tags: ["mobile", "promo-candidate"],
+  },
+  {
+    id: "jess",
+    name: "Jess Tanaka",
+    role: "Engineer I",
+    level: "L3",
+    tenure: "6mo",
+    pronouns: "they/them",
+    timezone: "PST",
+    initials: "JT",
+    color: "#9CC6A4",
+    nextOneOnOne: "Fri 11:00",
+    lastNote: "3d ago",
+    sentiment: [2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    sentimentLabel: "ramping",
+    flags: ["new-hire"],
+    pto: "Out Thu–Fri",
+    growthFocus: "Onboarding & first shipped feature",
+    growthProgress: 0.4,
+    openActions: 3,
+    tags: ["frontend", "new-hire"],
+  },
+  {
+    id: "deepa",
+    name: "Deepa Iyer",
+    role: "Senior Engineer",
+    level: "L5",
+    tenure: "3y",
+    pronouns: "she/her",
+    timezone: "IST",
+    initials: "DI",
+    color: "#1C332D",
+    nextOneOnOne: "Mon 22:00",
+    lastNote: "8d ago",
+    sentiment: [4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2],
+    sentimentLabel: "needs attention",
+    flags: ["sentiment-drop", "no-note-7d"],
+    pto: null,
+    growthFocus: "Re-engagement; scope clarity",
+    growthProgress: 0.5,
+    openActions: 5,
+    tags: ["data-platform"],
+  },
+  {
+    id: "leo",
+    name: "Leo Halvorsen",
+    role: "Engineer II",
+    level: "L4",
+    tenure: "1y 8mo",
+    pronouns: "he/him",
+    timezone: "CET",
+    initials: "LH",
+    color: "#DDD2BE",
+    nextOneOnOne: "Tue 15:00",
+    lastNote: "4d ago",
+    sentiment: [4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4],
+    sentimentLabel: "steady",
+    flags: [],
+    pto: null,
+    growthFocus: "Deep dives in distributed systems",
+    growthProgress: 0.6,
+    openActions: 1,
+    tags: ["infra"],
+  },
+];
+
+const ME = {
+  name: "Joe Crick",
+  role: "Engineering Manager",
+  team: "Payments Platform",
+  initials: "JC",
+};
+
+// 1:1 notes (per person, newest first)
+const NOTES = {
+  alex: [
+    {
+      id: "n1",
+      date: "May 22, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 4,
+      summary:
+        "Strong week. Shipped the idempotency keys migration ahead of schedule. Wants to lead the next cross-team scoping session — green light.",
+      highlights: [
+        "Idempotency keys shipped Tue, zero incidents",
+        "Asked about TL track: timeline is realistic for Q3",
+        "Wants more design-doc reviews from peers, not just from me",
+      ],
+      actions: [
+        { id: "a1", text: "Connect Alex with Priya re: scoping coaching", done: false, owner: "me" },
+        { id: "a2", text: "Send TL competency rubric (current Q)", done: true, owner: "me" },
+      ],
+      transcript: false,
+    },
+    {
+      id: "n2",
+      date: "May 15, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 4,
+      summary:
+        "Discussed idempotency keys design tradeoffs. Some friction with Infra team on the partition-key choice. Alex handled it well.",
+      highlights: [
+        "Resolved infra disagreement in <1 day",
+        "Wants to mentor Jess on backend basics",
+      ],
+      actions: [
+        { id: "a3", text: "Schedule Alex ↔ Jess mentorship pairing", done: true, owner: "me" },
+      ],
+    },
+    {
+      id: "n3",
+      date: "May 8, 2026",
+      type: "Skip",
+      duration: "20 min",
+      sentiment: 4,
+      summary:
+        "Skip-level with director went well. Alex articulated payments roadmap clearly.",
+      highlights: [],
+      actions: [],
+    },
+  ],
+  sam: [
+    {
+      id: "sn1",
+      date: "May 19, 2026",
+      type: "1:1",
+      duration: "45 min",
+      sentiment: 3,
+      summary:
+        "Sam mentioned feeling stretched between three workstreams. Wants to drop the on-call rotation for next month. Sentiment slipping — keep watching.",
+      highlights: [
+        "Three active workstreams: infra migration, mentor for Marco, IC4 hiring loop",
+        "Drop on-call for June — agreed",
+        "Wants to write down a 'no list' so we both know what she's not doing",
+      ],
+      actions: [
+        { id: "sa1", text: "Remove Sam from June on-call", done: false, owner: "me" },
+        { id: "sa2", text: "Sam to draft a 'no list' before next 1:1", done: false, owner: "sam" },
+      ],
+    },
+  ],
+  marco: [
+    {
+      id: "mn1",
+      date: "May 23, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 5,
+      summary:
+        "Promotion packet is in great shape. Want to nominate at next calibration.",
+      highlights: ["Promo packet — 3 of 4 sections drafted", "Strong cross-team examples"],
+      actions: [
+        { id: "ma1", text: "Submit Marco's promo packet by June 5", done: false, owner: "me" },
+      ],
+    },
+  ],
+  jess: [
+    {
+      id: "jn1",
+      date: "May 21, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 4,
+      summary: "Onboarding going well. Shipped first PR this week.",
+      highlights: ["First PR merged 🎉", "Pairing with Alex is helping"],
+      actions: [],
+    },
+  ],
+  deepa: [
+    {
+      id: "dn1",
+      date: "May 16, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 2,
+      summary:
+        "Deepa shared frustration about scope drift on the data-platform rewrite. Feels her work isn't visible to leadership. Need to address.",
+      highlights: [
+        "Three rounds of scope changes from product",
+        "Last 1:1 with skip was 6 weeks ago — too long",
+        "Wants a clearer success metric",
+      ],
+      actions: [
+        { id: "da1", text: "Schedule skip-level for Deepa within 2 weeks", done: false, owner: "me" },
+        { id: "da2", text: "Lock scope with product PM Friday", done: false, owner: "me" },
+      ],
+    },
+  ],
+  leo: [
+    {
+      id: "ln1",
+      date: "May 20, 2026",
+      type: "1:1",
+      duration: "30 min",
+      sentiment: 4,
+      summary: "Quiet week. Leo is happy with distributed systems reading group.",
+      highlights: [],
+      actions: [],
+    },
+  ],
+};
+
+// Feedback log
+const FEEDBACK = {
+  alex: [
+    { id: "f1", date: "May 21", type: "praise", from: "Priya (PM)", text: "Alex's communication on the idempotency rollout was exemplary. Daily updates kept everyone unblocked." },
+    { id: "f2", date: "May 14", type: "praise", from: "Infra team", text: "Solid push-back on the partition-key proposal. Saved us from a re-design later." },
+    { id: "f3", date: "Apr 30", type: "constructive", from: "Self", text: "Tend to take on too much in design reviews. Want to delegate more to peers." },
+  ],
+  sam: [
+    { id: "fs1", date: "May 18", type: "constructive", from: "Skip-level", text: "Sam's strategic memo was strong but landed late. Earlier signal would have changed Q2 staffing." },
+    { id: "fs2", date: "May 2", type: "praise", from: "Marco", text: "Sam's mentorship has been pivotal for my promo prep." },
+  ],
+  marco: [
+    { id: "fm1", date: "May 22", type: "praise", from: "Customer Success", text: "Marco's mobile checkout redesign cut support tickets by 22%." },
+  ],
+  jess: [
+    { id: "fj1", date: "May 21", type: "praise", from: "Alex", text: "Great first PR. Asked the right questions before writing any code." },
+  ],
+  deepa: [
+    { id: "fd1", date: "Apr 28", type: "praise", from: "Self", text: "Shipped the schema migration with zero downtime." },
+  ],
+  leo: [],
+};
+
+// Goals (OKR-style)
+const GOALS = {
+  alex: [
+    { id: "g1", title: "Demonstrate tech-lead readiness", progress: 0.7, period: "Q2", status: "on-track",
+      keyResults: [
+        { text: "Lead 2 cross-team design reviews", progress: 1.0 },
+        { text: "Mentor 1 engineer through onboarding", progress: 0.5 },
+        { text: "Own one architectural decision end-to-end", progress: 0.6 },
+      ] },
+    { id: "g2", title: "Idempotency migration", progress: 1.0, period: "Q2", status: "complete",
+      keyResults: [{ text: "Ship to 100% of payments traffic", progress: 1.0 }] },
+  ],
+  sam: [
+    { id: "gs1", title: "Cross-org influence", progress: 0.55, period: "Q2", status: "at-risk",
+      keyResults: [
+        { text: "Publish infra strategy memo", progress: 0.4 },
+        { text: "Run 1 architecture forum talk", progress: 0.7 },
+      ] },
+  ],
+  marco: [
+    { id: "gm1", title: "Promotion to L5", progress: 0.85, period: "Q2", status: "on-track",
+      keyResults: [
+        { text: "Complete promo packet", progress: 0.75 },
+        { text: "Get 3 cross-team peer reviews", progress: 1.0 },
+      ] },
+  ],
+  jess: [
+    { id: "gj1", title: "Successful first quarter", progress: 0.4, period: "Q2", status: "on-track",
+      keyResults: [
+        { text: "Ship first medium-sized feature", progress: 0.3 },
+        { text: "Develop on-call confidence", progress: 0.2 },
+      ] },
+  ],
+  deepa: [],
+  leo: [],
+};
+
+// Growth ladder
+const GROWTH = {
+  alex: {
+    currentLevel: "L5 — Senior Engineer",
+    targetLevel: "L6 — Staff / Tech Lead",
+    competencies: [
+      { name: "Technical scope",      current: 0.8, target: 0.9 },
+      { name: "Cross-team influence", current: 0.6, target: 0.85 },
+      { name: "Mentorship",           current: 0.7, target: 0.8 },
+      { name: "Strategic thinking",   current: 0.55, target: 0.8 },
+      { name: "Execution",            current: 0.9, target: 0.9 },
+    ],
+    estimate: "2-3 quarters",
+  },
+  sam: {
+    currentLevel: "L6 — Staff",
+    targetLevel: "L7 — Principal",
+    competencies: [
+      { name: "Technical scope", current: 0.85, target: 0.95 },
+      { name: "Cross-org influence", current: 0.55, target: 0.85 },
+      { name: "Mentorship", current: 0.8, target: 0.85 },
+      { name: "Strategic thinking", current: 0.75, target: 0.9 },
+      { name: "Execution", current: 0.8, target: 0.85 },
+    ],
+    estimate: "4+ quarters",
+  },
+  marco: {
+    currentLevel: "L4 — Engineer II",
+    targetLevel: "L5 — Senior",
+    competencies: [
+      { name: "Technical scope", current: 0.7, target: 0.75 },
+      { name: "Cross-team influence", current: 0.65, target: 0.7 },
+      { name: "Mentorship", current: 0.5, target: 0.6 },
+      { name: "Strategic thinking", current: 0.6, target: 0.7 },
+      { name: "Execution", current: 0.85, target: 0.8 },
+    ],
+    estimate: "Ready now",
+  },
+  jess: {
+    currentLevel: "L3 — Engineer I",
+    targetLevel: "L4 — Engineer II",
+    competencies: [
+      { name: "Technical scope", current: 0.4, target: 0.6 },
+      { name: "Cross-team influence", current: 0.3, target: 0.5 },
+      { name: "Mentorship", current: 0.2, target: 0.3 },
+      { name: "Strategic thinking", current: 0.3, target: 0.5 },
+      { name: "Execution", current: 0.55, target: 0.65 },
+    ],
+    estimate: "3-4 quarters",
+  },
+  deepa: {
+    currentLevel: "L5 — Senior",
+    targetLevel: "L5 — sustain & re-engage",
+    competencies: [
+      { name: "Technical scope", current: 0.85, target: 0.85 },
+      { name: "Cross-team influence", current: 0.6, target: 0.75 },
+      { name: "Mentorship", current: 0.7, target: 0.75 },
+      { name: "Strategic thinking", current: 0.7, target: 0.8 },
+      { name: "Execution", current: 0.55, target: 0.75 },
+    ],
+    estimate: "n/a — focus on engagement",
+  },
+  leo: {
+    currentLevel: "L4 — Engineer II",
+    targetLevel: "L5 — Senior",
+    competencies: [
+      { name: "Technical scope", current: 0.6, target: 0.75 },
+      { name: "Cross-team influence", current: 0.5, target: 0.7 },
+      { name: "Mentorship", current: 0.4, target: 0.5 },
+      { name: "Strategic thinking", current: 0.6, target: 0.7 },
+      { name: "Execution", current: 0.75, target: 0.8 },
+    ],
+    estimate: "2-3 quarters",
+  },
+};
+
+// Today's view
+const TODAY_AGENDA = [
+  { id: "t1", time: "10:00", person: "alex", title: "1:1 — Alex Park", duration: 30, prep: true },
+  { id: "t2", time: "11:30", person: null, title: "Staff sync", duration: 45, prep: false },
+  { id: "t3", time: "14:00", person: "marco", title: "1:1 — Marco Rivera", duration: 30, prep: true },
+  { id: "t4", time: "16:00", person: null, title: "Calibration prep (Q2)", duration: 60, prep: false },
+];
+
+const OPEN_ACTIONS = [
+  { id: "oa1", text: "Connect Alex with Priya re: scoping coaching", person: "alex", due: "This week", dueDate: "2026-05-29", from: "1:1 May 22", owner: "me", done: false },
+  { id: "oa2", text: "Remove Sam from June on-call", person: "sam", due: "Today", dueDate: "2026-05-25", from: "1:1 May 19", owner: "me", done: false, urgent: true },
+  { id: "oa3", text: "Submit Marco's promo packet", person: "marco", due: "Jun 5", dueDate: "2026-06-05", from: "1:1 May 23", owner: "me", done: false },
+  { id: "oa4", text: "Schedule skip-level for Deepa", person: "deepa", due: "Overdue", dueDate: "2026-05-22", from: "1:1 May 16", owner: "me", done: false, urgent: true, overdue: true },
+  { id: "oa5", text: "Lock scope with product PM (Deepa's rewrite)", person: "deepa", due: "Friday", dueDate: "2026-05-29", from: "1:1 May 16", owner: "me", done: false },
+  { id: "oa6", text: "Send TL competency rubric (current Q)", person: "alex", due: "Done", dueDate: "2026-05-23", from: "1:1 May 22", owner: "me", done: true },
+  { id: "oa7", text: "Schedule Alex ↔ Jess mentorship pairing", person: "alex", due: "Done", dueDate: "2026-05-16", from: "1:1 May 15", owner: "me", done: true },
+  { id: "oa8", text: "Draft a 'no list' before next 1:1", person: "sam", due: "Next 1:1", dueDate: "2026-05-27", from: "1:1 May 19", owner: "report", done: false },
+  { id: "oa9", text: "Review Q3 OKR draft with team", person: null, due: "Next week", dueDate: "2026-06-02", from: "Team sync May 20", owner: "me", done: false },
+  { id: "oa10", text: "1:1 prep notes for Jess (first review)", person: "jess", due: "Thu", dueDate: "2026-05-28", from: "Calendar prep", owner: "me", done: false },
+  { id: "oa11", text: "Pair on H2 roadmap draft with Sam", person: "sam", due: "Jun 10", dueDate: "2026-06-10", from: "Growth plan", owner: "me", done: false },
+];
+
+// AI suggestions (mocked)
+const AI_PROMPTS = {
+  alex: [
+    "She mentioned wanting design-doc reviews from peers — ask which peers she has in mind.",
+    "TL track timeline came up last week. Worth checking in on confidence today.",
+    "Idempotency keys shipped — celebrate the win, then probe for energy level.",
+  ],
+  sam: [
+    "Sentiment has slipped 3 weeks running. Open with: 'How was last week, honestly?'",
+    "She agreed to a 'no list' last 1:1 — did she draft it?",
+    "On-call removal happens June 1. Confirm it's enough relief.",
+  ],
+  marco: [
+    "Promo packet at 75%. Ask if he wants you to review draft sections this week.",
+    "Mobile checkout success — make sure the impact lands in his packet narrative.",
+  ],
+  jess: [
+    "First PR merged — celebrate.",
+    "PTO Thu–Fri — confirm coverage on his on-call shadow rotation.",
+  ],
+  deepa: [
+    "8 days since last note — longest gap on the team. Today is the day.",
+    "Scope drift was the headline last time. Bring the locked scope doc.",
+    "Skip-level request is open. Have you scheduled it?",
+  ],
+  leo: [
+    "Sentiment steady-flat for 8 weeks. Worth probing for growth aspirations.",
+  ],
+};
+
+window.EM = { TEAM, ME, NOTES, FEEDBACK, GOALS, GROWTH, TODAY_AGENDA, OPEN_ACTIONS, AI_PROMPTS };
+window.getPerson = (id) => TEAM.find(p => p.id === id);
