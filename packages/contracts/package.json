@@ -12,6 +12,7 @@
     "build": "echo \"@em-notes/contracts: nothing to build\""
   },
   "dependencies": {
+    "@em-notes/core": "workspace:*",
     "ljspec": "github:joe-crick/ljspec"
   },
   "devDependencies": {

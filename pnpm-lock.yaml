@@ -73,6 +73,9 @@ importers:
 
   packages/contracts:
     dependencies:
+      '@em-notes/core':
+        specifier: workspace:*
+        version: link:../core
       ljspec:
         specifier: github:joe-crick/ljspec
         version: https://codeload.github.com/joe-crick/ljspec/tar.gz/873b49bc4b19f8da24ef6922c9db68a9d96e9d1c

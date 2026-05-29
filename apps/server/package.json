@@ -11,6 +11,7 @@
     "build": "echo \"@em-notes/server: nothing to build\"",
     "db:migrate": "node src/migrate.js",
     "db:seed": "node src/seed.js",
+    "auth:reset": "node src/auth/reset-password.js",
     "macro:check": "node src/macros/check.js"
   },
   "dependencies": {

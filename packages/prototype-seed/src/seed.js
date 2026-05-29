@@ -1,3 +1,8 @@
-// @em-notes/prototype-seed — transforms prototype data into seed data.
-// Implemented in Phase 1 (see docs/implementation-plan.md §16).
-export {};
+import { EM } from "./data.js";
+import { buildSeed } from "./transform.js";
+
+// The prebuilt seed payload (people, notes, actions) the migration/seed script consumes.
+export const seed = buildSeed(EM);
+
+export { buildSeed, buildPeople, buildNotes, buildActions } from "./transform.js";
+export { EM } from "./data.js";
